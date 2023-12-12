@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "531101783354",
+    "project_id": "testapi-d628c",
+    "storage_bucket": "testapi-d628c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531101783354:android:c60f76f2cd57fe7fec6c03",
+        "android_client_info": {
+          "package_name": "com.example.login_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3uISlykp6Wfr8pXimepPcaB_2YBoXPZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
