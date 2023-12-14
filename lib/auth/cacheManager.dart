@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 mixin CacheManager {
@@ -9,7 +10,8 @@ mixin CacheManager {
 
   String? getToken() {
     final box = GetStorage();
-    return box.read(CacheManagerKey.TOKEN.toString());
+     String token = box.read(CacheManagerKey.TOKEN.toString());
+    return token;
   }
 
   Future<void> removeToken() async {

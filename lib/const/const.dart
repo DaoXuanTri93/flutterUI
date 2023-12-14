@@ -1,3 +1,6 @@
+//hostname
+String SEVERNAME = "http://192.168.24.16:3000";
+
 // const login
 String titleUser = 'ログイン';
 String hintUser = 'ユーザー名';

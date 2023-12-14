@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../button/button.dart';
 import '../const/const.dart';
-import '../controller/homeController.dart';
+import '../controller/timeKeepingController.dart';
 
 class TimekeepingPage extends StatelessWidget {
   TimekeepingPage({super.key});
-  final HomeController controller = Get.put(HomeController());
+  final TimekeepingController controller = Get.put(TimekeepingController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +29,7 @@ class TimekeepingPage extends StatelessWidget {
                   width: double.infinity,
                   margin: const EdgeInsets.only(bottom: 20),
                   child: ButtonScreen(
-                      onPressed: !controller.isCheckin.value ? () {} : null,
+                      onPressed: !controller.isCheckin.value ? ()=> controller.checkIn() : null,
                       text: Text(buttonCheckin,
                           style: const TextStyle(fontSize: 20)),
                       radius: 8)),
@@ -38,7 +38,8 @@ class TimekeepingPage extends StatelessWidget {
                   width: double.infinity,
                   margin: const EdgeInsets.only(bottom: 20),
                   child: ButtonScreen(
-                    onPressed: !controller.isCheckin.value ? () {} : null,
+
+                    onPressed: !controller.isCheckout.value ? ()=> controller.checkOut() : null,
                     text: Text(buttonCheckout,
                         style: const TextStyle(fontSize: 20)),
                     radius: 8,
@@ -75,4 +76,5 @@ class TimekeepingPage extends StatelessWidget {
       ),
     );
   }
+
 }

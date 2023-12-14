@@ -2,29 +2,47 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-// import 'package:untitled2/models/office.dart';
+import '../const/const.dart';
 
 class HomeProviders extends GetConnect {
   final isCheckin = false.obs;
+
   final _connect = GetConnect();
+
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
   Future<Response> login(Map data) =>
-      _connect.post('http://192.168.24.16:3000/auth/login',data);
+      _connect.post('$SEVERNAME/auth/login',data);
   Future<Response> getUser(String token) =>
-      _connect.get('http://192.168.24.16:3000/auth/user',headers: {
+      _connect.get('$SEVERNAME/auth/user',headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       });
   Future<Response> logOut() =>
-      _connect.post('http://192.168.24.16:3000/auth/logout',null);
+      _connect.post('$SEVERNAME/auth/logout',null);
 
   Future<Response> getDataTimeKeeping(String token) =>
-      _connect.get('http://192.168.24.16:3000/timekeeping',headers: {
+      _connect.get('$SEVERNAME/timekeeping',headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       });
-  // _connect.post('http://localhost:3000/auth/login', data);
+
+  Future<Response> getCoordinate(String token) =>
+      _connect.get('$SEVERNAME/office/info',headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      });
+
+  Future<Response> checkIn(String token) =>
+      _connect.post('$SEVERNAME/timekeeping/checkin',null,headers: {
+  'Content-Type': 'application/json; charset=UTF-8',
+  'Authorization': 'Bearer $token'});
+
+  Future<Response> checkOut(String token) =>
+      _connect.post('$SEVERNAME/timekeeping/checkout',null,headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'});
+
   Future<Map<String, dynamic>> initPlatformState() async {
     var deviceData = <String, dynamic>{};
     try {

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:login_app/pages/homepages.dart';
 import 'package:login_app/pages/loginpage.dart';
-import '../services/officeProviders.dart';
+import '../services/HomeProviders.dart';
 import 'cacheManager.dart';
 
 class AuthenticationManager extends GetxController with CacheManager {
