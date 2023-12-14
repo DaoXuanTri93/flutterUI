@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:login_app/pages/forgotpage.dart';
 import 'package:login_app/pages/loadingpage.dart';
 import 'package:login_app/pages/loginpage.dart';
+import 'package:login_app/pages/timekeepingpage.dart';
 // import 'package:untitled2/pages/detailoffice.dart';
 // import 'package:untitled2/pages/detailuser.dart';
 // import 'package:untitled2/pages/distancepage.dart';
@@ -35,14 +37,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeController controller = Get.put(HomeController());
     return GetMaterialApp(
         initialRoute: '/',
         getPages: [
           // GetPage(name: '/homepage', page: () => HomePage()),
           GetPage(name: '/loginpage', page: () => LoginPage()),
-          // GetPage(name: '/forgotpage', page: () => ForgotPage()),
-          // GetPage(name: '/timekeeppage', page: () => TimekeepPage()),
+          GetPage(name: '/forgotpage', page: () => ForgotPage()),
+          GetPage(name: '/timekeepingpage', page: () => TimekeepingPage()),
           // GetPage(name: '/schedulepage', page: () => SchedulePage()),
           // GetPage(name: '/distancepage', page: () => DistancePage()),
           // GetPage(name: '/findOfficepage', page: () => FindOfficePage()),

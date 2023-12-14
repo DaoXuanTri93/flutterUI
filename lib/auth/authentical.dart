@@ -12,7 +12,7 @@ class AuthenticationManager extends GetxController with CacheManager {
   void logOut() {
     isLogged.value = false;
     removeToken();
-    OfficeProviders().logOut();
+    HomeProviders().logOut();
     Get.off(LoginPage());
   }
 
@@ -23,7 +23,7 @@ class AuthenticationManager extends GetxController with CacheManager {
       "MAC": mac,
       "isWeb":kIsWeb
     };
-    Response response = await OfficeProviders().login(user);
+    Response response = await HomeProviders().login(user);
     Map<String, dynamic> data = Map<String, dynamic>.from(response.body);
     if(response.statusCode!=200){
       Get.snackbar("Đăng nhập thất bại", data["message"]);
@@ -43,7 +43,7 @@ class AuthenticationManager extends GetxController with CacheManager {
     if(token == null){
       return user;
     }
-    Response response = await OfficeProviders().getUser(token);
+    Response response = await HomeProviders().getUser(token);
     print(response.body["username"]);
     return response.statusCode==200? response.body : user;
   }

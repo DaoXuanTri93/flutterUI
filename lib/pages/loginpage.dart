@@ -76,7 +76,7 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 5),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/forgotpage');
+                  Get.toNamed('/forgotpage');
                 },
                 child: Text(getPassUser,
                     style: const TextStyle(color: Colors.blue)),

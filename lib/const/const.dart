@@ -2,7 +2,7 @@
 String titleUser = 'ログイン';
 String hintUser = 'ユーザー名';
 String hintPassUser = 'パスワード';
-String getPassUser = 'パスワードを忘れた場合';
+String getPassUser = 'パスワードを変更します';
 String rememberUser = 'パスワードを記憶';
 
 // const change_password
