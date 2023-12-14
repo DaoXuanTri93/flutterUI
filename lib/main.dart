@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:login_app/pages/driver_information/driver_infor_details.dart';
+import 'package:login_app/pages/driver_information/driver_infor_search.dart';
 import 'package:login_app/pages/loadingpage.dart';
 import 'package:login_app/pages/loginpage.dart';
 // import 'package:untitled2/pages/detailoffice.dart';
@@ -50,12 +52,12 @@ class MyApp extends StatelessWidget {
           // GetPage(name: '/detailuser', page: () => DetailUser()),
           // GetPage(name: '/permissionssettings', page: () => PermissionssettingPage()),
           // GetPage(name: '/driverinfo', page: () => DriverInfo()),
-          // GetPage(name: '/driverinfodetail', page: () => DriverInfoDetail()),
+          GetPage(name: '/driver-infor-details', page: () => DriverInforDetails()),
           // GetPage(name: '/screencheckteam', page: () => ScreenCheckTeam()),
           // GetPage(name: '/screencheckteamdetail', page: () => ScreenCheckTeamDetail()),
         ],
         home: SafeArea(
-            child: LoadingPages()
+            child: DriverInforSearch()
         ),
         builder: EasyLoading.init(),
         debugShowCheckedModeBanner: false
