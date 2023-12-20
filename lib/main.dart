@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:login_app/pages/loadingpage.dart';
 import 'package:login_app/pages/loginpage.dart';
+import 'package:login_app/pages/user_master_details.dart';
 import 'package:login_app/pages/user_master_search.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'controller/homeController.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         getPages: [
           GetPage(name: '/loginpage', page: () => LoginPage()),
           GetPage(name: '/search-users', page: () => UserMasterSearch()),
+          GetPage(name: '/users-details', page: () => UserMasterDetails()),
         ],
         home: SafeArea(
             child: UserMasterSearch()

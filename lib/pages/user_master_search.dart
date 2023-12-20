@@ -3,38 +3,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:login_app/model/officemodel.dart';
 
+import '../controller/officeUserController.dart';
+import '../controller/searchUserController.dart';
 import '../controller/staffuserController.dart';
 import '../model/staffmodel.dart';
+import '../model/usermodel.dart';
 
 class UserMasterSearch extends StatelessWidget {
-  UserMasterSearch({super.key});
+   UserMasterSearch({super.key});
 
-  List child = [
-    [
-      '提点1',
-      '住所1',
-      '電話番号1',
-      '012-345-6789',
-    ],
-    [
-      '提点2',
-      '住所2',
-      '電話番号2',
-      '012-345-6789',
-    ],
-    [
-      '提点3',
-      '住所3',
-      '電話番号3',
-      '012-345-6789',
-    ],
-  ];
+  var affiliatedOffice = ''.obs;
+  var role = ''.obs;
+  var userName = ''.obs;
+
+  SingleValueDropDownController dropDownController = SingleValueDropDownController();
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put<StaffUserController>(StaffUserController());
-    List<StaffUser> listStaffUser = controller.staffUserList;
+    final controllerStaffUser = Get.put<StaffUserController>(StaffUserController());
+    final controllerOfficeUser = Get.put<OfficeUserController>(OfficeUserController());
+    final controllerSearchUser = Get.put<SearchUserController>(SearchUserController());
+
+    List<StaffUser> listStaffUser = controllerStaffUser.staffUserList;
+    List<OfficeUser> listOfficeUser = controllerOfficeUser.officeUserList;
+    List<SearchUser> searchUser = controllerSearchUser.searchUserList;
+
+    Map<String, dynamic> dataSearch;
 
     return Scaffold(
       body: Padding(
@@ -62,6 +58,12 @@ class UserMasterSearch extends StatelessWidget {
               ),
               DropDownTextField(
                 dropdownRadius: 5,
+                controller: dropDownController,
+                onChanged: (value){
+                  dropDownController.dropDownValue?.name == null ?
+                  affiliatedOffice.value = '' :
+                  affiliatedOffice.value = dropDownController.dropDownValue!.name;
+                },
                 dropDownIconProperty: IconProperty(
                     color: Colors.black,
                     size: 30,
@@ -70,9 +72,10 @@ class UserMasterSearch extends StatelessWidget {
                     hintStyle: const TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5))),
-                dropDownList: child
+                dropDownList: listOfficeUser
                     .map(
-                      (e) => DropDownValueModel(name: e[0], value: e[0]),
+                      (e) => DropDownValueModel(
+                          name: e.baseName, value: e.baseName),
                     )
                     .toList(),
               ),
@@ -88,6 +91,12 @@ class UserMasterSearch extends StatelessWidget {
               ),
               DropDownTextField(
                 dropdownRadius: 5,
+                controller: dropDownController,
+                onChanged: (value){
+                  dropDownController.dropDownValue?.name == null ?
+                  role.value = '' :
+                  role.value = dropDownController.dropDownValue!.name;
+                },
                 dropDownIconProperty: IconProperty(
                     color: Colors.black,
                     size: 30,
@@ -96,9 +105,9 @@ class UserMasterSearch extends StatelessWidget {
                     hintStyle: const TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5))),
-                dropDownList: child
+                dropDownList: searchUser
                     .map(
-                      (e) => DropDownValueModel(name: e[1], value: e[1]),
+                      (e) => DropDownValueModel(name: e.role, value: e.role),
                     )
                     .toList(),
               ),
@@ -113,6 +122,9 @@ class UserMasterSearch extends StatelessWidget {
                 height: 10,
               ),
               TextFormField(
+                onChanged: (value){
+                  userName.value = value;
+                },
                 decoration: InputDecoration(
                     hintStyle: const TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
@@ -126,11 +138,16 @@ class UserMasterSearch extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Get.toNamed('DriverInfo');
+                      dataSearch = {
+                        'affiliatedOffice': affiliatedOffice,
+                        'role': role,
+                        'userName': userName
+                      };
+                      controllerStaffUser.getAllOffice(dataSearch);
                     },
                     style: ElevatedButton.styleFrom(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
                       backgroundColor: Colors.grey[300],
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero,
@@ -142,7 +159,9 @@ class UserMasterSearch extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                               vertical: 20, horizontal: 10),
@@ -169,7 +188,7 @@ class UserMasterSearch extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              Obx(() => controller.isLoading.value
+              Obx(() => controllerStaffUser.isLoading.value
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
@@ -198,14 +217,16 @@ class UserMasterSearch extends StatelessWidget {
                             .map(
                               (e) => DataRow(cells: [
                                 DataCell(Text(
-                                  e.affiliatedOffice.baseName,
+                                  e.affiliatedOffice,
                                   overflow: TextOverflow.ellipsis,
                                 )),
-                                DataCell(Text(e.userAccount.role,
+                                DataCell(Text(e.role,
                                     overflow: TextOverflow.ellipsis)),
                                 DataCell(InkWell(
                                     onTap: () {
-                                      // Get.toNamed('/UserMasterDetails',arguments: e);
+                                      controllerStaffUser.getAllStaffUserDetail(
+                                          e.id.toString());
+                                      // Get.toNamed('/users-details',arguments: e.id);
                                     },
                                     child: Text(e.userName,
                                         overflow: TextOverflow.ellipsis,

@@ -1,64 +1,29 @@
+// To parse this JSON data, do
+//
+//     final staffUser = staffUserFromJson(jsonString);
 
-class Office {
-  int officeId;
+import 'dart:convert';
+
+OfficeUser staffUserFromJson(String str) => OfficeUser.fromJson(json.decode(str));
+
+String staffUserToJson(OfficeUser data) => json.encode(data.toJson());
+
+class OfficeUser {
+  int id;
   String baseName;
-  String basePhoto;
-  String address;
-  String telephoneNumber;
-  String manager;
-  String driverInformation;
-  String drivingRoute;
-  String vehicleInformation;
-  String drivingSchedule;
-  String detailedInformation;
-  String coordinate;
-  String engravingRangeRadius;
 
-  Office({
-    required this.officeId,
+  OfficeUser({
+    required this.id,
     required this.baseName,
-    required this.basePhoto,
-    required this.address,
-    required this.telephoneNumber,
-    required this.manager,
-    required this.driverInformation,
-    required this.drivingRoute,
-    required this.vehicleInformation,
-    required this.drivingSchedule,
-    required this.detailedInformation,
-    required this.coordinate,
-    required this.engravingRangeRadius,
   });
 
-  factory Office.fromJson(Map<String, dynamic> json) => Office(
-    officeId: json["officeId"],
+  factory OfficeUser.fromJson(Map<String, dynamic> json) => OfficeUser(
+    id: json["id"],
     baseName: json["baseName"],
-    basePhoto: json["basePhoto"],
-    address: json["address"],
-    telephoneNumber: json["telephoneNumber"],
-    manager: json["manager"],
-    driverInformation: json["driverInformation"],
-    drivingRoute: json["drivingRoute"],
-    vehicleInformation: json["vehicleInformation"],
-    drivingSchedule: json["drivingSchedule"],
-    detailedInformation: json["detailedInformation"],
-    coordinate: json["coordinate"],
-    engravingRangeRadius: json["engravingRangeRadius"],
   );
 
   Map<String, dynamic> toJson() => {
-    "officeId": officeId,
+    "id": id,
     "baseName": baseName,
-    "basePhoto": basePhoto,
-    "address": address,
-    "telephoneNumber": telephoneNumber,
-    "manager": manager,
-    "driverInformation": driverInformation,
-    "drivingRoute": drivingRoute,
-    "vehicleInformation": vehicleInformation,
-    "drivingSchedule": drivingSchedule,
-    "detailedInformation": detailedInformation,
-    "coordinate": coordinate,
-    "engravingRangeRadius": engravingRangeRadius,
   };
 }

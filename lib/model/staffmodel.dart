@@ -4,70 +4,55 @@
 
 import 'dart:convert';
 
-import 'package:login_app/model/usermodel.dart';
-
-import 'officemodel.dart';
-
 StaffUser staffUserFromJson(String str) => StaffUser.fromJson(json.decode(str));
 
 String staffUserToJson(StaffUser data) => json.encode(data.toJson());
 
+
 class StaffUser {
-  int staffId;
+  int id;
+  String userAccount;
   String userName;
   String email;
   String telephone;
-  String dateOfBirth;
-  String drivingLicenseNumber;
-  String area;
-  String businessTrip;
-  String macAddress;
-  User userAccount;
-  Office affiliatedOffice;
+  String affiliatedOffice;
+  String role;
+  String mac;
 
   StaffUser({
-    required this.staffId,
+    required this.id,
+    required this.userAccount,
     required this.userName,
     required this.email,
     required this.telephone,
-    required this.dateOfBirth,
-    required this.drivingLicenseNumber,
-    required this.area,
-    required this.businessTrip,
-    required this.macAddress,
-    required this.userAccount,
     required this.affiliatedOffice,
+    required this.role,
+    required this.mac,
   });
 
+
   factory StaffUser.fromJson(Map<String, dynamic> json) => StaffUser(
-    staffId: json["staffId"],
+    id: json["id"],
+    userAccount: json["userAccount"],
     userName: json["userName"],
     email: json["email"],
     telephone: json["telephone"],
-    dateOfBirth: json["dateOfBirth"],
-    drivingLicenseNumber: json["drivingLicenseNumber"],
-    area: json["area"],
-    businessTrip: json["businessTrip"],
-    macAddress: json["macAddress"],
-    userAccount: User.fromJson(json["userAccount"]),
-    affiliatedOffice: Office.fromJson(json["affiliatedOffice"]),
+    affiliatedOffice: json["affiliatedOffice"],
+    role: json["role"],
+    mac: json["MAC"],
   );
 
   Map<String, dynamic> toJson() => {
-    "staffId": staffId,
+    "id": id,
+    "userAccount": userAccount,
     "userName": userName,
     "email": email,
     "telephone": telephone,
-    "dateOfBirth": dateOfBirth,
-    "drivingLicenseNumber": drivingLicenseNumber,
-    "area": area,
-    "businessTrip": businessTrip,
-    "macAddress": macAddress,
-    "userAccount": userAccount.toJson(),
-    "affiliatedOffice": affiliatedOffice.toJson(),
+    "affiliatedOffice": affiliatedOffice,
+    "role": role,
+    "MAC": mac,
   };
+  static List<StaffUser> fromData(List<dynamic> data) {
+    return data.map((e) => StaffUser.fromJson(e)).toList();
+  }
 }
-
-
-
-

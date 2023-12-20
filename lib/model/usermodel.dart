@@ -1,31 +1,26 @@
-class User {
-  int id;
-  String username;
-  String password;
-  String role;
-  String mac;
 
-  User({
+import 'dart:convert';
+
+SearchUser staffUserFromJson(String str) => SearchUser.fromJson(json.decode(str));
+
+String staffUserToJson(SearchUser data) => json.encode(data.toJson());
+
+class SearchUser {
+  int id;
+  String role;
+
+  SearchUser({
     required this.id,
-    required this.username,
-    required this.password,
     required this.role,
-    required this.mac,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory SearchUser.fromJson(Map<String, dynamic> json) => SearchUser(
     id: json["id"],
-    username: json["username"],
-    password: json["password"],
     role: json["role"],
-    mac: json["MAC"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "username": username,
-    "password": password,
     "role": role,
-    "MAC": mac,
   };
 }
