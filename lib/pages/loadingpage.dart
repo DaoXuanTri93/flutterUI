@@ -38,6 +38,5 @@ class _LoadingPagesState extends State<LoadingPages> {
 
   Future getInstance() async {
     user = await AuthenticationManager().checkLoginStatus();
-    print(user["username"]);
   }
 }

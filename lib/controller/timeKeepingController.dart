@@ -6,14 +6,16 @@ import '../services/timekeepingservices.dart';
 class TimekeepingController extends GetxController {
   final isCheckin = false.obs;
   final isCheckout = false.obs;
+  final listMission = [].obs;
 
   void getDataTimeKeep() async {
-    Map<String, dynamic> timeKeepData = await TimeKeepingServices().getDataTimeKeeping();
-    if(timeKeepData.isNotEmpty){
+    Map<String, dynamic> timeKeepData =
+        await TimeKeepingServices().getDataTimeKeeping();
+    if (timeKeepData.isNotEmpty) {
       final timeStartDay = timeKeepData["timeStartDay"];
       final timeEndDay = timeKeepData["timeEndDay"];
-      timeStartDay != null ? isCheckin.value = true:isCheckin.value= false;
-      timeEndDay != null ? isCheckout.value = true:isCheckout.value= false;
+      timeStartDay != null ? isCheckin.value = true : isCheckin.value = false;
+      timeEndDay != null ? isCheckout.value = true : isCheckout.value = false;
     }
   }
 
@@ -24,10 +26,10 @@ class TimekeepingController extends GetxController {
   void checkOut() async {
     isCheckout.value = await TimeKeepingServices().checkout();
   }
+
   @override
   void onInit() {
     super.onInit();
     getDataTimeKeep();
   }
-
 }

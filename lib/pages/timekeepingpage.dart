@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:login_app/pages/missionpage.dart';
+import 'package:login_app/services/timekeepingservices.dart';
 import '../button/button.dart';
 import '../const/const.dart';
 import '../controller/timeKeepingController.dart';
@@ -10,6 +12,7 @@ class TimekeepingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -49,7 +52,7 @@ class TimekeepingPage extends StatelessWidget {
                 width: double.infinity,
                 margin: const EdgeInsets.only(bottom: 20),
                 child: ButtonScreen(
-                    onPressed: () {},
+                    onPressed: () => Get.toNamed("missionpage") ,
                     text: Text(buttonBusinessTrip,
                         style: const TextStyle(fontSize: 20)),
                     radius: 8)),
@@ -57,7 +60,7 @@ class TimekeepingPage extends StatelessWidget {
               width: double.infinity,
               margin: const EdgeInsets.only(bottom: 20),
               child: ButtonScreen(
-                  onPressed: () {},
+                  onPressed: () => TimeKeepingServices().showInputStartOverTime(context),
                   text: Text(buttonStartOverTime,
                       style: const TextStyle(fontSize: 20)),
                   radius: 8),
@@ -66,7 +69,7 @@ class TimekeepingPage extends StatelessWidget {
               width: double.infinity,
               margin: const EdgeInsets.only(bottom: 20),
               child: ButtonScreen(
-                  onPressed: () {},
+                  onPressed: () => TimeKeepingServices().showInputEndOverTime(context),
                   text: Text(buttonEndOverTime,
                       style: const TextStyle(fontSize: 20)),
                   radius: 8),

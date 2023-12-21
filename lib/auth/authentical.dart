@@ -5,14 +5,16 @@ import 'package:login_app/pages/homepages.dart';
 import 'package:login_app/pages/loginpage.dart';
 import '../services/HomeProviders.dart';
 import 'cacheManager.dart';
+import 'package:login_app/global-variable/globals.dart' as globals;
 
 class AuthenticationManager extends GetxController with CacheManager {
   final isLogged = false.obs;
-
+   static String token = '';
   void logOut() {
     isLogged.value = false;
     removeToken();
     HomeProviders().logOut();
+    globals.token = "";
     Get.off(LoginPage());
   }
 
@@ -32,17 +34,21 @@ class AuthenticationManager extends GetxController with CacheManager {
     if(ischeckSave){
       await saveToken(data["jwt"]);
     }
+    token = data["jwt"];
+    globals.token = data["jwt"];
     isLogged.value = true;
     Get.off(const HomePage());
   }
 
   Future<Map<String, dynamic>> checkLoginStatus() async{
     Map<String, dynamic> user = {};
-    final token = getToken();
-    print(token);
-    if(token == null){
+    final storagetoken = getToken();
+    if(storagetoken == null){
       return user;
     }
+    print(storagetoken);
+    token = storagetoken;
+    globals.token = storagetoken;
     Response response = await HomeProviders().getUser(token);
     print(response.body["username"]);
     return response.statusCode==200? response.body : user;
