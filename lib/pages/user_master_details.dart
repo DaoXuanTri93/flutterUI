@@ -21,6 +21,7 @@ class UserMasterDetails extends StatelessWidget {
    final TextEditingController phone = TextEditingController();
    final TextEditingController mac = TextEditingController();
    final TextEditingController affiliatedOffice = TextEditingController();
+   var _role = '';
 
 
   @override
@@ -33,6 +34,7 @@ class UserMasterDetails extends StatelessWidget {
       phone.text = element.telephone.toString();
       mac.text = 'MAC : ${element.mac.toString()}';
       affiliatedOffice.text = element.affiliatedOffice.toString();
+      _role = element.role;
     }
 
     final controllerOfficeUser = Get.put<OfficeUserController>(OfficeUserController());
@@ -213,7 +215,20 @@ class UserMasterDetails extends StatelessWidget {
                           width: 10,
                         ),
                         ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              StaffUser staffUser = StaffUser(
+                                  id: 0,
+                                  userAccount: userAccount.text,
+                                  userName: userName.text,
+                                  email: mail.text,
+                                  telephone: phone.text,
+                                  affiliatedOffice: affiliatedOffice.text,
+                                  role: _role,
+                                  mac: mac.text);
+
+                              controllerStaffUser.createStaffUser(staffUser);
+
+                            },
                             style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 20),

@@ -12,19 +12,23 @@ import '../model/staffmodel.dart';
 import '../model/usermodel.dart';
 
 class UserMasterSearch extends StatelessWidget {
-   UserMasterSearch({super.key});
+  UserMasterSearch({super.key});
 
   var affiliatedOffice = ''.obs;
   var role = ''.obs;
   var userName = ''.obs;
 
-  SingleValueDropDownController dropDownController = SingleValueDropDownController();
+  SingleValueDropDownController dropDownController =
+      SingleValueDropDownController();
 
   @override
   Widget build(BuildContext context) {
-    final controllerStaffUser = Get.put<StaffUserController>(StaffUserController());
-    final controllerOfficeUser = Get.put<OfficeUserController>(OfficeUserController());
-    final controllerSearchUser = Get.put<SearchUserController>(SearchUserController());
+    final controllerStaffUser =
+        Get.put<StaffUserController>(StaffUserController());
+    final controllerOfficeUser =
+        Get.put<OfficeUserController>(OfficeUserController());
+    final controllerSearchUser =
+        Get.put<SearchUserController>(SearchUserController());
 
     List<StaffUser> listStaffUser = controllerStaffUser.staffUserList;
     List<OfficeUser> listOfficeUser = controllerOfficeUser.officeUserList;
@@ -59,10 +63,11 @@ class UserMasterSearch extends StatelessWidget {
               DropDownTextField(
                 dropdownRadius: 5,
                 controller: dropDownController,
-                onChanged: (value){
-                  dropDownController.dropDownValue?.name == null ?
-                  affiliatedOffice.value = '' :
-                  affiliatedOffice.value = dropDownController.dropDownValue!.name;
+                onChanged: (value) {
+                  dropDownController.dropDownValue?.name == null
+                      ? affiliatedOffice.value = ''
+                      : affiliatedOffice.value =
+                          dropDownController.dropDownValue!.name;
                 },
                 dropDownIconProperty: IconProperty(
                     color: Colors.black,
@@ -92,10 +97,10 @@ class UserMasterSearch extends StatelessWidget {
               DropDownTextField(
                 dropdownRadius: 5,
                 controller: dropDownController,
-                onChanged: (value){
-                  dropDownController.dropDownValue?.name == null ?
-                  role.value = '' :
-                  role.value = dropDownController.dropDownValue!.name;
+                onChanged: (value) {
+                  dropDownController.dropDownValue?.name == null
+                      ? role.value = ''
+                      : role.value = dropDownController.dropDownValue!.name;
                 },
                 dropDownIconProperty: IconProperty(
                     color: Colors.black,
@@ -122,7 +127,7 @@ class UserMasterSearch extends StatelessWidget {
                 height: 10,
               ),
               TextFormField(
-                onChanged: (value){
+                onChanged: (value) {
                   userName.value = value;
                 },
                 decoration: InputDecoration(
@@ -143,7 +148,7 @@ class UserMasterSearch extends StatelessWidget {
                         'role': role,
                         'userName': userName
                       };
-                      controllerStaffUser.getAllOffice(dataSearch);
+                      controllerStaffUser.searchStaffUser(dataSearch);
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
@@ -160,7 +165,7 @@ class UserMasterSearch extends StatelessWidget {
                   ),
                   ElevatedButton(
                       onPressed: () {
-
+                        Get.toNamed('/users-details');
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(

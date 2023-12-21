@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -53,8 +55,7 @@ class StaffUserController extends GetxController{
    }
   }
 
-   getAllOffice(Map<String ,dynamic> staffUser ) {
-print(staffUser['role']);
+   searchStaffUser(Map<String ,dynamic> staffUser ) {
     staffUserList.value = staffUserSearchList.value
         .where((e) =>
     (staffUser['affiliatedOffice'] == '' ? true : e.affiliatedOffice.contains(staffUser['affiliatedOffice'])) &&
@@ -62,6 +63,22 @@ print(staffUser['role']);
         &&
         (staffUser['userName'] == '' ? true : e.userName.contains(staffUser['userName']))
             ).toList();
+  }
+
+  createStaffUser(StaffUser staffUser) async {
+
+    const String createStaffUser = 'http://localhost:3000/staff';
+    final response = await http.post(Uri.parse(createStaffUser), body:staffUser );
+
+    if(response.statusCode == 200){
+      Get.snackbar('Thành Công', 'đã tạo mới một Staff User',backgroundColor: Colors.lightGreen);
+    }else {
+      (
+        Get.snackbar('Error Loading Data !!! ',
+            'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}'
+        )
+    );
+    }
   }
 
 }
