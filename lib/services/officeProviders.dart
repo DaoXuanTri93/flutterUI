@@ -12,9 +12,12 @@ class OfficeProviders extends GetConnect {
   //   List<Map<String, dynamic>> items =
   //       List<Map<String, dynamic>>.from(response.body);
   //   var offices = Office.fromData(items);
+
+
   //   List<Office> filteredList = offices
   //       .where((e) =>
-  //           (office.name == '' ? true : e.name.contains(office.name)) &&
+  //           (office.name == '' ? true : e.name.contains(office.name))
+  //           &&
   //           (office.address == '' ? true : e.address.contains(office.address))
   //               &&
   //               (office.managerName == '' ? true : e.managerName.contains(office.managerName))
@@ -47,14 +50,17 @@ class OfficeProviders extends GetConnect {
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
   Future<Response> login(Map data) =>
-      _connect.post('http://192.168.24.16:3000/auth/login',data);
+      _connect.post('http://192.168.24.11:3000/auth/login',data);
+
   Future<Response> getUser(String token) =>
-      _connect.get('http://192.168.24.16:3000/auth/user',headers: {
+      _connect.get('http://192.168.24.11:3000/auth/user',headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token' //carrier
       },);
+
+
   Future<Response> logOut() =>
-      _connect.post('http://192.168.24.16:3000/auth/logout',null);
+      _connect.post('http://192.168.24.11:3000/auth/logout',null);
   // _connect.post('http://localhost:3000/auth/login', data);
   Future<Map<String, dynamic>> initPlatformState() async {
     var deviceData = <String, dynamic>{};

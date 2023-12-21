@@ -17,6 +17,7 @@ class AuthenticationManager extends GetxController with CacheManager {
   }
 
   void login(String username, String password, bool ischeckSave,String mac) async {
+
     Map<String, dynamic> user = {
       "username": username,
       "password": password,
