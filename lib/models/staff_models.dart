@@ -1,40 +1,54 @@
-class StaffModel {
-  String? userAccount ;
+class Staff {
+  String? affiliatedOffice ;
   String? userName;
-  String? email;
-  String? telephone;
-  String? dateOfBirth;
-  String? drivingLicenseNumber;
+  String? date;
   String? area;
+  String? clockInTime;
+  String? clockOutTime;
+  String? overtimeClockInTime;
+  String? overtimeClockOutTime;
   String? businessTrip;
-  String? macAddress;
-  String? affiliatedOffice;
+  String? distance;
+  String? meterLink;
 
-  StaffModel(
-      this.userAccount,
+  Staff.search(
+      this.affiliatedOffice,
       this.userName,
-      this.email,
-      this.telephone,
-      this.dateOfBirth,
-      this.drivingLicenseNumber,
+      this.date,
       this.area,
-      this.businessTrip,
-      this.macAddress,
-      this.affiliatedOffice);
+      this.businessTrip
+      );
 
-  StaffModel.fromJson(Map<String, dynamic> json) {
-    userAccount = json['userAccount'];
+  Staff(
+      this.affiliatedOffice,
+      this.userName,
+      this.date,
+      this.area,
+      this.clockInTime,
+      this.clockOutTime,
+      this.overtimeClockInTime,
+      this.overtimeClockOutTime,
+      this.businessTrip,
+      this.distance,
+      this.meterLink
+      );
+
+  Staff.fromJson(Map<String, dynamic> json) {
+    affiliatedOffice = json['affiliatedOffice'];
     userName = json['userName'];
-    email = json['email'];
-    telephone = json['telephone'];
-    dateOfBirth = json['dateOfBirth'];
-    drivingLicenseNumber = json['drivingLicenseNumber'];
-    area = json['area'];
-    businessTrip = json['businessTrip'];
-    macAddress = json['macAddress'];
-    userAccount = json['affiliatedOffice'];
+    // date = json['date'];
+    // area = json['area'];
+    // clockInTime = json['clockInTime'];
+    // clockOutTime = json['clockOutTime'];
+    // overtimeClockInTime = json['overtimeClockInTime'];
+    // overtimeClockOutTime = json['overtimeClockOutTime'];
+    // businessTrip = json['businessTrip'];
+    // distance = json['distance'];
+    // meterLink = json['meterLink'];
   }
+
 }
+
 
 
 

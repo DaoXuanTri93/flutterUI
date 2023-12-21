@@ -1,16 +1,27 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_app/services/uploadCalendar.dart';
 
 import '../../const/font_text.dart';
 import '../../controller/staff_controller.dart';
+import '../../models/staff_models.dart';
+
+
+// import 'package:syncfusion_flutter_xlsio/xlsio.dart';
+// import 'dart:io';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:open_file/open_file.dart';
+// import 'package:universal_html/html.dart' as AnchorElement;
+// import 'package:flutter/foundation.dart' as kIsWeb;
 
 class DriverInforSearch extends StatelessWidget {
   DriverInforSearch({super.key});
 
   var notStamped = false.obs;
-  var businessTrip = false.obs;
-  final List titleTable = [
+  var businessTrips = false.obs;
+  var titleTable = [
     '事務所',
     '運転手名',
     '日付',
@@ -23,27 +34,38 @@ class DriverInforSearch extends StatelessWidget {
     '距離',
     'メータ ーリン ク',
   ];
-
-  final List<List<String>> childTable = [
-    ['事務所1', '運転手A', '2023-01-01','エリアA', '08:00', '17:00', '1:00',
-      '0:00', 'あり', '50km', '詳細', '001', '17/07/2000', '0123456789'],
-  ];
+  // final List<List<String>> childTable = [
+  //   ['事務所1', '運転手A', '2023-01-01','エリアA', '08:00', '17:00', '1:00',
+  //     '0:00', 'あり', '50km', '詳細', '001', '17/07/2000', '0123456789'],
+  // ];
 
   String? selectedOffice;
-
   final List officeItem = [
     'すべての事務所',
-    'office 1',
-    'office 2',
-    'office 4',
-    'office 5',
+    '事務所1',
+    '事務所2',
+    '事務所3',
+    '事務所4',
   ].obs;
 
   @override
   Widget build(BuildContext context) {
 
-    final StaffController controller = Get.put(StaffController());
-    final TextEditingController searchController = TextEditingController();
+    final controller = Get.put<StaffController>(StaffController());
+
+
+    final affiliatedOffice = TextEditingController();
+    final userName = TextEditingController();
+    final date = TextEditingController();
+    final area = TextEditingController();
+    final clockInTime = TextEditingController();
+    final clockOutTime = TextEditingController();
+    final overtimeClockInTime = TextEditingController();
+    final overtimeClockOutTime = TextEditingController();
+    final businessTrip = TextEditingController();
+    final distance = TextEditingController();
+    final meterLink = TextEditingController();
+
     return SafeArea(
       child: Scaffold(
           body: SingleChildScrollView(
@@ -90,6 +112,8 @@ class DriverInforSearch extends StatelessWidget {
                                 }).toList(),
                               ),
                             ),
+
+
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Text('運転手名 :',style: TextFont.textFont.titleMedium,),
@@ -141,9 +165,9 @@ class DriverInforSearch extends StatelessWidget {
                   Center(
                     child: Obx(
                           () => Checkbox(
-                        value: businessTrip.value,
+                        value: businessTrips.value,
                         onChanged: (bool? value) {
-                          businessTrip.value =! businessTrip.value;
+                          businessTrips.value =! businessTrips.value;
                         },),
                     ),
                   ),
@@ -151,69 +175,85 @@ class DriverInforSearch extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  ElevatedButton(
-                      onPressed: () {controller.search(searchController.text);},
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey[350],
-                          foregroundColor: Colors.black,
-                          shape: const BeveledRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                              side: BorderSide(color: Colors.black,width: 0.3)
-                          )
-                      ),
-                      child: const Text('検索')
-                  ),
+                  // ElevatedButton(
+                  //     onPressed: () {
+                  //       final staffsearch = Staff.search(
+                  //         affiliatedOffice.value.text,
+                  //         userName.value.text,
+                  //         date.value.text,
+                  //         area.value.text,
+                  //         businessTrip.value.text,
+                  //       );
+                  //       controller.searchListStaff(staffsearch);
+                  //       print('object');
+                  //       print(Staff);
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //         backgroundColor: Colors.grey[350],
+                  //         foregroundColor: Colors.black,
+                  //         shape: const BeveledRectangleBorder(
+                  //             borderRadius: BorderRadius.zero,
+                  //             side: BorderSide(color: Colors.black,width: 0.3)
+                  //         )
+                  //     ),
+                  //     child: const Text('検索')
+                  // ),
                   /// Find
 
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     child: SizedBox(
                         width: double.infinity,
-                        child:DataTable(
-                          border: TableBorder.all(width: 0.3, style: BorderStyle.solid),
-                          headingRowColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.grey.shade200),
-                          columns: titleTable.map(
-                                  (title) =>
-                                  DataColumn(
-                                      label: Expanded(
-                                          child: Text(title, style: TextFont.textFont.titleSmall)
-                                      )
-                                  )
-                          ).toList(),
-                          rows: childTable.map(
-                                  (rowData) {
-                                return DataRow(
-                                  cells:[
-                                    DataCell(Expanded(child: Text(rowData[0]))),
-                                    DataCell(Expanded(child: Text(rowData[1]))),
-                                    DataCell(Expanded(child: Text(rowData[2]))),
-                                    DataCell(Expanded(child: Text(rowData[3]))),
-                                    DataCell(Expanded(child: Text(rowData[4]))),
-                                    DataCell(Expanded(child: Text(rowData[5]))),
-                                    DataCell(Expanded(child: Text(rowData[6]))),
-                                    DataCell(Expanded(child: Text(rowData[7]))),
-                                    DataCell(Expanded(child: Text(rowData[8]))),
-                                    DataCell(Expanded(child: Text(rowData[9]))),
-                                    DataCell(
-                                        onTap: () {
-                                          Get.toNamed('/driver-infor-details', arguments: rowData);
-                                        },
-                                        Text(rowData[10],
-                                          style: const TextStyle(
-                                              color: Colors.blue,
-                                              decoration: TextDecoration.underline
-                                          ),
+                        child:SingleChildScrollView(
+                          child: Obx(
+                            () {
+                              final List staff = controller.searchStaffList;
+
+                              return DataTable(
+                                  border: TableBorder.all(width: 0.3, style: BorderStyle.solid),
+                                  headingRowColor: MaterialStateColor.resolveWith(
+                                          (states) => Colors.grey.shade200),
+                                  columns: List.generate(titleTable.length, (index) {
+                                    return DataColumn(
+                                        label: Expanded(
+                                            child: Text(titleTable[index], style: TextFont.textFont.titleSmall)
                                         )
-                                    ),
-                                  ],
-                                );
-                              }).toList(),
-                        )
-                    ),
-                  ),
+                                    );
+                                  }),
+                                  rows: List.generate(staff.length, (index) {
+                                    return DataRow(
+                                      cells:[
+                                        DataCell(Text('${staff[index].affiliatedOffice}')),
+                                        DataCell(onTap: () {
+                                          Get.toNamed('/driver-infor-details');
+                                        },Text('${staff[index].userName}')),
+                                        DataCell(Text('${staff[index].date}')),
+                                        DataCell(Text('${staff[index].area}')),
+                                        DataCell(Text('${staff[index].clockInTime}')),
+                                        DataCell(Text('${staff[index].clockOutTime}')),
+                                        DataCell(Text('${staff[index].overtimeClockInTime}')),
+                                        DataCell(Text('${staff[index].overtimeClockOutTime}')),
+                                        DataCell(Text('${staff[index].businessTrip}')),
+                                        DataCell(Text('${staff[index].distance}')),
+                                        DataCell(Text('${staff[index].meterLink}',
+                                              style: const TextStyle(
+                                                  color: Colors.blue,
+                                                  decoration: TextDecoration.underline
+                                              ),
+                                            )
+                                        ),
+                                      ],
+                                    );
+                                  })
+                              );
+                            }
+                          ),
+                        ),
+                    )),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed:  () {
+
+                    },
                     style: ElevatedButton.styleFrom(
                         shape: BeveledRectangleBorder(
                             borderRadius: BorderRadius.circular(2)
@@ -221,10 +261,32 @@ class DriverInforSearch extends StatelessWidget {
                     ),
                     child: const Text('CSV出力'),
                   )
-                ],
-              ),
+              ]),
             ),
           )),
     );
   }
+
+  // Future<void> createExcel() async {
+  //   final Workbook workbook = Workbook();
+  //   final Worksheet sheet = workbook.worksheets[0];
+  //   sheet.getRangeByName('A1').setText('Hello World!');
+  //   final List<int> bytes = workbook.saveAsStream();
+  //   workbook.dispose();
+  //
+  //   if (kIsWeb) {
+  //     AnchorElement(
+  //         href:
+  //         'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}')
+  //       ..setAttribute('download', 'FileTest.xlsx')
+  //       ..click();
+  //   } else {
+  //     final String path = (await getApplicationSupportDirectory()).path;
+  //     final String fileName =
+  //     Platform.isWindows ? '$path\\FileTest.xlsx' : '$path/FileTest.xlsx';
+  //     final File file = File(fileName);
+  //     await file.writeAsBytes(bytes, flush: true);
+  //     OpenFile.open(fileName);
+  //   }
+  // }
 }
