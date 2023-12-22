@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:login_app/pages/limit_setting.dart';
 import 'package:login_app/pages/loadingpage.dart';
 import 'package:login_app/pages/loginpage.dart';
 import 'package:login_app/pages/user_master_details.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/loginpage', page: () => LoginPage()),
           GetPage(name: '/search-users', page: () => UserMasterSearch()),
           GetPage(name: '/users-details', page: () => UserMasterDetails()),
+          GetPage(name: '/limit-setting', page: () => LimitSetting()),
         ],
         home: SafeArea(
             child: UserMasterSearch()

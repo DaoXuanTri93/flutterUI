@@ -21,7 +21,10 @@ class UserMasterDetails extends StatelessWidget {
    final TextEditingController phone = TextEditingController();
    final TextEditingController mac = TextEditingController();
    final TextEditingController affiliatedOffice = TextEditingController();
-   var _role = '';
+   final _role =''.obs;
+   SingleValueDropDownController dropDownController = SingleValueDropDownController();
+   var dropdownValue =''.obs;
+
 
 
   @override
@@ -33,8 +36,8 @@ class UserMasterDetails extends StatelessWidget {
       mail.text = element.email.toString();
       phone.text = element.telephone.toString();
       mac.text = 'MAC : ${element.mac.toString()}';
-      affiliatedOffice.text = element.affiliatedOffice.toString();
-      _role = element.role;
+      dropdownValue.value = affiliatedOffice.text = element.affiliatedOffice.toString();
+      _role.value = element.role;
     }
 
     final controllerOfficeUser = Get.put<OfficeUserController>(OfficeUserController());
@@ -163,6 +166,13 @@ class UserMasterDetails extends StatelessWidget {
                 ),
                 DropDownTextField(
                   dropdownRadius: 5,
+                  controller: dropDownController,
+                  onChanged: (value){
+                    dropDownController.dropDownValue?.name == null
+                        ? affiliatedOffice.text = dropdownValue.value
+                        : affiliatedOffice.text =
+                        dropDownController.dropDownValue!.name;
+                  },
                   dropDownIconProperty: IconProperty(
                       color: Colors.black,
                       size: 30,
@@ -181,14 +191,39 @@ class UserMasterDetails extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const Row(
-                  children: [
-                    Text(
-                      'ユーザ種別:',
-                      style:
-                      TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-                    )
-                  ],
+                Obx(
+
+                      () =>  Row(
+                    children: [
+                      Text('ユーザ種別 :',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      Radio(
+                        value: 'DRIVER',
+                        groupValue: _role.value,
+                        onChanged: (value){
+                          _role.value = value!;
+                        },
+                      ),
+                      Text('運転手',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      Radio(
+                        // title: Text("Male"),
+                        value: 'member',
+                        groupValue: _role.value,
+                        onChanged: (value){
+                          _role.value = value!;
+                        },
+                      ),
+                      Text('営業スタッフ',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      Radio(
+                        // title: Text("Male"),
+                        value: 'admin',
+                        groupValue: _role.value,
+                        onChanged: (value){
+                          _role.value = value!;
+                        },
+                      ),
+                      Text('管理者',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -223,7 +258,7 @@ class UserMasterDetails extends StatelessWidget {
                                   email: mail.text,
                                   telephone: phone.text,
                                   affiliatedOffice: affiliatedOffice.text,
-                                  role: _role,
+                                  role: _role.value,
                                   mac: mac.text);
 
                               controllerStaffUser.createStaffUser(staffUser);
@@ -246,7 +281,7 @@ class UserMasterDetails extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             onPressed: () {
-                              Get.toNamed('LimitSetting');
+                              Get.toNamed('/limit-setting');
                             },
                             style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(

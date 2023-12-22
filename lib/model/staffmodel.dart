@@ -43,7 +43,7 @@ class StaffUser {
   );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
+    "id": id.toString(),
     "userAccount": userAccount,
     "userName": userName,
     "email": email,

@@ -68,10 +68,13 @@ class StaffUserController extends GetxController{
   createStaffUser(StaffUser staffUser) async {
 
     const String createStaffUser = 'http://localhost:3000/staff';
-    final response = await http.post(Uri.parse(createStaffUser), body:staffUser );
+    final response = await http.post(Uri.parse(createStaffUser), body:staffUser.toJson());
+    print(staffUser);
+    if(response.statusCode == 201){
 
-    if(response.statusCode == 200){
+      getAllStaffUser();
       Get.snackbar('Thành Công', 'đã tạo mới một Staff User',backgroundColor: Colors.lightGreen);
+
     }else {
       (
         Get.snackbar('Error Loading Data !!! ',
