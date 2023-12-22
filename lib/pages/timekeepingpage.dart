@@ -73,7 +73,7 @@ class TimekeepingPage extends StatelessWidget {
                   text: Text(buttonEndOverTime,
                       style: const TextStyle(fontSize: 20)),
                   radius: 8),
-            ),
+            )
           ],
         ),
       ),

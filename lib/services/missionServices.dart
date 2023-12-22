@@ -24,7 +24,7 @@ class MissionServices {
 
   Future editMission(BuildContext context, Map data, id,MissionController controller) async {
     final token = globals.token;
-    Response response = await HomeProviders().editMission(token!, data, id);
+    Response response = await HomeProviders().editMission(token, data, id);
     if (response.statusCode == 200) {
       Get.snackbar("Đăng kí công tác thành công", "");
       controller.getDataMission();
@@ -36,10 +36,11 @@ class MissionServices {
 
   Future cancelMisson(BuildContext context, id,MissionController controller) async {
     final token = globals.token;
-    Response response = await HomeProviders().cancelMission(token!, id);
+    Response response = await HomeProviders().cancelMission(token, id);
     if (response.statusCode == 200) {
       Get.snackbar("Thao tác thành công", "");
       controller.getDataMission();
+      Navigator.pop(context);
     } else {
       Get.snackbar("Đăng kí thất bại", response.body["message"]);
     }
@@ -199,7 +200,7 @@ class MissionServices {
   Future getDataMission() async {
     final token = globals.token;
     List<dynamic> data = [];
-    Response response = await HomeProviders().getAllMissionByUser(token!);
+    Response response = await HomeProviders().getAllMissionByUser(token);
     if (response.statusCode == 200) {
       data = response.body;
     }

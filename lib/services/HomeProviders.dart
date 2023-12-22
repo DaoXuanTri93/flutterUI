@@ -8,7 +8,6 @@ class HomeProviders extends GetConnect {
   final isCheckin = false.obs;
 
   final _connect = GetConnect();
-
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
   Future<Response> login(Map data) =>
@@ -74,6 +73,10 @@ class HomeProviders extends GetConnect {
         'Authorization': 'Bearer $token'
       });
 
+  Future<Response> registerSchedule(String token,Map data) =>
+      _connect.post('$SEVERNAME/stampApprovalController',data,headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'});
 
   Future<Map<String, dynamic>> initPlatformState() async {
     var deviceData = <String, dynamic>{};

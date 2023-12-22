@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:login_app/pages/forgotpage.dart';
+import 'package:login_app/pages/homepages.dart';
 import 'package:login_app/pages/loadingpage.dart';
 import 'package:login_app/pages/loginpage.dart';
 import 'package:login_app/pages/missionpage.dart';
+import 'package:login_app/pages/schedulepage.dart';
 import 'package:login_app/pages/timekeepingpage.dart';
 // import 'package:untitled2/pages/detailoffice.dart';
 // import 'package:untitled2/pages/detailuser.dart';
@@ -17,23 +18,25 @@ import 'package:login_app/pages/timekeepingpage.dart';
 // import 'package:untitled2/pages/home.dart';
 // import 'package:untitled2/pages/mappage.dart';
 // import 'package:untitled2/pages/permissionssettings.dart';
-// import 'package:untitled2/pages/schedulepage.dart';
+// import 'package:untitled2/pages/scheduleservices.dart';
 // import 'package:untitled2/pages/screen_check_team.dart';
 // import 'package:untitled2/pages/screen_check_team_detail.dart';
 // import 'package:untitled2/pages/timekeeppage.dart';
 // import 'package:untitled2/pages/login.dart';
+import 'package:login_app/controller/teamApprovalController.dart';
+import 'package:login_app/pages/loadingpage.dart';
+import 'package:login_app/pages/web/screen_check_team.dart';
+import 'package:login_app/pages/upload_image_new.dart';
+import 'package:login_app/pages/web/screen_check_team_detail.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'auth/authentical.dart';
-import 'controller/homeController.dart';
-
-void main ()async{
+void main() async {
   await GetStorage.init();
   setPathUrlStrategy();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
 
   @override
@@ -41,28 +44,20 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
         initialRoute: '/',
         getPages: [
-          // GetPage(name: '/homepage', page: () => HomePage()),
+          GetPage(name: '/homepage', page: () => HomePage()),
           GetPage(name: '/loginpage', page: () => LoginPage()),
+          GetPage(name: '/loadingpage', page: () => LoadingPages()),
           GetPage(name: '/forgotpage', page: () => ForgotPage()),
           GetPage(name: '/timekeepingpage', page: () => TimekeepingPage()),
-          GetPage(name: '/missionpage', page: () =>   MissionPage()),
-
-          // GetPage(name: '/schedulepage', page: () => SchedulePage()),
-          // GetPage(name: '/distancepage', page: () => DistancePage()),
-          // GetPage(name: '/findOfficepage', page: () => FindOfficePage()),
-          // GetPage(name: '/findOffice-page', page: () => DetailOffice()),
-          // GetPage(name: '/detailuser', page: () => DetailUser()),
-          // GetPage(name: '/permissionssettings', page: () => PermissionssettingPage()),
-          // GetPage(name: '/driverinfo', page: () => DriverInfo()),
-          // GetPage(name: '/driverinfodetail', page: () => DriverInfoDetail()),
-          // GetPage(name: '/screencheckteam', page: () => ScreenCheckTeam()),
-          // GetPage(name: '/screencheckteamdetail', page: () => ScreenCheckTeamDetail()),
+          GetPage(name: '/schedulepage', page: () => SchedulePage()),
+          GetPage(name: '/missionpage', page: () => MissionPage()),
+          GetPage(name: '/imageUpload', page: () => UploadImageNew()),
+          GetPage(name: '/screenCheckTeam', page: () => ScreenCheckTeam()),
+          GetPage(
+              name: '/screenCheckTeamDetail',
+              page: () => ScreenCheckTeamDetail()),
         ],
-        home: SafeArea(
-            child: LoadingPages()
-        ),
-        builder: EasyLoading.init(),
-        debugShowCheckedModeBanner: false
-    );
+        home: const SafeArea(child: LoadingPages()),
+        debugShowCheckedModeBanner: false);
   }
 }

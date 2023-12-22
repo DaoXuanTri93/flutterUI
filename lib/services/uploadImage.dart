@@ -1,12 +1,25 @@
+import 'package:get/get.dart';
 
-import 'dart:io';
+import '../const/const.dart';
 
-import 'package:image_picker/image_picker.dart';
 
-class UploadImage {
-  static Future upImage (File image) async{
-    final returnImage = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (returnImage==null) return;
-    image = File(returnImage.path);
-  }
+
+
+class ImageConnect extends GetConnect {
+  Future<Response> createEnterDistance(Map data, String token) async =>
+      await post('$SEVERNAME/driver/createEnterDistance', data, headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token' //carrier
+      });
+  Future<Response> updateEnterDistance(Map data, String token) async =>
+      await post('$SEVERNAME/driver/updateEnterDistance', data, headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token' //carrier
+      });
+
+  Future<Response> findOneDriver(String token) async =>
+      await get('$SEVERNAME/driver/findOneEnterDistance', headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token' //carrier
+      });
 }

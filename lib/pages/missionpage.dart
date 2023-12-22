@@ -24,7 +24,6 @@ class MissionPage extends StatelessWidget {
         ],
       ),
       body: Obx(() {
-        print("aaaa");
         List _todo = controller.listMission.value;
         return _todo.isEmpty
             ? Center(
@@ -44,8 +43,8 @@ class MissionPage extends StatelessWidget {
                 itemCount: _todo.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
-                    margin: EdgeInsets.only(top: 2),
-                    padding: EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(top: 2),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.blueGrey)),
                     child: Row(
@@ -67,7 +66,7 @@ class MissionPage extends StatelessWidget {
                                         fontWeight: FontWeight.w300,
                                         fontSize: 12))
                               ]),
-                          SizedBox(width: 15),
+                          const SizedBox(width: 15),
                           SizedBox(
                             width: 100,
                             child: Text(_todo[index]["statusMission"],
@@ -89,8 +88,8 @@ class MissionPage extends StatelessWidget {
                                   value: 2,
                                   child: _todo[index]["statusMission"] ==
                                           "CANCELLING"
-                                      ? Text("Bỏ hủy")
-                                      : Text("Hủy")),
+                                      ? const Text("Bỏ hủy")
+                                      : const Text("Hủy")),
                             ],
                             onSelected: (value) {
                               switch (value) {

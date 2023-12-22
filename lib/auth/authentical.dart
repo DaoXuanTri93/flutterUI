@@ -1,7 +1,6 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:login_app/pages/homepages.dart';
 import 'package:login_app/pages/loginpage.dart';
 import '../services/HomeProviders.dart';
 import 'cacheManager.dart';
@@ -37,20 +36,19 @@ class AuthenticationManager extends GetxController with CacheManager {
     token = data["jwt"];
     globals.token = data["jwt"];
     isLogged.value = true;
-    Get.off(const HomePage());
+    Get.offNamed("/homepage");
   }
 
   Future<Map<String, dynamic>> checkLoginStatus() async{
     Map<String, dynamic> user = {};
     final storagetoken = getToken();
     if(storagetoken == null){
+      globals.token = "";
       return user;
     }
-    print(storagetoken);
     token = storagetoken;
     globals.token = storagetoken;
     Response response = await HomeProviders().getUser(token);
-    print(response.body["username"]);
     return response.statusCode==200? response.body : user;
   }
 

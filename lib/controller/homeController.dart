@@ -11,6 +11,7 @@ class HomeController extends GetxController {
       MAC = "";
     }else{
       MAC = deviceData["id"];
+      print(MAC);
     }
   }
 

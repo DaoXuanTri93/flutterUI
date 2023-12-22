@@ -32,7 +32,7 @@ class _LoadingPagesState extends State<LoadingPages> {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () async {
       getInstance().whenComplete(() =>
-          user.isNotEmpty ? Get.to(const HomePage()) : Get.to(LoginPage()));
+          user.isNotEmpty ? Get.toNamed("/homepage") : Get.toNamed("/loginpage"));
     });
   }
 
