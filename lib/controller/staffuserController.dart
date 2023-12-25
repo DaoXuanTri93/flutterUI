@@ -43,15 +43,16 @@ class StaffUserController extends GetxController{
 
   getAllStaffUserDetail(String id) async {
    try{
-     String staffUserDetailUrl = 'http://localhost:3000/staff/$id';
+     final String staffUserDetailUrl = 'http://localhost:3000/staff/$id';
      final response = await http.get(Uri.parse(staffUserDetailUrl));
      if(response.statusCode==200){
        final result = jsonDecode(response.body);
        staffUserListDetail.value = StaffUser.fromData(result);
-       Get.toNamed('/users-details');
+       Get.toNamed('/users-details', arguments:id) ;
      }
    } catch(e) {
-     print("loi");
+     Get.snackbar('Error Loading Data !!! ',
+         'Sever Responded : $e');
    }
   }
 
@@ -66,21 +67,39 @@ class StaffUserController extends GetxController{
   }
 
   createStaffUser(StaffUser staffUser) async {
+    try{
+      const String createStaffUser = 'http://localhost:3000/staff';
+      final response = await http.post(Uri.parse(createStaffUser), body:staffUser.toJson());
 
-    const String createStaffUser = 'http://localhost:3000/staff';
-    final response = await http.post(Uri.parse(createStaffUser), body:staffUser.toJson());
-    print(staffUser);
-    if(response.statusCode == 201){
+      if(response.statusCode == 201){
 
-      getAllStaffUser();
-      Get.snackbar('Thành Công', 'đã tạo mới một Staff User',backgroundColor: Colors.lightGreen);
+        getAllStaffUser();
+        Get.snackbar('Thành Công', 'đã tạo mới một Staff User',backgroundColor: Colors.lightGreen);
+
+      }
+    }catch(e){
+      Get.snackbar('Error Loading Data !!! ',
+          'Sever Responded : $e');
+    }
+
+  }
+
+  updateStaffUser(String id , StaffUser staffUser) async {
+
+    final String updateStaffUser = 'http://localhost:3000/staff/$id';
+    final response = await http.put(Uri.parse(updateStaffUser), body:staffUser.toJson());
+
+    if(response.statusCode == 200){
+
+      Get.snackbar('Thành Công', 'cập nhập Staff User thành công',backgroundColor: Colors.lightGreen);
+      getAllStaffUserDetail(id);
 
     }else {
       (
-        Get.snackbar('Error Loading Data !!! ',
-            'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}'
-        )
-    );
+          Get.snackbar('Error Loading Data !!! ',
+              'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}'
+          )
+      );
     }
   }
 

@@ -165,7 +165,8 @@ class UserMasterSearch extends StatelessWidget {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        Get.toNamed('/users-details');
+                        var id ;
+                        Get.toNamed('/users-details',arguments:id);
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(

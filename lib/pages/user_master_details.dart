@@ -11,36 +11,48 @@ import '../model/officemodel.dart';
 import '../model/staffmodel.dart';
 
 class UserMasterDetails extends StatelessWidget {
-   UserMasterDetails({super.key});
+  UserMasterDetails({super.key});
 
-   final StaffUserController controllerStaffUser = Get.put(StaffUserController());
-
-   final TextEditingController userAccount = TextEditingController();
-   final TextEditingController userName = TextEditingController();
-   final TextEditingController mail = TextEditingController();
-   final TextEditingController phone = TextEditingController();
-   final TextEditingController mac = TextEditingController();
-   final TextEditingController affiliatedOffice = TextEditingController();
-   final _role =''.obs;
-   SingleValueDropDownController dropDownController = SingleValueDropDownController();
-   var dropdownValue =''.obs;
-
-
+  final TextEditingController userAccount = TextEditingController();
+  final TextEditingController userName = TextEditingController();
+  final TextEditingController mail = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController mac = TextEditingController();
+  final TextEditingController affiliatedOffice = TextEditingController();
+  final _role = ''.obs;
+  SingleValueDropDownController dropDownController =
+      SingleValueDropDownController();
+  var dropdownValue = ''.obs;
+  late final _id;
 
   @override
   Widget build(BuildContext context) {
-
-    for (var element in controllerStaffUser.staffUserListDetail) {
-      userAccount.text = element.userAccount.toString();
-      userName.text = element.userName.toString();
-      mail.text = element.email.toString();
-      phone.text = element.telephone.toString();
-      mac.text = 'MAC : ${element.mac.toString()}';
-      dropdownValue.value = affiliatedOffice.text = element.affiliatedOffice.toString();
-      _role.value = element.role;
+    final StaffUserController controllerStaffUser =
+        Get.put(StaffUserController());
+    final controllerOfficeUser =
+        Get.put<OfficeUserController>(OfficeUserController());
+    if (Get.arguments != null) {
+      for (var element in controllerStaffUser.staffUserListDetail) {
+        userAccount.text = element.userAccount.toString();
+        userName.text = element.userName.toString();
+        mail.text = element.email.toString();
+        phone.text = element.telephone.toString();
+        mac.text = 'MAC : ${element.mac.toString()}';
+        dropdownValue.value =
+            affiliatedOffice.text = element.affiliatedOffice.toString();
+        _role.value = element.role;
+        _id = element.id;
+      }
+    } else {
+      userAccount.text = '';
+      userName.text = '';
+      mail.text = '';
+      phone.text = '';
+      mac.text = 'MAC : ';
+      dropdownValue.value = '';
+      _role.value = '';
     }
 
-    final controllerOfficeUser = Get.put<OfficeUserController>(OfficeUserController());
     List<OfficeUser> listOfficeUser = controllerOfficeUser.officeUserList;
 
     return Scaffold(
@@ -67,7 +79,7 @@ class UserMasterDetails extends StatelessWidget {
                     const Text(
                       'ユーザマスタ詳細',
                       style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     // SizedBox(
                     //   width: 1350,
@@ -167,11 +179,11 @@ class UserMasterDetails extends StatelessWidget {
                 DropDownTextField(
                   dropdownRadius: 5,
                   controller: dropDownController,
-                  onChanged: (value){
+                  onChanged: (value) {
                     dropDownController.dropDownValue?.name == null
                         ? affiliatedOffice.text = dropdownValue.value
                         : affiliatedOffice.text =
-                        dropDownController.dropDownValue!.name;
+                            dropDownController.dropDownValue!.name;
                   },
                   dropDownIconProperty: IconProperty(
                       color: Colors.black,
@@ -184,120 +196,137 @@ class UserMasterDetails extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5))),
                   dropDownList: listOfficeUser
                       .map(
-                        (e) => DropDownValueModel(name: e.baseName, value: e.baseName),
-                  )
+                        (e) => DropDownValueModel(
+                            name: e.baseName, value: e.baseName),
+                      )
                       .toList(),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Obx(
-
-                      () =>  Row(
+                  () => Row(
                     children: [
-                      Text('ユーザ種別 :',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      Text('ユーザ種別 :',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
                       Radio(
                         value: 'DRIVER',
                         groupValue: _role.value,
-                        onChanged: (value){
+                        onChanged: (value) {
                           _role.value = value!;
                         },
                       ),
-                      Text('運転手',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      Text('運転手',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
                       Radio(
                         // title: Text("Male"),
                         value: 'member',
                         groupValue: _role.value,
-                        onChanged: (value){
+                        onChanged: (value) {
                           _role.value = value!;
                         },
                       ),
-                      Text('営業スタッフ',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      Text('営業スタッフ',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
                       Radio(
                         // title: Text("Male"),
                         value: 'admin',
                         groupValue: _role.value,
-                        onChanged: (value){
+                        onChanged: (value) {
                           _role.value = value!;
                         },
                       ),
-                      Text('管理者',style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      Text('管理者',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 20),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                                backgroundColor: Colors.lightBlue),
-                            child: const Text(
-                              '編集',
-                              style: TextStyle(color: Colors.white),
-                            )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              StaffUser staffUser = StaffUser(
-                                  id: 0,
-                                  userAccount: userAccount.text,
-                                  userName: userName.text,
-                                  email: mail.text,
-                                  telephone: phone.text,
-                                  affiliatedOffice: affiliatedOffice.text,
-                                  role: _role.value,
-                                  mac: mac.text);
+                Get.arguments != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                StaffUser staffUser = StaffUser(
+                                    id: 0,
+                                    userAccount: userAccount.text,
+                                    userName: userName.text,
+                                    email: mail.text,
+                                    telephone: phone.text,
+                                    affiliatedOffice: affiliatedOffice.text,
+                                    role: _role.value,
+                                    mac: mac.text);
+                                controllerStaffUser.updateStaffUser(
+                                    _id.toString(), staffUser);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 20),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                  ),
+                                  backgroundColor: Colors.lightBlue),
+                              child: const Text(
+                                '編集',
+                                style: TextStyle(color: Colors.white),
+                              )),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                Get.toNamed('/limit-setting');
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 20),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                  ),
+                                  backgroundColor: Colors.lightBlue),
+                              child: const Text(
+                                '権限設定',
+                                style: TextStyle(color: Colors.white),
+                              )),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                StaffUser staffUser = StaffUser(
+                                    id: 0,
+                                    userAccount: userAccount.text,
+                                    userName: userName.text,
+                                    email: mail.text,
+                                    telephone: phone.text,
+                                    affiliatedOffice: affiliatedOffice.text,
+                                    role: _role.value,
+                                    mac: mac.text);
 
-                              controllerStaffUser.createStaffUser(staffUser);
-
-                            },
-                            style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 20),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                                backgroundColor: Colors.lightBlue),
-                            child: const Text(
-                              '新規登録',
-                              style: TextStyle(color: Colors.white),
-                            )),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Get.toNamed('/limit-setting');
-                            },
-                            style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 20),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                                backgroundColor: Colors.lightBlue),
-                            child: const Text(
-                              '権限設定',
-                              style: TextStyle(color: Colors.white),
-                            )),
-                      ],
-                    )
-                  ],
-                )
+                                controllerStaffUser.createStaffUser(staffUser);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 20),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.zero,
+                                  ),
+                                  backgroundColor: Colors.lightBlue),
+                              child: const Text(
+                                '新規登録',
+                                style: TextStyle(color: Colors.white),
+                              )),
+                        ],
+                      )
               ],
             ),
           ),
@@ -305,5 +334,4 @@ class UserMasterDetails extends StatelessWidget {
       ),
     );
   }
-
 }
