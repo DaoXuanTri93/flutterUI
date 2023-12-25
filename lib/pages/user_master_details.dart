@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
 import '../controller/officeUserController.dart';
 import '../controller/staffuserController.dart';
 import '../model/officemodel.dart';
@@ -264,7 +262,7 @@ class UserMasterDetails extends StatelessWidget {
                                     role: _role.value,
                                     mac: mac.text);
                                 controllerStaffUser.updateStaffUser(
-                                    _id.toString(), staffUser);
+                                    Get.arguments.toString(), staffUser);
                               },
                               style: ElevatedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
