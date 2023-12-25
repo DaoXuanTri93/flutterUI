@@ -22,41 +22,69 @@ class OfficeController extends GetxController {
       final data = result.map((e) => Office.fromJson(e)).toList();
       searchOfficeList.value = data;
       officeList = data;
-    } else {
-      print("ihihihihi");
     }
   }
 
   void searchListOffice(Office office) async {
-    print(office.baseName);
     List<Office> filteredList = officeList
         .where((e) =>
             (office.baseName == ''
                 ? true
-                : e.baseName!.contains(office.baseName!)) &&
+                :e.baseName == null ? false : e.baseName!.contains(office.baseName!)) &&
             (office.address == ''
                 ? true
-                : e.address!.contains(office.address!)) &&
+                : e.address == null ? false : e.address!.contains(office.address!)) &&
             (office.telephoneNumber == ''
                 ? true
-                : e.telephoneNumber!.contains(office.telephoneNumber!)) &&
+                : e.telephoneNumber == null ? false : e.telephoneNumber!.contains(office.telephoneNumber!)) &&
             (office.manager == ''
                 ? true
-                : e.manager!.contains(office.manager!)) &&
+                : e.manager == null ? false : e.manager!.contains(office.manager!)) &&
             (office.driverInformation == ''
                 ? true
-                : e.driverInformation!.contains(office.driverInformation!)) &&
+                : e.driverInformation == null ? false : e.driverInformation!.contains(office.driverInformation!)) &&
             (office.drivingRoute == ''
                 ? true
-                : e.drivingRoute!.contains(office.drivingRoute!)) &&
+                : e.drivingRoute == null ? false : e.drivingRoute!.contains(office.drivingRoute!)) &&
             (office.vehicleInformation == ''
                 ? true
-                : e.vehicleInformation!.contains(office.vehicleInformation!)) &&
+                : e.vehicleInformation == null ? false : e.vehicleInformation!.contains(office.vehicleInformation!)) &&
             (office.drivingSchedule == ''
                 ? true
-                : e.drivingSchedule!.contains(office.drivingSchedule!)))
+                : e.drivingSchedule == null ? false : e.drivingSchedule!.contains(office.drivingSchedule!)))
         .toList();
 
     searchOfficeList.value = filteredList;
+  }
+  void createData(Office office) async {
+      print(office.officeId);
+      final body = {
+        "baseName" : office.baseName,
+        "basePhoto" : office.basePhoto,
+        "address" : office.address,
+        "telephoneNumber" : office.telephoneNumber,
+        "manager" : office.manager,
+        "detailedInformation" : office.detailedInformation,
+        "coordinate" : office.coordinate,
+        "engravingRangeRadius" : office.engravingRangeRadius,
+      };
+      final url = 'http://localhost:3000/office/';
+      final response = await _getConnect.post(url, body);
+      getOffice();
+  }
+  void updateData(Office office, String id) async {
+    final body = {
+      "baseName" : office.baseName,
+      "basePhoto" : office.basePhoto,
+      "address" : office.address,
+      "telephoneNumber" : office.telephoneNumber,
+      "manager" : office.manager,
+      "detailedInformation" : office.detailedInformation,
+      "coordinate" : office.coordinate,
+      "engravingRangeRadius" : office.engravingRangeRadius,
+    };
+    final url = 'http://localhost:3000/office/${id}';
+    final response = await _getConnect.put(url, body);
+    getOffice();
   }
 }

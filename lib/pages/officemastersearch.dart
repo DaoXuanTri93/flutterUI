@@ -267,7 +267,15 @@ class OfficeMasterSearch extends StatelessWidget {
                     width: 100,
                     height: 40,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        final Office offices = Office.create();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  OfficeDetails(office: offices)),
+                        );
+                      },
                       child: Text('新規登録'),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue[700],
@@ -306,26 +314,29 @@ class OfficeMasterSearch extends StatelessWidget {
                           ));
                         }),
                         rows: List.generate(office.length, (index) {
-                          return DataRow(cells: [
-                            DataCell(Text('${office[index].baseName}')),
-                            DataCell(Text('${office[index].address}')),
-                            DataCell(Text('${office[index].telephoneNumber}')),
-                            DataCell(Text('${office[index].manager}')),
-                            DataCell(
-                                Text('${office[index].driverInformation}')),
-                            DataCell(Text('${office[index].drivingRoute}')),
-                            DataCell(
-                                Text('${office[index].vehicleInformation}')),
-                            DataCell(Text('${office[index].drivingSchedule}'))
-                          ],
+                          return DataRow(
+                              cells: [
+                                DataCell(Text('${office[index].baseName}')),
+                                DataCell(Text('${office[index].address}')),
+                                DataCell(
+                                    Text('${office[index].telephoneNumber}')),
+                                DataCell(Text('${office[index].manager}')),
+                                DataCell(
+                                    Text('${office[index].driverInformation}')),
+                                DataCell(Text('${office[index].drivingRoute}')),
+                                DataCell(Text(
+                                    '${office[index].vehicleInformation}')),
+                                DataCell(
+                                    Text('${office[index].drivingSchedule}'))
+                              ],
                               onSelectChanged: (value) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OfficeDetails(
-                                      office: office[index],
-                                    )));
-                          });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OfficeDetails(
+                                              office: office[index],
+                                            )));
+                              });
                         }),
                       );
                     },

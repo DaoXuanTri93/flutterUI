@@ -13,6 +13,8 @@ class Office {
   String? coordinate;
   String? engravingRangeRadius;
 
+  Office.create();
+
   Office(
       this.officeId,
       this.baseName,
@@ -28,7 +30,6 @@ class Office {
       this.coordinate,
       this.engravingRangeRadius);
 
-
   Office.search(
       this.baseName,
       this.address,
@@ -38,6 +39,15 @@ class Office {
       this.drivingRoute,
       this.vehicleInformation,
       this.drivingSchedule);
+  Office.changeData(
+      this.baseName,
+      this.address,
+      this.telephoneNumber,
+      this.manager,
+      this.basePhoto,
+      this.detailedInformation,
+      this.coordinate,
+      this.engravingRangeRadius);
 
   Office.fromJson(Map<String, dynamic> json) {
     officeId = (json['officeId']).toString();
