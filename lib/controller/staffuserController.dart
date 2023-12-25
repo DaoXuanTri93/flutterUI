@@ -93,6 +93,7 @@ class StaffUserController extends GetxController{
 
       Get.snackbar('Thành Công', 'cập nhập Staff User thành công',backgroundColor: Colors.lightGreen);
       getAllStaffUserDetail(id);
+      getAllStaffUser();
 
     }else {
       (
