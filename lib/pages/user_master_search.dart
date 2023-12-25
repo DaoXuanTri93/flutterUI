@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:login_app/model/officemodel.dart';
-
 import '../controller/officeUserController.dart';
-import '../controller/searchUserController.dart';
 import '../controller/staffuserController.dart';
 import '../model/staffmodel.dart';
-import '../model/usermodel.dart';
+
 
 class UserMasterSearch extends StatelessWidget {
   UserMasterSearch({super.key});
@@ -27,12 +25,10 @@ class UserMasterSearch extends StatelessWidget {
         Get.put<StaffUserController>(StaffUserController());
     final controllerOfficeUser =
         Get.put<OfficeUserController>(OfficeUserController());
-    final controllerSearchUser =
-        Get.put<SearchUserController>(SearchUserController());
 
     List<StaffUser> listStaffUser = controllerStaffUser.staffUserList;
     List<OfficeUser> listOfficeUser = controllerOfficeUser.officeUserList;
-    List<SearchUser> searchUser = controllerSearchUser.searchUserList;
+
 
     Map<String, dynamic> dataSearch;
 
@@ -110,11 +106,12 @@ class UserMasterSearch extends StatelessWidget {
                     hintStyle: const TextStyle(color: Colors.grey),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5))),
-                dropDownList: searchUser
-                    .map(
-                      (e) => DropDownValueModel(name: e.role, value: e.role),
-                    )
-                    .toList(),
+                dropDownList: const [
+                  DropDownValueModel(name: 'user', value:'user'),
+                  DropDownValueModel(name: 'admin', value:'admin'),
+                  DropDownValueModel(name: 'member', value:'member'),
+                  DropDownValueModel(name: 'DRIVER', value:'DRIVER'),
+                ]
               ),
               const SizedBox(
                 height: 10,
@@ -165,8 +162,8 @@ class UserMasterSearch extends StatelessWidget {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        var id ;
-                        Get.toNamed('/users-details',arguments:id);
+                        const id = null;
+                        Get.toNamed('/users-details', arguments: id);
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
