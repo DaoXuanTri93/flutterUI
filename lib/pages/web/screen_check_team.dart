@@ -11,11 +11,6 @@ import 'package:login_app/model/TeamApprovalModel.dart';
 class ScreenCheckTeam extends StatelessWidget {
   ScreenCheckTeam({super.key});
   final TeamApprovalController teamApprovalController = Get.put(TeamApprovalController());
-
-  // TextEditingController _date = TextEditingController();
-  // TextEditingController _date_1 = TextEditingController();
-  // TextEditingController timeDemo = TextEditingController();
-
   var stampApprovalId = ''.obs;
   var staff = ''.obs;
   var approval = false.obs;
@@ -42,8 +37,6 @@ class ScreenCheckTeam extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var seen = Set<String>();
-    List<dynamic> uniquelist = teamApprovalController.teamApproval.where((country) => seen.add(country.officeName)).toList();
     SingleValueDropDownController controller = SingleValueDropDownController();
     return SafeArea(
         child: Scaffold(
@@ -57,23 +50,23 @@ class ScreenCheckTeam extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
               Text('事務所:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-              DropDownTextField(
+              Obx(
+                () => DropDownTextField(
+                    textFieldDecoration:
+                        InputDecoration(border: OutlineInputBorder()),
+                    dropDownList: List.generate(teamApprovalController.officeNameUnique.value.length, (index) {
+                      return
+                        DropDownValueModel(
+                            name: teamApprovalController.officeNameUnique.value[index].officeName,
+                            value: teamApprovalController.officeNameUnique.value[index].stampApprovalId);
 
-                  textFieldDecoration:
-                      InputDecoration(border: OutlineInputBorder()),
-                  dropDownList: List.generate(uniquelist.length, (index) {
-                    return
-                      DropDownValueModel(
-                          name: uniquelist[index].officeName,
-                          value: uniquelist[index].stampApprovalId);
+                    }),
+                  controller: controller,
+                  onChanged: (value){
+                    controller.dropDownValue == null ? officeName.value = '' : officeName.value = controller.dropDownValue!.name;
+                      },
 
-                  }),
-                controller: controller,
-                onChanged: (value){
-                  controller.dropDownValue == null ? officeName.value = '' : officeName.value = controller.dropDownValue!.name;
-                  print(officeName.value);
-                    },
-
+                ),
               ),
               Text('運転手名:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
@@ -106,7 +99,7 @@ class ScreenCheckTeam extends StatelessWidget {
                       context: context,
                     );
 
-                    submissionDate.text = DateFormat('dd/MM/yyyy ').format(datepicker) + pickedTime!.format(context);
+                    submissionDate.text = DateFormat('yyyy/MM/dd ').format(datepicker) + pickedTime!.format(context);
                   }
                 },
               ),
@@ -129,7 +122,7 @@ class ScreenCheckTeam extends StatelessWidget {
                       initialTime: TimeOfDay.now(),
                       context: context,
                     );
-                    approvalDate.text = DateFormat('dd/MM/yyyy ').format(datepicker) + pickedTimed!.format(context);;
+                    approvalDate.text = DateFormat('yyyy/MM/dd ').format(datepicker) + pickedTimed!.format(context);;
                   }
                 },
               ),
@@ -183,7 +176,7 @@ class ScreenCheckTeam extends StatelessWidget {
                             DataCell(ElevatedButton(
                               child: Text('button'),
                               onPressed: () {
-                                Get.toNamed('/screenCheckTeamDetail', arguments: teamApprovalController.teamApproval.value[index]);
+                                teamApprovalController.showDetailTeamApproval(teamApprovalController.teamApproval.value[index].stampApprovalId.toString());
                               },
                             )),
                           ]);

@@ -6,9 +6,9 @@ List<TeamApprovalModel> teamApprovalModelFromJson(String str) => List<TeamApprov
 String teamApprovalModelToJson(List<TeamApprovalModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class TeamApprovalModel {
-  int? stampApprovalId;
-  int? staff;
-  bool approval;
+  String? stampApprovalId;
+  String? staff;
+  bool? approval;
   String? officeName;
   String? driverName;
   String? submissionDate;
@@ -18,21 +18,21 @@ class TeamApprovalModel {
   String? reason;
 
   TeamApprovalModel({
-    required this.stampApprovalId,
-    required this.staff,
-    required this.approval,
-    required this.officeName,
-    required this.driverName,
-    required this.submissionDate,
-    required this.approvalDate,
-    required this.stampingBeforeCorrection,
-    required this.stampingAfterCorrection,
-    required this.reason,
+     this.stampApprovalId,
+     this.staff,
+     this.approval,
+     this.officeName,
+     this.driverName,
+     this.submissionDate,
+     this.approvalDate,
+     this.stampingBeforeCorrection,
+     this.stampingAfterCorrection,
+     this.reason,
   });
 
   factory TeamApprovalModel.fromJson(Map<String, dynamic> json) => TeamApprovalModel(
-    stampApprovalId: json["stampApprovalId"],
-    staff: json["staff"],
+    stampApprovalId: json["stampApprovalId"].toString(),
+    staff: json["staff"].toString(),
     approval: json["approval"],
     officeName: json["officeName"],
     driverName: json["driverName"],

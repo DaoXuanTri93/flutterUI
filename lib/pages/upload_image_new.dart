@@ -34,13 +34,10 @@ class UploadImageNew extends StatelessWidget {
   Future<void> _uploadImageStartingPoint() async {
     final url =
         Uri.parse('https://api.cloudinary.com/v1_1/dqnnru99w/image/upload');
-
-
     if(_startingPoint.value.text.trim() == ''){
       Get.snackbar('kilomet không được bỏ trống', 'Vui lòng nhập lại !!!');
       return;
     }
-
 
     if (_firstKilometerPhoto.value!.path == '') {
       var saveImage = imageController.createEnterDistance(_startingPoint.value.text, '');
@@ -48,7 +45,6 @@ class UploadImageNew extends StatelessWidget {
       _firstKilometerPhoto.value = File('');
       return saveImage;
     }
-
 
     var request = http.MultipartRequest('POST', url)
       ..fields['upload_preset'] = 'huklfdqx'
