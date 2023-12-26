@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:login_app/model/officemodel.dart';
+import 'package:login_app/model/officeModel.dart';
 import 'package:http/http.dart' as http;
 
 class OfficeUserController extends GetxController {

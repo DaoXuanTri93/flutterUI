@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:login_app/model/officemodel.dart';
+import 'package:login_app/model/officeModel.dart';
 import '../controller/officeUserController.dart';
-import '../controller/staffuserController.dart';
-import '../model/staffmodel.dart';
+import '../controller/staffUserController.dart';
+import '../model/staffModel.dart';
 
 
 class UserMasterSearch extends StatelessWidget {
