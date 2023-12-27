@@ -9,6 +9,7 @@ class AuthenticationManager extends GetxController with CacheManager {
   final isLogged = false.obs;
   static String token = '';
 
+
   void logOut() {
     isLogged.value = false;
     removeToken();
@@ -39,7 +40,7 @@ class AuthenticationManager extends GetxController with CacheManager {
     isLogged.value = true;
     print("globalsToken");
     print(globals.token);
-    kIsWeb ? Get.toNamed("/navigationBarDemo") : Get.offNamed("/homepage");
+    kIsWeb ? Get.toNamed("/NavigationBarDemo1") : Get.offNamed("/homepage");
   }
 
   Future<Map<String, dynamic>> checkLoginStatus() async {

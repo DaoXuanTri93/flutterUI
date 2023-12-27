@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:login_app/pages/officemastersearch.dart';
+import 'package:login_app/pages/web/screen_check_team.dart';
 
 class NavigationBarDemo extends StatelessWidget {
   NavigationBarDemo({super.key});
 
+  RxInt index = 0.obs;
+  List<Widget> pages = [
+    OfficeMasterSearch(),
+    ScreenCheckTeam(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,14 +19,12 @@ class NavigationBarDemo extends StatelessWidget {
           children: [
             Expanded(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 DrawerHeader(
                   child: Column(
                     children: [
                       Expanded(child: Text('UserAccount')),
-                      Expanded(child: Image.asset("lib/assets/logitem.jpg", fit: BoxFit.fill,)),
+                      Expanded(child: Image.asset("lib/assets/logitem.jpg")),
                     ],
                   ),
 
@@ -28,13 +33,15 @@ class NavigationBarDemo extends StatelessWidget {
                   title: 'CheckTeamApproval',
                   icon: Icon(Icons.check),
                   press: () {
-                    Get.toNamed("screenCheckTeam");
+                    index.value = 0;
                   },
                 ),
                 DashboardListTile(
                   title: 'Văn phòng',
                   icon: Icon(Icons.home),
-                  press: () {},
+                  press: () {
+                    index.value = 1;
+                  },
                 ),
                 DashboardListTile(
                   title: 'Tài Xế',
@@ -61,9 +68,8 @@ class NavigationBarDemo extends StatelessWidget {
             )),
             Expanded(
                 flex: 5,
-                child: Container(
-                  color: Colors.black26,
-                ))
+                child: Obx(() => pages[index.value]),
+                )
           ],
         ),
       ),

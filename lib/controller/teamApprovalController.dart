@@ -15,7 +15,7 @@ class TeamApprovalController extends GetxController {
   var officeNameUnique = [].obs;
   var detailTeamApproval = new TeamApprovalModel().obs;
   var seen = Set<String>();
-  final token = AuthenticationManager().getToken();
+  // final token = AuthenticationManager().getToken();
   @override
   void onInit() {
     super.onInit();
@@ -27,11 +27,10 @@ class TeamApprovalController extends GetxController {
 
     try {
       isLoading(true);
-      Response response = await TeamApprovalService().findAllOfLuyn(token!);
+      Response response = await TeamApprovalService().findAllOfLuyn(globals.token);
       if (response.statusCode == 200) {
         teamApproval.value = teamApprovalSearch.value =
             TeamApprovalModel.fromData(response.body);
-
         uniqueList();
       } else {
         print('error fetching data');
@@ -59,10 +58,6 @@ class TeamApprovalController extends GetxController {
         ? ''
         : approvalDateSearch = approvalDateSearch.substring(0, 10);
 
-    print('submissionDate');
-    print(submissionDateSearch);
-    print('approvalDate');
-    print(approvalDateSearch);
     teamApproval.value = teamApprovalSearch.value
         .where((p0) =>
             (dataSearch['officeName'] == ''
@@ -96,7 +91,7 @@ class TeamApprovalController extends GetxController {
 
 
   void showDetailTeamApproval(String id) async {
-    Response response = await teamApprovalService.approval(token!, id);
+    Response response = await teamApprovalService.approval(globals.token, id);
     print(response.statusCode);
     if(response.statusCode == 200){
       detailTeamApproval.value = TeamApprovalModel.fromJson(response.body);

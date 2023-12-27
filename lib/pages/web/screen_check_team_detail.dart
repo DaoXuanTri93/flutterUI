@@ -57,7 +57,7 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                     TextField(
                       readOnly: true,
                       decoration: InputDecoration(
-                        hintText: (teamApprovalController.detailTeamApproval.value.approval == true ? 'Đã Phê Duyệt' : 'Chưa Phê Duyệt'),
+                        hintText: (teamApprovalController.detailTeamApproval.value.approval == true ? 'Đã Phê Duyệt' : 'Chờ Phê Duyệt'),
                         border: OutlineInputBorder(),
                       ),
                     ),
@@ -103,7 +103,8 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                         }, child: Text('承認'), style: ElevatedButton.styleFrom(backgroundColor: Colors.green, fixedSize: Size(80, 40)),),
                         SizedBox(width: 10),
                         ElevatedButton(onPressed: () {
-                          Get.toNamed("screenCheckTeam");
+                          Get.back();
+                          // Get.toNamed("screenCheckTeam");
                         }, child: Text('差し戻し'), style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent,fixedSize: Size(110, 40)),),
                       ],
                     )

@@ -8,13 +8,16 @@ import 'package:login_app/pages/loginpage.dart';
 import 'package:login_app/pages/missionpage.dart';
 import 'package:login_app/pages/schedulepage.dart';
 import 'package:login_app/pages/timekeepingpage.dart';
+import 'package:login_app/pages/web/change_password_web.dart';
 import 'package:login_app/pages/web/screen_check_team.dart';
 import 'package:login_app/pages/upload_image_new.dart';
 import 'package:login_app/pages/web/screen_check_team_detail.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'pages/officemastersearch.dart';
 import 'pages/web/dashboard/narbargation.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
 
+import 'pages/web/dashboard/narbargation1.dart';
 import 'pages/web/loginpageweb.dart';
 void main() async {
   await GetStorage.init();
@@ -28,8 +31,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("token123");
-    print(globals.token);
     return GetMaterialApp(
         initialRoute: '/loadingpage',
         getPages: [
@@ -44,8 +45,10 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/screenCheckTeam', page: () => ScreenCheckTeam()),
           GetPage(name: '/screenCheckTeamDetail',page: () => ScreenCheckTeamDetail()),
           GetPage(name: '/loginPageWeb',page: () => LoginPageWeb()),
-
+          GetPage(name: '/officemastersearch',page: () => OfficeMasterSearch()),
+          GetPage(name: '/changePassword',page: () => ChangePassword()),
           GetPage(name: '/navigationBarDemo',page: () => NavigationBarDemo()),
+          GetPage(name: '/NavigationBarDemo1',page: () => NavigationBarDemo1()),
         ],
         debugShowCheckedModeBanner: false);
   }
