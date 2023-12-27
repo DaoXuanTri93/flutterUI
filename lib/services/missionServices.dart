@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:intl/intl.dart';
-import 'package:login_app/auth/authentical.dart';
 import '../controller/missionController.dart';
 import 'HomeProviders.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;

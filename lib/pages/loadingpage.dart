@@ -5,12 +5,13 @@ import 'package:login_app/pages/homepages.dart';
 import 'package:login_app/pages/loginpage.dart';
 
 import '../auth/authentical.dart';
+import '../controller/loadingcontroller.dart';
 
 Map<String, dynamic> user = {};
 
 class LoadingPages extends StatefulWidget {
-  const LoadingPages({super.key});
-
+   LoadingPages({super.key});
+  final LoadingController controller = Get.put(LoadingController());
   @override
   State<LoadingPages> createState() => _LoadingPagesState();
 }
@@ -27,16 +28,16 @@ class _LoadingPagesState extends State<LoadingPages> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 2), () async {
-      getInstance().whenComplete(() =>
-          user.isNotEmpty ? Get.toNamed("/homepage") : Get.toNamed("/loginpage"));
-    });
-  }
-
-  Future getInstance() async {
-    user = await AuthenticationManager().checkLoginStatus();
-  }
+  // @override
+  // void initState() {
+  //   Future.delayed(const Duration(seconds: 2), () async {
+  //     getInstance().whenComplete(() =>
+  //         // Get.toNamed("/loginpage"));
+  //         user.isNotEmpty ? Get.toNamed("/homepage") : Get.toNamed("/loginpage"));
+  //   });
+  // }
+  //
+  // Future getInstance() async {
+  //   user = await AuthenticationManager().checkLoginStatus();
+  // }
 }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:login_app/model/TeamApprovalModel.dart';
 import 'package:login_app/services/teamApprovalService.dart';
+import 'package:login_app/global-variable/globals.dart' as globals;
 
 class TeamApprovalController extends GetxController {
   TeamApprovalService teamApprovalService = TeamApprovalService();
@@ -18,7 +19,7 @@ class TeamApprovalController extends GetxController {
   void fetchData() async {
     try {
       isLoading(true);
-      Response response = await TeamApprovalService().findAll();
+      Response response = await TeamApprovalService().findAll(globals.token);
       if (response.statusCode == 200) {
         teamApproval.value = teamApprovalSearch.value =
             TeamApprovalModel.fromData(response.body);
@@ -67,7 +68,7 @@ class TeamApprovalController extends GetxController {
     String id = data['stampApprovalId'];
       print('update');
       print(data);
-      Response response = await teamApprovalService.updateTeamApproval(id);
+      Response response = await teamApprovalService.updateTeamApproval(id,globals.token);
       if(response.statusCode == 200){
         print(response.body);
       }

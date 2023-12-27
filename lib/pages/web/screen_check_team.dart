@@ -1,20 +1,15 @@
-import 'dart:collection';
+import 'dart:async';
 
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:login_app/controller/teamApprovalController.dart';
-import 'package:login_app/model/TeamApprovalModel.dart';
 
 
 class ScreenCheckTeam extends StatelessWidget {
   ScreenCheckTeam({super.key});
   final TeamApprovalController teamApprovalController = Get.put(TeamApprovalController());
-
-  // TextEditingController _date = TextEditingController();
-  // TextEditingController _date_1 = TextEditingController();
-  // TextEditingController timeDemo = TextEditingController();
 
   var stampApprovalId = ''.obs;
   var staff = ''.obs;
@@ -53,14 +48,14 @@ class ScreenCheckTeam extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('打刻承認検索',
+              const Text('打刻承認検索',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-              Text('事務所:',
+              const Text('事務所:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               DropDownTextField(
 
                   textFieldDecoration:
-                      InputDecoration(border: OutlineInputBorder()),
+                      const InputDecoration(border: OutlineInputBorder()),
                   dropDownList: List.generate(uniquelist.length, (index) {
                     return
                       DropDownValueModel(
@@ -71,23 +66,22 @@ class ScreenCheckTeam extends StatelessWidget {
                 controller: controller,
                 onChanged: (value){
                   controller.dropDownValue == null ? officeName.value = '' : officeName.value = controller.dropDownValue!.name;
-                  print(officeName.value);
                     },
 
               ),
-              Text('運転手名:',
+              const Text('運転手名:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               TextField(
                 controller: driverName,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                 ),
               ),
-              Text('申請日:',
+              const Text('申請日:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               TextField(
                 controller: submissionDate,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'mm/dd/yyyy --:-- --',
                     suffixIcon: Icon(Icons.calendar_today)),
@@ -110,11 +104,11 @@ class ScreenCheckTeam extends StatelessWidget {
                   }
                 },
               ),
-              Text('承認日:',
+              const Text('承認日:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               TextField(
                 controller: approvalDate,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'mm/dd/yyyy --:-- --',
                     suffixIcon: Icon(Icons.calendar_today)),
@@ -133,7 +127,7 @@ class ScreenCheckTeam extends StatelessWidget {
                   }
                 },
               ),
-              Text('出張有無:',
+              const Text('出張有無:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +157,7 @@ class ScreenCheckTeam extends StatelessWidget {
                 };
 
                 teamApprovalController.dataSearch(dataSearch);
-              }, child: Text('検索')),
+              }, child: const Text('検索')),
              Obx(
                    () => SizedBox(
                     width: double.infinity,
@@ -181,7 +175,7 @@ class ScreenCheckTeam extends StatelessWidget {
                             DataCell(Text(teamApprovalController.teamApproval.value[index].stampingBeforeCorrection.toString())),
                             DataCell(Text(teamApprovalController.teamApproval.value[index].stampingAfterCorrection.toString())),
                             DataCell(ElevatedButton(
-                              child: Text('button'),
+                              child: const Text('button'),
                               onPressed: () {
                                 Get.toNamed('/screenCheckTeamDetail', arguments: teamApprovalController.teamApproval.value[index]);
                               },

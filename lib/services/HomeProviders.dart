@@ -14,7 +14,7 @@ class HomeProviders extends GetConnect {
       _connect.post('$SEVERNAME/auth/login',data);
   Future<Response> getUser(String token) =>
       _connect.get('$SEVERNAME/auth/user',headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       });
   Future<Response> logOut() =>
@@ -22,60 +22,60 @@ class HomeProviders extends GetConnect {
 
   Future<Response> getDataTimeKeeping(String token) =>
       _connect.get('$SEVERNAME/timekeeping',headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       });
 
   Future<Response> getCoordinate(String token) =>
       _connect.get('$SEVERNAME/office/info',headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       });
 
   Future<Response> checkIn(String token,Map data) =>
       _connect.post('$SEVERNAME/timekeeping/checkin',data,headers: {
-  'Content-Type': 'application/json; charset=UTF-8',
+  // 'Content-Type': 'application/json; charset=UTF-8',
   'Authorization': 'Bearer $token'});
 
   Future<Response> checkOut(String token,Map data) =>
       _connect.post('$SEVERNAME/timekeeping/checkout',data,headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'});
 
   Future<Response> saveTimeStartOT(String token,Map data) =>
       _connect.post('$SEVERNAME/timekeeping/overtimestart',data,headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'});
   Future<Response> saveTimeEndOT(String token,Map data) =>
       _connect.post('$SEVERNAME/timekeeping/overtimeend',data,headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'});
 
   Future<Response> mission(String token,Map data) =>
       _connect.post('$SEVERNAME/mission',data,headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'});
 
   Future<Response> getAllMissionByUser(String token) =>
       _connect.get('$SEVERNAME/mission',headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       });
 
   Future<Response>  editMission(String token,Map data,id) =>
       _connect.put('$SEVERNAME/mission/$id',data,headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       });
   Future<Response>  cancelMission(String token,id) =>
       _connect.put('$SEVERNAME/mission/cancel/$id',null,headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'
       });
 
   Future<Response> registerSchedule(String token,Map data) =>
       _connect.post('$SEVERNAME/stampApprovalController',data,headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token'});
 
   Future<Map<String, dynamic>> initPlatformState() async {
