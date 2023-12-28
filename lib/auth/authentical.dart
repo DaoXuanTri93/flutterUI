@@ -4,11 +4,11 @@ import 'package:login_app/pages/loginpage.dart';
 import '../services/HomeProviders.dart';
 import 'cacheManager.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
+import 'package:login_app/auth/cookie_manager.dart' as cookie;
 
 class AuthenticationManager extends GetxController with CacheManager {
   final isLogged = false.obs;
   static String token = '';
-
 
   void logOut() {
     isLogged.value = false;
@@ -36,11 +36,13 @@ class AuthenticationManager extends GetxController with CacheManager {
       await saveToken(data["jwt"]);
     }
     token = data["jwt"];
-    globals.token = data["jwt"];
+    cookie.setToken('jwt', token);
+    globals.token = token;
     isLogged.value = true;
     print("globalsToken");
     print(globals.token);
     kIsWeb ? Get.toNamed("/NavigationBarDemo1") : Get.offNamed("/homepage");
+
   }
 
   Future<Map<String, dynamic>> checkLoginStatus() async {

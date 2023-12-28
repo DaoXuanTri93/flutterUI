@@ -6,7 +6,6 @@ import 'package:login_app/model/TeamApprovalModel.dart';
 import 'package:login_app/services/teamApprovalService.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
 
-
 class TeamApprovalController extends GetxController {
   TeamApprovalService teamApprovalService = TeamApprovalService();
   var isLoading = false.obs;
@@ -80,9 +79,11 @@ class TeamApprovalController extends GetxController {
         .toList();
   }
 
-  void updateTeamApproval(String id, Map<String, dynamic> data) async {
-      Response response = await teamApprovalService.updateTeamApproval(globals.token,id,data);
 
+  void updateTeamApproval(Map<String, dynamic> data) async {
+    String id = data['stampApprovalId'];
+    // print(data['stampApprovalId']);
+      Response response = await teamApprovalService.updateTeamApproval(id,data,globals.token);
       if(response.statusCode == 200){
 
         print(response.body);

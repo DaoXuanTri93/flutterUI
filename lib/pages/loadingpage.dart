@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:login_app/pages/homepages.dart';
-import 'package:login_app/pages/loginpage.dart';
 
 import '../auth/authentical.dart';
+import '../controller/loadingcontroller.dart';
 
 Map<String, dynamic> user = {};
 
 class LoadingPages extends StatefulWidget {
-  const LoadingPages({super.key});
-
+   LoadingPages({super.key});
+  final LoadingController controller = Get.put(LoadingController());
   @override
   State<LoadingPages> createState() => _LoadingPagesState();
 }
@@ -39,4 +38,5 @@ class _LoadingPagesState extends State<LoadingPages> {
   Future getInstance() async {
     user = await AuthenticationManager().checkLoginStatus();
   }
+
 }

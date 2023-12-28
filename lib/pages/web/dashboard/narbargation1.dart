@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:login_app/auth/authentical.dart';
 import 'package:login_app/pages/officemastersearch.dart';
 import 'package:login_app/pages/web/change_password_web.dart';
+import 'package:login_app/pages/web/driver_infor.dart';
 import 'package:login_app/pages/web/screen_check_team.dart';
 
 class NavigationBarDemo1 extends StatelessWidget {
@@ -13,13 +14,25 @@ class NavigationBarDemo1 extends StatelessWidget {
     List<Widget> container_demo = [
       OfficeMasterSearch(),
       ScreenCheckTeam(),
-      Container(child: Center(child: Text("driver"))),
+      DriverInforSearch(),
       Container(child: Center(child: Text("approval"))),
       Container(child: Center(child: Text("Staff user"))),
       Container(child: Center(child: Text("Staff"))),
       ChangePassword(),
     ].obs;
     var _selectIndex = 0.obs;
+    var argument = Get.arguments;
+    print('argument');
+    print(argument);
+    if(argument == null){
+      _selectIndex.value = 0;
+    }else{
+      _selectIndex.value = argument;
+    }
+
+
+  print('index');
+  print(_selectIndex.value);
     return Scaffold(
       body: SafeArea(
         child: Obx(
