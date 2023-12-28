@@ -4,7 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:text_area/text_area.dart';
 
 import '../controller/OfficeController.dart';
-import '../modals/office.dart';
+import '../model/office.dart';
 import 'officemastersearch.dart';
 
 class OfficeDetails extends StatelessWidget {

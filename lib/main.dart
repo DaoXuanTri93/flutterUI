@@ -19,11 +19,11 @@ import 'package:url_strategy/url_strategy.dart';
 import 'pages/officemastersearch.dart';
 import 'pages/web/dashboard/narbargation.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
-
+import 'package:login_app/pages/limit_setting.dart';
+import 'package:login_app/pages/user_master_details.dart';
+import 'package:login_app/pages/user_master_search.dart';
 import 'pages/web/dashboard/narbargation1.dart';
 import 'pages/web/loginpageweb.dart';
-
-import 'package:login_app/global-variable/globals.dart' as globals;
 import 'package:login_app/auth/cookie_manager.dart' as cookie;
 void main() async {
   await GetStorage.init();
@@ -61,8 +61,12 @@ class MyApp extends StatelessWidget {
               page: () => DriverInforDetails()),
           GetPage(
               name: '/driver-infor',
-              page: () => DriverInforSearch())
+              page: () => DriverInforSearch()),
+          GetPage(name: '/search-users', page: () => UserMasterSearch()),
+          GetPage(name: '/users-details', page: () => UserMasterDetails()),
+          GetPage(name: '/limit-setting', page: () => LimitSetting()),
         ],
+
         builder: EasyLoading.init(),
         debugShowCheckedModeBanner: false);
   }

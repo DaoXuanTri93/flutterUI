@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:login_app/modals/office.dart';
+import 'package:login_app/model/office.dart';
+import 'package:login_app/global-variable/globals.dart' as globals;
+import '../const/const.dart';
 
 class OfficeController extends GetxController {
   final _getConnect = GetConnect();
@@ -15,8 +17,12 @@ class OfficeController extends GetxController {
   }
 
   getOffice() async {
-    const String url = 'http://192.168.24.16:3000/office';
-    final response = await _getConnect.get(url);
+
+    final String url = '$SEVERNAME/office';
+    final response = await _getConnect.get(url,headers: {
+    // 'Content-Type': 'application/json; charset=UTF-8',
+    'Authorization': 'Bearer ${globals.token}'
+    });
     if (response.statusCode == 200) {
       final List result = response.body;
       final data = result.map((e) => Office.fromJson(e)).toList();
@@ -68,8 +74,11 @@ class OfficeController extends GetxController {
         "coordinate" : office.coordinate,
         "engravingRangeRadius" : office.engravingRangeRadius,
       };
-      final url = 'http://192.168.24.16:3000/office/';
-      final response = await _getConnect.post(url, body);
+      final url = '$SEVERNAME/office/';
+      final response = await _getConnect.post(url, body,headers: {
+      // 'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${globals.token}'
+      });
       getOffice();
   }
   void updateData(Office office, String id) async {
@@ -83,8 +92,11 @@ class OfficeController extends GetxController {
       "coordinate" : office.coordinate,
       "engravingRangeRadius" : office.engravingRangeRadius,
     };
-    final url = 'http://192.168.24.16:3000/office/${id}';
-    final response = await _getConnect.put(url, body);
+    final url = '$SEVERNAME/office/${id}';
+    final response = await _getConnect.put(url, body,headers: {
+      // 'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${globals.token}'
+    });
     getOffice();
   }
 }

@@ -1,7 +1,5 @@
-import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:login_app/auth/authentical.dart';
 import 'package:login_app/model/TeamApprovalModel.dart';
 import 'package:login_app/services/teamApprovalService.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
@@ -14,6 +12,7 @@ class TeamApprovalController extends GetxController {
   var officeNameUnique = [].obs;
   var detailTeamApproval = new TeamApprovalModel().obs;
   var seen = Set<String>();
+  var isCheck = false.obs;
   // final token = AuthenticationManager().getToken();
   @override
   void onInit() {
@@ -80,14 +79,29 @@ class TeamApprovalController extends GetxController {
   }
 
 
-  void updateTeamApproval(Map<String, dynamic> data) async {
+  void updateTeamApproval(Map<String, dynamic> data, teamApprovalController1) async {
     String id = data['stampApprovalId'];
-    // print(data['stampApprovalId']);
+
       Response response = await teamApprovalService.updateTeamApproval(id,data,globals.token);
       if(response.statusCode == 200){
 
-        print(response.body);
       }
+    // teamApprovalController1.dataSearch();
+    // teamApprovalController1.refresh();
+  }
+
+  void approvalButton(Map<String, dynamic> data, teamApprovalController1) async {
+    String id = data['stampApprovalId'];
+    // teamApprovalSearch.value = [];
+    Response response = await teamApprovalService.updateTeamApproval(id,data,globals.token);
+    print(response.statusCode);
+    if(response.statusCode == 201){
+
+    }
+    // teamApprovalController1.fetchDataOfLuyn();
+    // teamApprovalController1.refresh();
+    // teamApprovalSearch.refresh();
+
   }
 
 

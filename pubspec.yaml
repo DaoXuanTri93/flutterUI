@@ -52,6 +52,7 @@ dependencies:
   flutter_easyloading:
   universal_html:
   excel: ^4.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

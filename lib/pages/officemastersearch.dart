@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:login_app/controller/OfficeController.dart';
 
-import '../modals/office.dart';
+import '../model/office.dart';
 import 'officemasterdetails.dart';
 
 class OfficeMasterSearch extends StatelessWidget {

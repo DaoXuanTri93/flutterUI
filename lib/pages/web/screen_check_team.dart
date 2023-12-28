@@ -6,10 +6,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:login_app/controller/teamApprovalController.dart';
 
-
 class ScreenCheckTeam extends StatelessWidget {
   ScreenCheckTeam({super.key});
-  final TeamApprovalController teamApprovalController = Get.put<TeamApprovalController>(TeamApprovalController());
+
+  final TeamApprovalController teamApprovalController =
+      Get.put<TeamApprovalController>(TeamApprovalController());
   var stampApprovalId = ''.obs;
   var staff = ''.obs;
   var approval = false.obs;
@@ -22,6 +23,7 @@ class ScreenCheckTeam extends StatelessWidget {
   var reason = ''.obs;
   late Map<String, dynamic> dataSearch;
 
+  // final Color color = ;
   List<String> team = [
     '事務所',
     '運転手名',
@@ -33,11 +35,10 @@ class ScreenCheckTeam extends StatelessWidget {
     '承認'
   ];
 
-
   @override
   Widget build(BuildContext context) {
     SingleValueDropDownController controller = SingleValueDropDownController();
-    teamApprovalController.fetchDataOfLuyn();
+    // teamApprovalController.fetchDataOfLuyn();
     return SafeArea(
         child: Scaffold(
       body: SingleChildScrollView(
@@ -52,19 +53,23 @@ class ScreenCheckTeam extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               Obx(
                 () => DropDownTextField(
-                    textFieldDecoration:
-                        InputDecoration(border: OutlineInputBorder()),
-                    dropDownList: List.generate(teamApprovalController.officeNameUnique.value.length, (index) {
-                      return
-                        DropDownValueModel(
-                            name: teamApprovalController.officeNameUnique.value[index].officeName,
-                            value: teamApprovalController.officeNameUnique.value[index].stampApprovalId);
-                    }),
+                  textFieldDecoration:
+                      InputDecoration(border: OutlineInputBorder()),
+                  dropDownList: List.generate(
+                      teamApprovalController.officeNameUnique.value.length,
+                      (index) {
+                    return DropDownValueModel(
+                        name: teamApprovalController
+                            .officeNameUnique.value[index].officeName,
+                        value: teamApprovalController
+                            .officeNameUnique.value[index].stampApprovalId);
+                  }),
                   controller: controller,
-                  onChanged: (value){
-                    controller.dropDownValue == null ? officeName.value = '' : officeName.value = controller.dropDownValue!.name;
-                      },
-
+                  onChanged: (value) {
+                    controller.dropDownValue == null
+                        ? officeName.value = ''
+                        : officeName.value = controller.dropDownValue!.name;
+                  },
                 ),
               ),
               const Text('運転手名:',
@@ -84,21 +89,22 @@ class ScreenCheckTeam extends StatelessWidget {
                     hintText: 'mm/dd/yyyy --:-- --',
                     suffixIcon: Icon(Icons.calendar_today)),
                 onTap: () async {
-                  DateTime? datepicker =  await showDatePicker(
+                  DateTime? datepicker = await showDatePicker(
                       // confirmText: 'bam vo day',
-                      context:context,
+                      context: context,
                       initialDate: DateTime.now(),
-                      firstDate: DateTime(2000), lastDate: DateTime(2100)
-                  );
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100));
 
-                  if(datepicker != null){
-
-                    TimeOfDay? pickedTime =  await showTimePicker(
+                  if (datepicker != null) {
+                    TimeOfDay? pickedTime = await showTimePicker(
                       initialTime: TimeOfDay.now(),
                       context: context,
                     );
 
-                    submissionDate.text = DateFormat('yyyy/MM/dd ').format(datepicker) + pickedTime!.format(context);
+                    submissionDate.text =
+                        DateFormat('yyyy/MM/dd ').format(datepicker) +
+                            pickedTime!.format(context);
                   }
                 },
               ),
@@ -111,17 +117,20 @@ class ScreenCheckTeam extends StatelessWidget {
                     hintText: 'mm/dd/yyyy --:-- --',
                     suffixIcon: Icon(Icons.calendar_today)),
                 onTap: () async {
-                  DateTime? datepicker =  await showDatePicker(
-                      context:context,
+                  DateTime? datepicker = await showDatePicker(
+                      context: context,
                       initialDate: DateTime.now(),
-                      firstDate: DateTime(2000), lastDate: DateTime(2100));
-                  if(datepicker != null){
-
-                    TimeOfDay? pickedTimed =  await showTimePicker(
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100));
+                  if (datepicker != null) {
+                    TimeOfDay? pickedTimed = await showTimePicker(
                       initialTime: TimeOfDay.now(),
                       context: context,
                     );
-                    approvalDate.text = DateFormat('yyyy/MM/dd ').format(datepicker) + pickedTimed!.format(context);;
+                    approvalDate.text =
+                        DateFormat('yyyy/MM/dd ').format(datepicker) +
+                            pickedTimed!.format(context);
+                    ;
                   }
                 },
               ),
@@ -140,62 +149,128 @@ class ScreenCheckTeam extends StatelessWidget {
                   )
                 ],
               ),
-              ElevatedButton(onPressed: () {
-                dataSearch = {
-                  "stampApprovalId": stampApprovalId.value,
-                  "staff": staff.value,
-                  "approval": approval.value,
-                  "officeName": officeName.value,
-                  "driverName": driverName.text,
-                  "submissionDate": submissionDate.text,
-                  "approvalDate": approvalDate.text,
-                  "stampingBeforeCorrection": stampingBeforeCorrection.value,
-                  "stampingAfterCorrection": stampingAfterCorrection.value,
-                  "reason": reason.value,
-                };
+              ElevatedButton(
+                  onPressed: () {
+                    dataSearch = {
+                      "stampApprovalId": stampApprovalId.value,
+                      "staff": staff.value,
+                      "approval": approval.value,
+                      "officeName": officeName.value,
+                      "driverName": driverName.text,
+                      "submissionDate": submissionDate.text,
+                      "approvalDate": approvalDate.text,
+                      "stampingBeforeCorrection":
+                          stampingBeforeCorrection.value,
+                      "stampingAfterCorrection": stampingAfterCorrection.value,
+                      "reason": reason.value,
+                    };
 
-                teamApprovalController.dataSearch(dataSearch);
-              }, child: const Text('検索')),
-             Obx(
-                   () => SizedBox(
-                    width: double.infinity,
-                    child: DataTable(
+                    teamApprovalController.dataSearch(dataSearch);
+                  },
+                  child: const Text('検索')),
+              Obx(
+                () => SizedBox(
+                  width: double.infinity,
+                  child: DataTable(
                       sortColumnIndex: 1,
                       sortAscending: true,
-                        columns: team
-                            .map((e) => DataColumn(label: Expanded(child: Center(child: Text(e, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),)))))
-                            .toList(),
-                        rows: List.generate(teamApprovalController.teamApproval.value.length, (index) {
-                          return DataRow(
+                      columns: team
+                          .map((e) => DataColumn(
+                                  label: Expanded(
+                                      child: Center(
+                                          child: Text(
+                                e,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              )))))
+                          .toList(),
+                      rows: List.generate(
+                          teamApprovalController.teamApproval.value.length,
+                          (index) {
+                        return DataRow(
+                            onLongPress: () {
+                              teamApprovalController.showDetailTeamApproval(
+                                  teamApprovalController
+                                      .teamApproval.value[index].stampApprovalId
+                                      .toString());
+                            },
                             // selected: true,
-                              cells: [
-                            DataCell(Center(child: Text(teamApprovalController.teamApproval.value[index].officeName.toString()))),
-                            DataCell(Center(child: Text(teamApprovalController.teamApproval.value[index].driverName.toString()))),
-                            DataCell(Center(child: Text(teamApprovalController.teamApproval.value[index].submissionDate.toString()))),
-                            DataCell(Center(child: Text(teamApprovalController.teamApproval.value[index].approvalDate.toString()))),
-                            DataCell(
-                                ((teamApprovalController.teamApproval.value[index].approval == false ?
-                          Center(child: Text('Chờ Phê Duyệt', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold))) :
-                          Center(child: Text('Đã Phê Duyệt', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)))))),
-                            DataCell(Center(child: Text(teamApprovalController.teamApproval.value[index].stampingBeforeCorrection.toString()))),
-                            DataCell(Center(child: Text(teamApprovalController.teamApproval.value[index].stampingAfterCorrection.toString()))),
-                            DataCell(Center(
-                              child: ElevatedButton(
-                                                        style : ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(Colors.green),
-                                                        ),
-                                child: Text('変更', style: TextStyle(color: Colors.white),),
-                                onPressed: () {
-                                  teamApprovalController.showDetailTeamApproval(teamApprovalController.teamApproval.value[index].stampApprovalId.toString());
-                                },
-                              ),
-                            )),
-                          ]);
-                        }
-                          )
-                    ),
-                  ),
-             ),
+                            cells: [
+                              DataCell(Center(
+                                  child: Text(teamApprovalController
+                                      .teamApproval.value[index].officeName
+                                      .toString()))),
+                              DataCell(Center(
+                                  child: Text(teamApprovalController
+                                      .teamApproval.value[index].driverName
+                                      .toString()))),
+                              DataCell(Center(
+                                  child: Text(teamApprovalController
+                                      .teamApproval.value[index].submissionDate
+                                      .toString()))),
+                              DataCell(Center(
+                                  child: Text(teamApprovalController
+                                      .teamApproval.value[index].approvalDate
+                                      .toString()))),
+                              DataCell(((teamApprovalController
+                                          .teamApproval.value[index].approval ==
+                                      false
+                                  ? Center(
+                                      child: Text('Chờ Phê Duyệt',
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold)))
+                                  : Center(
+                                      child: Text('Đã Phê Duyệt',
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.bold)))))),
+                              DataCell(Center(
+                                  child: Text(teamApprovalController
+                                      .teamApproval
+                                      .value[index]
+                                      .stampingBeforeCorrection
+                                      .toString()))),
+                              DataCell(Center(
+                                  child: Text(teamApprovalController
+                                      .teamApproval
+                                      .value[index]
+                                      .stampingAfterCorrection
+                                      .toString()))),
+                              DataCell(Center(
+                                child: ElevatedButton(
+                                  onHover: (value) {},
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.green),
+                                  ),
+                                  child: Text(
+                                    '変更',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () {
+                                    Map<String, dynamic> data = {
+                                      "index": index,
+                                      "stampApprovalId": teamApprovalController
+                                          .teamApproval
+                                          .value[index]
+                                          .stampApprovalId,
+                                      "approval": true,
+                                      "reason": ''
+                                    };
+                                    teamApprovalController.approvalButton(
+                                        data, teamApprovalController);
+
+                                    // Get.toNamed('/NavigationBarDemo1', arguments: 1);
+                                  },
+                                ),
+                              )),
+                            ]);
+                      })),
+                ),
+              ),
             ],
           ),
         ),
