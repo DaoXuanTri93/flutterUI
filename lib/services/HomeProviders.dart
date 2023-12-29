@@ -2,60 +2,82 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-// import 'package:untitled2/models/office.dart';
+import '../const/const.dart';
 
-class OfficeProviders extends GetConnect {
+class HomeProviders extends GetConnect {
+  final isCheckin = false.obs;
+
   final _connect = GetConnect();
-  // Future<List<Office>> getAllOffice(Office office) async {
-  //   Response response =
-  //       await get('https://655ac1516981238d054db189.mockapi.io/logitem/office');
-  //   List<Map<String, dynamic>> items =
-  //       List<Map<String, dynamic>>.from(response.body);
-  //   var offices = Office.fromData(items);
-  //   List<Office> filteredList = offices
-  //       .where((e) =>
-  //           (office.name == '' ? true : e.name.contains(office.name)) &&
-  //           (office.address == '' ? true : e.address.contains(office.address))
-  //               &&
-  //               (office.managerName == '' ? true : e.managerName.contains(office.managerName))
-  //               &&
-  //               (office.phone == '' ? true : e.phone.contains(office.phone))
-  //               &&
-  //               (office.schedule == '' ? true : e.schedule.contains(office.schedule))
-  //               &&
-  //               (office.infoCar == '' ? true : e.infoCar.contains(office.infoCar))
-  //               &&
-  //               (office.route == '' ? true : e.route.contains(office.route))
-  //               &&
-  //               (office.infoDriver == '' ? true : e.infoDriver.contains(office.infoDriver)))
-  //       .toList();
-  //   return filteredList;
-  // }
-
-  // Future<Office> getOfficeById(String id) async{
-  //   Response response =
-  //       await get('https://655ac1516981238d054db189.mockapi.io/logitem/office/${id}');
-  //   if(response.hasError){
-  //     return Office("", "", "", "", "", "", "", "");
-  //   }
-  //   Map<String, dynamic> officeJS = Map<String, dynamic>.from(response.body);
-  //   Office office = Office.fromJs(officeJS);
-  // return office;
-  // }
-
-  // Future<Response> updateOffice(Map data,int id) => put('https://655ac1516981238d054db189.mockapi.io/logitem/office/${id}',data);
   static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
   Future<Response> login(Map data) =>
-      _connect.post('http://192.168.24.16:3000/auth/login',data);
+      _connect.post('$SEVERNAME/auth/login',data);
   Future<Response> getUser(String token) =>
-      _connect.get('http://192.168.24.16:3000/auth/user',headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $token' //carrier
-      },);
+      _connect.get('$SEVERNAME/auth/user',headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      });
   Future<Response> logOut() =>
-      _connect.post('http://192.168.24.16:3000/auth/logout',null);
-  // _connect.post('http://localhost:3000/auth/login', data);
+      _connect.post('$SEVERNAME/auth/logout',null);
+
+  Future<Response> getDataTimeKeeping(String token) =>
+      _connect.get('$SEVERNAME/timekeeping',headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      });
+
+  Future<Response> getCoordinate(String token) =>
+      _connect.get('$SEVERNAME/office/info',headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      });
+
+  Future<Response> checkIn(String token,Map data) =>
+      _connect.post('$SEVERNAME/timekeeping/checkin',data,headers: {
+  // 'Content-Type': 'application/json; charset=UTF-8',
+  'Authorization': 'Bearer $token'});
+
+  Future<Response> checkOut(String token,Map data) =>
+      _connect.post('$SEVERNAME/timekeeping/checkout',data,headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'});
+
+  Future<Response> saveTimeStartOT(String token,Map data) =>
+      _connect.post('$SEVERNAME/timekeeping/overtimestart',data,headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'});
+  Future<Response> saveTimeEndOT(String token,Map data) =>
+      _connect.post('$SEVERNAME/timekeeping/overtimeend',data,headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'});
+
+  Future<Response> mission(String token,Map data) =>
+      _connect.post('$SEVERNAME/mission',data,headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'});
+
+  Future<Response> getAllMissionByUser(String token) =>
+      _connect.get('$SEVERNAME/mission',headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      });
+
+  Future<Response>  editMission(String token,Map data,id) =>
+      _connect.put('$SEVERNAME/mission/$id',data,headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      });
+  Future<Response>  cancelMission(String token,id) =>
+      _connect.put('$SEVERNAME/mission/cancel/$id',null,headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'
+      });
+
+  Future<Response> registerSchedule(String token,Map data) =>
+      _connect.post('$SEVERNAME/stampApprovalController',data,headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token'});
+
   Future<Map<String, dynamic>> initPlatformState() async {
     var deviceData = <String, dynamic>{};
     try {

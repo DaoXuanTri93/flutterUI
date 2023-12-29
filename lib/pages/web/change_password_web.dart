@@ -1,0 +1,115 @@
+
+
+
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
+import 'package:login_app/controller/changePasswordController.dart';
+
+
+class ChangePassword extends StatelessWidget {
+  ChangePassword({super.key});
+  ChangePasswordController changePasswordController = Get.put(ChangePasswordController());
+
+  @override
+  Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    var passOld = TextEditingController().obs;
+    var passNew = TextEditingController().obs;
+    var passNewConFirm = TextEditingController().obs;
+
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Row(
+                children: [
+                  Expanded(flex: 2, child: Container()),
+                  Expanded(flex: 4, child: Form(
+                    key: _formKey,
+                    child: Obx(
+                      () => Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('パスワード変更', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),
+                            SizedBox(height: 30),
+                            Text('現在のパスワード:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                            SizedBox(height: 15),
+                            TextFormField(
+                              validator: (value) {
+                                if(value!.trim().isEmpty){
+                                  return "Không được bỏ trống" ;
+                                }
+                              },
+                              // autovalidateMode: AutovalidateMode.onUserInteraction,
+                              obscureText: true,
+                              controller: passOld.value,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder()),
+                            ),
+                            SizedBox(height: 15),
+                            Text('新しいパスワード:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                            SizedBox(height: 15),
+                            TextFormField(
+                              validator: (value) {
+                                passNew.value.text = value!;
+                                if(value!.trim().isEmpty){
+                                  return "Không được bỏ trống" ;
+                                }
+                              },
+                              // autovalidateMode: AutovalidateMode.onUserInteraction,
+                              obscureText: true,
+                              controller: passNew.value,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder()),
+                            ),
+                            SizedBox(height: 15),
+                            Text('新しいパスワードの確認:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                            SizedBox(height: 15),
+                            TextFormField(
+                              validator: (value) {
+                                passNewConFirm.value.text = value!;
+                                if(value!.trim().isEmpty){
+                                  return "Không được bỏ trống" ;
+                                }
+
+                                if(passNew.value.text != passNewConFirm.value.text){
+                                  return "Mật khẩu chưa khớp, vui lòng nhập lại";
+                                }
+                              },
+                              // autovalidateMode: AutovalidateMode.onUserInteraction,
+                              obscureText: true,
+                              controller: passNewConFirm.value,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder()),
+                            ),
+                            SizedBox(height: 15),
+                            ElevatedButton(onPressed: () {
+
+                              Map<String, dynamic> data = {
+                                "passwordOld" : passOld.value.text,
+                                "passwordNew" : passNew.value.text,
+                                "passwordNewConfirm" : passNewConFirm.value.text,
+                              };
+                              if(_formKey.currentState!.validate()){
+                                EasyLoading.show();
+                                changePasswordController.fetchDatauser(data);
+                              }
+                            }, child: Text('変更')),
+                          ],
+                        ),
+                    ),
+                  ),
+                  ),
+                  Expanded(flex: 2, child: Container()),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

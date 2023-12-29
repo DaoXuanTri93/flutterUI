@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import '../model/staffModel.dart';
+import 'package:login_app/const/const.dart';
 
 class StaffUserController extends GetxController {
   var staffUserList = <StaffUser>[].obs;
@@ -21,7 +19,7 @@ class StaffUserController extends GetxController {
   }
 
   getAllStaffUser() async {
-    const String staffUserUrl = 'http://localhost:3000/staff';
+    final String staffUserUrl = '$SEVERNAME/staff';
     final response = await http.get(Uri.parse(staffUserUrl));
 
     if (response.statusCode == 200) {
@@ -39,7 +37,7 @@ class StaffUserController extends GetxController {
 
   getAllStaffUserDetail(String id) async {
     try {
-      final String staffUserDetailUrl = 'http://localhost:3000/staff/$id';
+      final String staffUserDetailUrl = '$SEVERNAME/staff/$id';
       final response = await http.get(Uri.parse(staffUserDetailUrl));
 
       if (response.statusCode == 200) {
@@ -71,7 +69,7 @@ class StaffUserController extends GetxController {
 
   createStaffUser(StaffUser staffUser) async {
     try {
-      const String createStaffUser = 'http://localhost:3000/staff';
+      final String createStaffUser = '$SEVERNAME/staff';
       final response =
           await http.post(Uri.parse(createStaffUser), body: staffUser.toJson());
 
@@ -86,7 +84,7 @@ class StaffUserController extends GetxController {
   }
 
   updateStaffUser(String id, StaffUser staffUser) async {
-    final String updateStaffUser = 'http://localhost:3000/staff/$id';
+    final String updateStaffUser = '$SEVERNAME/staff/$id';
     final response =
         await http.put(Uri.parse(updateStaffUser), body: staffUser.toJson());
 

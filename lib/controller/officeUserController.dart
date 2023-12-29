@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:login_app/model/officeModel.dart';
 import 'package:http/http.dart' as http;
 
+import '../const/const.dart';
+
 class OfficeUserController extends GetxController {
 
   var officeUserList = <OfficeUser>[].obs;
@@ -16,7 +18,7 @@ class OfficeUserController extends GetxController {
 
   getAllOfficeUser() async {
 
-    const String staffUserUrl = 'http://localhost:3000/office';
+    final String staffUserUrl = '$SEVERNAME/office';
     final response = await http.get(Uri.parse(staffUserUrl));
 
     if(response.statusCode==200){

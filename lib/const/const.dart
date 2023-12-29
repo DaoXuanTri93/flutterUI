@@ -1,8 +1,12 @@
+//hostname
+String SEVERNAME = "http://192.168.24.16:3000";
+// String SEVERNAME = "http://localhost:3000";
+
 // const login
 String titleUser = 'ログイン';
 String hintUser = 'ユーザー名';
 String hintPassUser = 'パスワード';
-String getPassUser = 'パスワードを忘れた場合';
+String getPassUser = 'パスワードを変更します';
 String rememberUser = 'パスワードを記憶';
 
 // const change_password
@@ -18,6 +22,8 @@ String buttonCheckout = "退勤";
 String buttonBusinessTrip = "出張有無";
 String buttonStartOverTime = "所定時間外出勤";
 String buttonEndOverTime= "所定時間外退勤";
+String buttonRegisterTimekeeping= "打刻申請";
+String buttonEnterDistance= "距離入力";
 
 
 // const schedulepage
