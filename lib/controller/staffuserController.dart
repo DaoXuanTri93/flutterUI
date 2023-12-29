@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../model/staffModel.dart';
 import 'package:login_app/const/const.dart';
+import 'package:login_app/global-variable/globals.dart' as globals;
 
 class StaffUserController extends GetxController {
   var staffUserList = <StaffUser>[].obs;
-  final staffUserListDetail = <StaffUser>[].obs;
+  final staffUserListDetail = {}.obs;
   final staffUserSearchList = <StaffUser>[].obs;
 
   var isLoading = true.obs;
@@ -20,7 +21,10 @@ class StaffUserController extends GetxController {
 
   getAllStaffUser() async {
     final String staffUserUrl = '$SEVERNAME/staff';
-    final response = await http.get(Uri.parse(staffUserUrl));
+    final response = await http.get(Uri.parse(staffUserUrl),headers: {
+      // 'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer ${globals.token}'
+    });
 
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
@@ -38,11 +42,15 @@ class StaffUserController extends GetxController {
   getAllStaffUserDetail(String id) async {
     try {
       final String staffUserDetailUrl = '$SEVERNAME/staff/$id';
-      final response = await http.get(Uri.parse(staffUserDetailUrl));
+      final response = await http.get(Uri.parse(staffUserDetailUrl),headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${globals.token}'
+      });
 
       if (response.statusCode == 200) {
         final result = jsonDecode(response.body);
-        staffUserListDetail.value = StaffUser.fromData(result);
+        staffUserListDetail.value = result;
+
         Get.toNamed('/users-details', arguments: id);
 
         isLoading.value = false;
@@ -71,11 +79,14 @@ class StaffUserController extends GetxController {
     try {
       final String createStaffUser = '$SEVERNAME/staff';
       final response =
-          await http.post(Uri.parse(createStaffUser), body: staffUser.toJson());
+          await http.post(Uri.parse(createStaffUser), body: staffUser.toJson(),headers: {
+            // 'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${globals.token}'
+          });
 
       if (response.statusCode == 201) {
         getAllStaffUser();
-        Get.snackbar('Thành Công', 'đã tạo mới một Staff User',
+        Get.snackbar('Success', 'Staff User New Has Been Created',
             backgroundColor: Colors.lightGreen);
       }
     } catch (e) {
@@ -86,7 +97,10 @@ class StaffUserController extends GetxController {
   updateStaffUser(String id, StaffUser staffUser) async {
     final String updateStaffUser = '$SEVERNAME/staff/$id';
     final response =
-        await http.put(Uri.parse(updateStaffUser), body: staffUser.toJson());
+        await http.put(Uri.parse(updateStaffUser), body: staffUser.toJson(),headers: {
+          // 'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ${globals.token}'
+        });
 
     if (response.statusCode == 200) {
       Get.snackbar('Thành Công', 'cập nhập Staff User thành công',

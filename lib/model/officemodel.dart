@@ -1,29 +1,17 @@
-// To parse this JSON data, do
-//
-//     final staffUser = staffUserFromJson(jsonString);
-
-import 'dart:convert';
-
-OfficeUser staffUserFromJson(String str) => OfficeUser.fromJson(json.decode(str));
-
-String staffUserToJson(OfficeUser data) => json.encode(data.toJson());
-
 class OfficeUser {
-  int id;
-  String baseName;
+  String? officeId;
+  String? baseName;
 
-  OfficeUser({
-    required this.id,
-    required this.baseName,
-  });
 
-  factory OfficeUser.fromJson(Map<String, dynamic> json) => OfficeUser(
-    id: json["id"],
-    baseName: json["baseName"],
-  );
+  OfficeUser.create();
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "baseName": baseName,
-  };
+  OfficeUser(
+      this.officeId,
+      this.baseName);
+
+
+  OfficeUser.fromJson(Map<String, dynamic> json) {
+    officeId = (json['officeId']).toString();
+    baseName = json['baseName'];
+  }
 }

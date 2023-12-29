@@ -27,7 +27,6 @@ class UserMasterSearch extends StatelessWidget {
         Get.put<OfficeUserController>(OfficeUserController());
 
     List<StaffUser> listStaffUser = controllerStaffUser.staffUserList;
-    List<OfficeUser> listOfficeUser = controllerOfficeUser.officeUserList;
 
 
     Map<String, dynamic> dataSearch;
@@ -56,29 +55,31 @@ class UserMasterSearch extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              DropDownTextField(
-                dropdownRadius: 5,
-                controller: dropDownController,
-                onChanged: (value) {
-                  dropDownController.dropDownValue?.name == null
-                      ? affiliatedOffice.value = ''
-                      : affiliatedOffice.value =
-                          dropDownController.dropDownValue!.name;
-                },
-                dropDownIconProperty: IconProperty(
-                    color: Colors.black,
-                    size: 30,
-                    icon: Icons.keyboard_arrow_down),
-                textFieldDecoration: InputDecoration(
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5))),
-                dropDownList: listOfficeUser
-                    .map(
-                      (e) => DropDownValueModel(
-                          name: e.baseName, value: e.baseName),
-                    )
-                    .toList(),
+              Obx(
+                () => DropDownTextField(
+                  dropdownRadius: 5,
+                  controller: dropDownController,
+                  onChanged: (value) {
+                    dropDownController.dropDownValue?.name == null
+                        ? affiliatedOffice.value = ''
+                        : affiliatedOffice.value =
+                            dropDownController.dropDownValue!.name;
+                  },
+                  dropDownIconProperty: IconProperty(
+                      color: Colors.black,
+                      size: 30,
+                      icon: Icons.keyboard_arrow_down),
+                  textFieldDecoration: InputDecoration(
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5))),
+                  dropDownList: controllerOfficeUser.officeUserList.value
+                      .map(
+                        (e) => DropDownValueModel(
+                            name: e.baseName!, value: e.officeId),
+                      )
+                      .toList(),
+                ),
               ),
               const SizedBox(
                 height: 10,
