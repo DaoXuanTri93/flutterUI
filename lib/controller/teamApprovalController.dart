@@ -1,6 +1,7 @@
 
 import 'package:get/get.dart';
 import 'package:login_app/model/TeamApprovalModel.dart';
+import 'package:login_app/pages/web/123.dart';
 import 'package:login_app/services/teamApprovalService.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
 
@@ -29,6 +30,7 @@ class TeamApprovalController extends GetxController {
       if (response.statusCode == 200) {
         teamApproval.value = teamApprovalSearch.value =
             TeamApprovalModel.fromData(response.body);
+        print(teamApproval.runtimeType);
         uniqueList();
       } else {
         print('error fetching data');
@@ -45,6 +47,7 @@ class TeamApprovalController extends GetxController {
   }
 
   void dataSearch(Map<String, dynamic> dataSearch) {
+
     String submissionDateSearch = dataSearch['submissionDate'];
     String approvalDateSearch = dataSearch['approvalDate'];
 
@@ -56,7 +59,13 @@ class TeamApprovalController extends GetxController {
         ? ''
         : approvalDateSearch = approvalDateSearch.substring(0, 10);
 
-    teamApproval.value = teamApprovalSearch.value
+    teamApproval.value = teamApprovalSearch
+        .where((p0) =>
+    (dataSearch['officeName'] == ''
+        ? true
+        : p0.officeName.contains(dataSearch['officeName']))).toList();
+
+    teamApproval.value = teamApprovalSearch
         .where((p0) =>
             (dataSearch['officeName'] == ''
                 ? true
@@ -76,32 +85,22 @@ class TeamApprovalController extends GetxController {
                     : p0.approvalDate.contains(approvalDateSearch)) &&
             (p0.approval == dataSearch['approval']))
         .toList();
+
+    print('dataSearch');
+    print(dataSearch);
+    print('teamApproval.value');
+    print(teamApproval.value);
   }
 
 
-  void updateTeamApproval(Map<String, dynamic> data, teamApprovalController1) async {
+  void updateTeamApproval(Map<String, dynamic> data) async {
     String id = data['stampApprovalId'];
 
       Response response = await teamApprovalService.updateTeamApproval(id,data,globals.token);
-      if(response.statusCode == 200){
-
+      if(response.statusCode == 201){
+        teamApproval.value[data['index']].approval = true;
+        teamApproval.refresh();
       }
-    // teamApprovalController1.dataSearch();
-    // teamApprovalController1.refresh();
-  }
-
-  void approvalButton(Map<String, dynamic> data, teamApprovalController1) async {
-    String id = data['stampApprovalId'];
-    // teamApprovalSearch.value = [];
-    Response response = await teamApprovalService.updateTeamApproval(id,data,globals.token);
-    print(response.statusCode);
-    if(response.statusCode == 201){
-
-    }
-    // teamApprovalController1.fetchDataOfLuyn();
-    // teamApprovalController1.refresh();
-    // teamApprovalSearch.refresh();
-
   }
 
 

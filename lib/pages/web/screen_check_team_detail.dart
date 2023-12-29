@@ -134,7 +134,7 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                                 "approval": true,
                                 "reason": reason.text
                               };
-                              teamApprovalController.updateTeamApproval(data,teamApprovalController);
+                              teamApprovalController.updateTeamApproval(data);
                               Get.toNamed('/NavigationBarDemo1', arguments: 1);
                               Get.snackbar("Báo Cáo", 'Phê Duyệt Thành Công !!!');
                             },
@@ -150,7 +150,7 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                                 "approval": false,
                                 "reason": reason.text
                               };
-                              teamApprovalController.updateTeamApproval(data,teamApprovalController);
+                              teamApprovalController.updateTeamApproval(data);
                               Get.toNamed('/NavigationBarDemo1');
                             },
                               child: Text('差し戻し'),

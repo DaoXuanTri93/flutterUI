@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:login_app/pages/web/123.dart';
 import 'package:login_app/pages/web/driver_infor_details.dart';
 import 'package:login_app/pages/forgotpage.dart';
 import 'package:login_app/pages/homepages.dart';
@@ -12,11 +13,12 @@ import 'package:login_app/pages/schedulepage.dart';
 import 'package:login_app/pages/timekeepingpage.dart';
 import 'package:login_app/pages/web/change_password_web.dart';
 import 'package:login_app/pages/web/driver_infor.dart';
-import 'package:login_app/pages/web/screen_check_team.dart';
+// import 'package:login_app/pages/web/screen_check_team.dart';
 import 'package:login_app/pages/upload_image_new.dart';
 import 'package:login_app/pages/web/screen_check_team_detail.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'pages/officemastersearch.dart';
+
 import 'pages/web/dashboard/narbargation.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
 import 'package:login_app/pages/limit_setting.dart';
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/loginPageWeb',page: () => LoginPageWeb()),
           GetPage(name: '/officemastersearch',page: () => OfficeMasterSearch()),
           GetPage(name: '/changePassword',page: () => ChangePassword()),
-          GetPage(name: '/navigationBarDemo',page: () => NavigationBarDemo()),
+          // GetPage(name: '/navigationBarDemo',page: () => NavigationBarDemo()),
           GetPage(name: '/NavigationBarDemo1',page: () => NavigationBarDemo1()),
           GetPage(
               name: '/driver-infor-detail',

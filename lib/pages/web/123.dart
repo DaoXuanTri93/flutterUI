@@ -6,24 +6,34 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:login_app/controller/teamApprovalController.dart';
 
+
 class ScreenCheckTeam extends StatelessWidget {
   ScreenCheckTeam({super.key});
 
-  final TeamApprovalController teamApprovalController =
-      Get.put<TeamApprovalController>(TeamApprovalController());
+  TeamApprovalController teamApprovalController = Get.put(TeamApprovalController());
+
   var stampApprovalId = ''.obs;
+
   var staff = ''.obs;
+
   var approval = false.obs;
+
   var officeName = ''.obs;
+
   TextEditingController driverName = TextEditingController();
+
   TextEditingController submissionDate = TextEditingController();
+
   TextEditingController approvalDate = TextEditingController();
+
   var stampingBeforeCorrection = ''.obs;
+
   var stampingAfterCorrection = ''.obs;
+
   var reason = ''.obs;
+
   late Map<String, dynamic> dataSearch;
 
-  // final Color color = ;
   List<String> team = [
     '事務所',
     '運転手名',
@@ -39,6 +49,10 @@ class ScreenCheckTeam extends StatelessWidget {
   Widget build(BuildContext context) {
     SingleValueDropDownController controller = SingleValueDropDownController();
     // teamApprovalController.fetchDataOfLuyn();
+    List data = teamApprovalController.teamApproval.value;
+  print('data');
+  print(data);
+
     return SafeArea(
         child: Scaffold(
       body: SingleChildScrollView(
@@ -164,117 +178,142 @@ class ScreenCheckTeam extends StatelessWidget {
                       "stampingAfterCorrection": stampingAfterCorrection.value,
                       "reason": reason.value,
                     };
-
                     teamApprovalController.dataSearch(dataSearch);
                   },
                   child: const Text('検索')),
-              Obx(
-                () => SizedBox(
-                  width: double.infinity,
-                  child: DataTable(
-                      sortColumnIndex: 1,
-                      sortAscending: true,
-                      columns: team
-                          .map((e) => DataColumn(
-                                  label: Expanded(
-                                      child: Center(
-                                          child: Text(
-                                e,
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              )))))
-                          .toList(),
-                      rows: List.generate(
-                          teamApprovalController.teamApproval.value.length,
-                          (index) {
-                        return DataRow(
-                            onLongPress: () {
-                              teamApprovalController.showDetailTeamApproval(
-                                  teamApprovalController
-                                      .teamApproval.value[index].stampApprovalId
-                                      .toString());
-                            },
-                            // selected: true,
-                            cells: [
-                              DataCell(Center(
-                                  child: Text(teamApprovalController
-                                      .teamApproval.value[index].officeName
-                                      .toString()))),
-                              DataCell(Center(
-                                  child: Text(teamApprovalController
-                                      .teamApproval.value[index].driverName
-                                      .toString()))),
-                              DataCell(Center(
-                                  child: Text(teamApprovalController
-                                      .teamApproval.value[index].submissionDate
-                                      .toString()))),
-                              DataCell(Center(
-                                  child: Text(teamApprovalController
-                                      .teamApproval.value[index].approvalDate
-                                      .toString()))),
-                              DataCell(((teamApprovalController
-                                          .teamApproval.value[index].approval ==
-                                      false
-                                  ? const Center(
-                                      child: Text('Chờ Phê Duyệt',
-                                          style: TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold)))
-                                  : const Center(
-                                      child: Text('Đã Phê Duyệt',
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontWeight: FontWeight.bold)))))),
-                              DataCell(Center(
-                                  child: Text(teamApprovalController
-                                      .teamApproval
-                                      .value[index]
-                                      .stampingBeforeCorrection
-                                      .toString()))),
-                              DataCell(Center(
-                                  child: Text(teamApprovalController
-                                      .teamApproval
-                                      .value[index]
-                                      .stampingAfterCorrection
-                                      .toString()))),
-                              DataCell(Center(
-                                child: ElevatedButton(
-                                  onHover: (value) {},
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.green),
-                                  ),
-                                  child: const Text(
-                                    '変更',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () {
-                                    Map<String, dynamic> data = {
-                                      "index": index,
-                                      "stampApprovalId": teamApprovalController
-                                          .teamApproval
-                                          .value[index]
-                                          .stampApprovalId,
-                                      "approval": true,
-                                      "reason": ''
-                                    };
-                                    teamApprovalController.updateTeamApproval(
-                                        data);
+             SizedBox(
+                    width: double.infinity,
+                    child: PaginatedDataTable(
+                        source: MyData(teamApprovalController: teamApprovalController, dataSorce: data),
+                        columns: team
+                            .map((e) => DataColumn(
+                            label: Expanded(
+                                child: Center(
+                                    child: Text(
+                                      e,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    )))))
+                            .toList(),
+                      ),
+                    ),
 
-                                    // Get.toNamed('/NavigationBarDemo1', arguments: 1);
-                                  },
-                                ),
-                              )),
-                            ]);
-                      })),
-                ),
-              ),
             ],
           ),
         ),
       ),
     ));
   }
+}
+
+class MyData extends DataTableSource {
+  MyData({required this.teamApprovalController, required this.dataSorce});
+
+  List dataSorce;
+  TeamApprovalController teamApprovalController;
+
+  @override
+  DataRow? getRow(int index) {
+    print('dataSorce');
+    print(dataSorce);
+    // print('search');
+    // print(teamApprovalController.teamApprovalSearch.length);
+    return DataRow(
+        onLongPress: () {
+          teamApprovalController.showDetailTeamApproval(
+              teamApprovalController
+                  .teamApproval.value[index].stampApprovalId
+                  .toString());
+        },
+        // selected: true,
+        cells: [
+          DataCell(Center(
+                child: Text(dataSorce[index].officeName
+                    .toString())),
+          ),
+          DataCell(Center(
+              child: Text(teamApprovalController
+                  .teamApproval.value[index].driverName
+                  .toString()))),
+          DataCell(Center(
+              child: Text(teamApprovalController
+                  .teamApproval.value[index].submissionDate
+                  .toString()))),
+          DataCell(Center(
+              child: Text(teamApprovalController
+                  .teamApproval.value[index].approvalDate
+                  .toString()))),
+          DataCell(
+            ((teamApprovalController
+                  .teamApproval.value[index].approval ==
+                  false
+                  ? const Center(
+                  child: Text('Chờ Phê Duyệt',
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold)))
+                  : const Center(
+                  child: Text('Đã Phê Duyệt',
+                      style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold))))),
+
+          ),
+          DataCell(Center(
+              child: Text(teamApprovalController
+                  .teamApproval
+                  .value[index]
+                  .stampingBeforeCorrection
+                  .toString()))),
+          DataCell(Center(
+              child: Text(teamApprovalController
+                  .teamApproval
+                  .value[index]
+                  .stampingAfterCorrection
+                  .toString()))),
+          DataCell(Center(
+            child: ElevatedButton(
+              onHover: (value) {},
+              style: ButtonStyle(
+                backgroundColor:
+                MaterialStateProperty.all(Colors.green),
+              ),
+              child: const Text(
+                '変更',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Map<String, dynamic> data = {
+                  "index": index,
+                  "stampApprovalId": teamApprovalController
+                      .teamApproval
+                      .value[index]
+                      .stampApprovalId,
+                  "approval": true,
+                  "reason": ''
+                };
+                teamApprovalController.updateTeamApproval(
+                    data);
+
+                // Get.toNamed('/NavigationBarDemo1', arguments: 1);
+              },
+            ),
+          )),
+        ]);
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount {
+
+   return teamApprovalController.teamApprovalSearch.length;
+  }
+
+  @override
+  // TODO: implement selectedRowCount
+  int get selectedRowCount => 0;
 }
