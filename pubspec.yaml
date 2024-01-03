@@ -53,7 +53,7 @@ dependencies:
   universal_html:
   excel: ^4.0.2
   pagination_flutter:
-
+  loading_animation_widget: ^1.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -11,9 +11,17 @@ class LimitSetting extends StatelessWidget {
     [false, 'user_account2', 'ユ一步2'],
   ];
 
+  TextEditingController userAccount = TextEditingController();
+  TextEditingController userName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+    if(Get.arguments != null){
+      userAccount.text = Get.arguments['userAccount'].toString();
+      userName.text = Get.arguments['userName'].toString();
+    }
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(30),
@@ -49,6 +57,8 @@ class LimitSetting extends StatelessWidget {
                         height: 30,
                         width: 200,
                         child: TextFormField(
+                          controller: userAccount ,
+                          readOnly: true,
                           decoration: const InputDecoration(
                               hintStyle: TextStyle(color: Colors.grey),
                               border: OutlineInputBorder()),
@@ -65,6 +75,8 @@ class LimitSetting extends StatelessWidget {
                         height: 30,
                         width: 200,
                         child: TextFormField(
+                          readOnly: true,
+                          controller: userName,
                           decoration: const InputDecoration(
                               hintStyle: TextStyle(color: Colors.grey),
                               border: OutlineInputBorder()),
@@ -98,7 +110,8 @@ class LimitSetting extends StatelessWidget {
                       hintStyle: const TextStyle(color: Colors.grey),
                       hintText: 'なし',
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5))),
+                          borderRadius: BorderRadius.circular(5))
+                  ),
                   dropDownList: const [
                     DropDownValueModel(name: '個別設定1', value: '1'),
                     DropDownValueModel(name: '個別設定2', value: '2'),

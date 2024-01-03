@@ -17,7 +17,7 @@ class StaffUser {
   String telephone;
   String affiliatedOffice;
   String role;
-  String mac;
+  String? mac;
 
   StaffUser({
     required this.id,
@@ -27,7 +27,7 @@ class StaffUser {
     required this.telephone,
     required this.affiliatedOffice,
     required this.role,
-    required this.mac,
+     this.mac,
   });
 
 
