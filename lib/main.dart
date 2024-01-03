@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-// import 'package:login_app/pages/web/123.dart';
+
+import 'package:login_app/pages/officemasterdetails.dart';
+import 'package:login_app/pages/stamping_approval_details.dart';
+import 'package:login_app/pages/stamping_approval_screen.dart';
 import 'package:login_app/pages/web/driver_infor_details.dart';
 import 'package:login_app/pages/forgotpage.dart';
 import 'package:login_app/pages/homepages.dart';
@@ -58,6 +61,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/screenCheckTeamDetail',page: () => ScreenCheckTeamDetail()),
           GetPage(name: '/loginPageWeb',page: () => LoginPageWeb()),
           GetPage(name: '/officemastersearch',page: () => OfficeMasterSearch()),
+          GetPage(name: '/officedetails',page: () => OfficeDetails()),
           GetPage(name: '/changePassword',page: () => ChangePassword()),
           GetPage(name: '/screenCheckMission',page: () => ScreenCheckMission()),
           GetPage(name: '/NavigationBarDemo1',page: () => NavigationBarDemo1()),
@@ -70,6 +74,8 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/search-users', page: () => UserMasterSearch()),
           GetPage(name: '/users-details', page: () => UserMasterDetails()),
           GetPage(name: '/limit-setting', page: () => LimitSetting()),
+          GetPage(name: '/stamping-approval-screen', page: () => StampingApprovalScreen()),
+          GetPage(name: '/stamping-approval-detail', page: () => StampingApprovalDetail()),
         ],
 
         builder: EasyLoading.init(),

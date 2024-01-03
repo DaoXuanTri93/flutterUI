@@ -20,30 +20,23 @@ class TimeKeepingServices {
 
   Future checkin() async {
     final token = globals.token;
-    Map<String, dynamic> data = {};
     final positionLocal = await PositionServices().getLocaltion();
 
     Response response = await HomeProviders().getCoordinate(token!);
     if (response.statusCode != 200) {
       throw Exception(response.body["message"]);
     }
-    data = response.body;
-    final positionOffice = data["coordinate"].split(",");
+    final positionOffice = response.body[0]["coordinate"].split(",");
     final latOffice = double.parse(positionOffice[0]);
     final longOffice = double.parse(positionOffice[1]);
 
     double distanceInMeters = Geolocator.distanceBetween(
         positionLocal.latitude, positionLocal.longitude, latOffice, longOffice);
-    print(distanceInMeters);
     Map<String, dynamic> checkPosition = {};
     if (distanceInMeters > 200) {
-      // Get.snackbar(
-      //     "Chấm công thất bại", "Bạn đang nằm ngoài phạm vi chấm công");
-      // return false;
       checkPosition = {"check" : false};
     }
     Response res = await HomeProviders().checkIn(token,checkPosition);
-    print(res.body);
     if (res.statusCode != 201) {
       Get.snackbar("Chấm công thất bại", res.body["message"]);
       return false;
@@ -54,15 +47,13 @@ class TimeKeepingServices {
 
   Future checkout() async {
     final token = globals.token;
-    Map<String, dynamic> data = {};
     final positionLocal = await PositionServices().getLocaltion();
 
     Response response = await HomeProviders().getCoordinate(token!);
     if (response.statusCode != 200) {
       throw Exception(response.body["message"]);
     }
-    data = response.body;
-    final positionOffice = data["coordinate"].split(",");
+    final positionOffice = response.body[0]["coordinate"].split(",");
     final latOffice = double.parse(positionOffice[0]);
     final longOffice = double.parse(positionOffice[1]);
 

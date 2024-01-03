@@ -267,13 +267,7 @@ class OfficeMasterSearch extends StatelessWidget {
                       height: 40,
                       child: ElevatedButton(
                         onPressed: () {
-                          final Office offices = Office.create();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    OfficeDetails(office: offices)),
-                          );
+                          Get.toNamed('/officedetails/');
                         },
                         child: Text('新規登録'),
                         style: ElevatedButton.styleFrom(
@@ -315,26 +309,21 @@ class OfficeMasterSearch extends StatelessWidget {
                           rows: List.generate(office.length, (index) {
                             return DataRow(
                                 cells: [
-                                  DataCell(Text('${office[index].baseName}')),
-                                  DataCell(Text('${office[index].address}')),
+                                  DataCell(Text(office[index].baseName ?? '-')),
+                                  DataCell(Text(office[index].address ?? '-')),
                                   DataCell(
-                                      Text('${office[index].telephoneNumber}')),
-                                  DataCell(Text('${office[index].manager}')),
+                                      Text(office[index].telephoneNumber ?? '-')),
+                                  DataCell(Text(office[index].manager ?? '-')),
                                   DataCell(
-                                      Text('${office[index].driverInformation}')),
-                                  DataCell(Text('${office[index].drivingRoute}')),
+                                      Text(office[index].driverInformation ?? '-')),
+                                  DataCell(Text(office[index].drivingRoute ?? '-')),
                                   DataCell(Text(
-                                      '${office[index].vehicleInformation}')),
+                                      office[index].vehicleInformation ?? '-')),
                                   DataCell(
-                                      Text('${office[index].drivingSchedule}'))
+                                      Text(office[index].drivingSchedule ?? '-'))
                                 ],
                                 onSelectChanged: (value) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => OfficeDetails(
-                                                office: office[index],
-                                              )));
+                                  Get.toNamed('/officedetails/${office[index].officeId.toString()}');
                                 });
                           }),
                         );

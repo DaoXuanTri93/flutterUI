@@ -13,8 +13,6 @@ class Office {
   String? coordinate;
   String? engravingRangeRadius;
 
-  Office.create();
-
   Office(
       this.officeId,
       this.baseName,
