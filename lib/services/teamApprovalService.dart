@@ -18,6 +18,11 @@ class TeamApprovalService extends GetConnect{
         // 'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token' //carrier
       });
+  Future<Response> findAllStamping(String token) async =>
+      await get('$SEVERNAME/stampApprovalController/driver',headers: {
+        // 'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $token' //carrier
+      });
 
   Future<Response> approval(String token, String id) async =>
       await get('$SEVERNAME/stampApprovalController/$id',headers: {

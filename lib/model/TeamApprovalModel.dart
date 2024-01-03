@@ -15,6 +15,7 @@ class TeamApprovalModel {
   String? approvalDate;
   String? stampingBeforeCorrection;
   String? stampingAfterCorrection;
+  String? status;
   String? reason;
 
   TeamApprovalModel({
@@ -28,7 +29,19 @@ class TeamApprovalModel {
      this.stampingBeforeCorrection,
      this.stampingAfterCorrection,
      this.reason,
+    this.status
   });
+
+
+  TeamApprovalModel.stampingDetail(
+      this.stampApprovalId,
+      this.approval,
+      this.submissionDate,
+      this.approvalDate,
+      this.stampingBeforeCorrection,
+      this.stampingAfterCorrection,
+      this.status,
+      this.reason);
 
   factory TeamApprovalModel.fromJson(Map<String, dynamic> json) => TeamApprovalModel(
     stampApprovalId: json["stampApprovalId"].toString(),
@@ -41,6 +54,7 @@ class TeamApprovalModel {
     stampingBeforeCorrection: json["stampingBeforeCorrection"],
     stampingAfterCorrection: json["stampingAfterCorrection"],
     reason: json["reason"],
+    status: json["status"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -54,6 +68,7 @@ class TeamApprovalModel {
     "stampingBeforeCorrection": stampingBeforeCorrection,
     "stampingAfterCorrection": stampingAfterCorrection,
     "reason": reason,
+    "status" : status
   };
 
   static List<TeamApprovalModel> fromData(List<dynamic> data) {

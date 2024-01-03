@@ -24,6 +24,7 @@ String buttonStartOverTime = "所定時間外出勤";
 String buttonEndOverTime= "所定時間外退勤";
 String buttonRegisterTimekeeping= "打刻申請";
 String buttonEnterDistance= "距離入力";
+String buttonEnterStamping = "Stamping approval";
 
 
 // const schedulepage
@@ -39,3 +40,9 @@ String titleDistanceStart = "スタート距離:";
 String buttonDistanceStart = "スタートメーター写真をアップロード";
 String titleDistanceEnd = "終了距離:";
 String buttonDistanceEnd = "終了メーター写真をアップロード";
+
+// const stamping
+String stampingPage = 'Stamping Approval';
+String submissionDate = "Submission Date:";
+String approvalDate = "Approval date:";
+String approvalStatus = "Status: ";
