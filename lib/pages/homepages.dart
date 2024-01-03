@@ -49,6 +49,15 @@ class HomePage extends StatelessWidget {
                     style: const TextStyle(fontSize: 20)),
                 radius: 8),
         ),
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.only(bottom: 20),
+          child: ButtonScreen(
+              onPressed: () => Get.toNamed("/stamping-approval-screen"),
+              text: Text(buttonEnterStamping,
+                  style: const TextStyle(fontSize: 20)),
+              radius: 8),
+        ),
       ],
     ),
             )));
