@@ -15,6 +15,7 @@ class TeamApprovalModel {
   String? approvalDate;
   String? stampingBeforeCorrection;
   String? stampingAfterCorrection;
+  String? status;
   String? reason;
 
   TeamApprovalModel({
@@ -27,6 +28,7 @@ class TeamApprovalModel {
      this.approvalDate,
      this.stampingBeforeCorrection,
      this.stampingAfterCorrection,
+     this.status,
      this.reason,
   });
 
@@ -40,6 +42,7 @@ class TeamApprovalModel {
     approvalDate: json["approvalDate"],
     stampingBeforeCorrection: json["stampingBeforeCorrection"],
     stampingAfterCorrection: json["stampingAfterCorrection"],
+    status: json["status"],
     reason: json["reason"],
   );
 
@@ -53,6 +56,7 @@ class TeamApprovalModel {
     "approvalDate": approvalDate,
     "stampingBeforeCorrection": stampingBeforeCorrection,
     "stampingAfterCorrection": stampingAfterCorrection,
+    "status": status,
     "reason": reason,
   };
 

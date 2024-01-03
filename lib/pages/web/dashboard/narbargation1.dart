@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:login_app/auth/authentical.dart';
 import 'package:login_app/pages/officemastersearch.dart';
 import 'package:login_app/pages/user_master_search.dart';
-import 'package:login_app/pages/web/123.dart';
 import 'package:login_app/pages/web/change_password_web.dart';
 import 'package:login_app/pages/web/driver_infor.dart';
+import 'package:login_app/pages/web/screen_check_mission.dart';
+import 'package:login_app/pages/web/screen_check_team.dart';
 // import 'package:login_app/pages/web/screen_check_team.dart';
 
 class NavigationBarDemo1 extends StatelessWidget {
@@ -17,7 +18,7 @@ class NavigationBarDemo1 extends StatelessWidget {
       OfficeMasterSearch(),
       ScreenCheckTeam(),
       DriverInforSearch(),
-      Container(child: Center(child: Text("approval"))),
+      ScreenCheckMission(),
       UserMasterSearch(),
       Container(child: Center(child: Text("Staff"))),
       ChangePassword(),
@@ -97,7 +98,7 @@ class NavigationBarDemo1 extends StatelessWidget {
                                 Icons.approval,
                                 color: Colors.black,
                               ),
-                              label: Text("Time Attendance Approval")),
+                              label: Text("Mission Approval")),
                           NavigationRailDestination(
                               icon: Icon(Icons.search_outlined, color: Colors.white,),
                               selectedIcon: Icon(Icons.search_outlined, color: Colors.black,),

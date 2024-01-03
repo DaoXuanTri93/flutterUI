@@ -71,9 +71,7 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                           readOnly: true,
                           decoration: InputDecoration(
                             hintText: (teamApprovalController.detailTeamApproval
-                                .value.approval == true
-                                ? 'Đã Phê Duyệt'
-                                : 'Chờ Phê Duyệt'),
+                                .value.status),
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -127,31 +125,37 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                           ],
                         ) : Row(
                           children: [
+                            // NÚT THÀNH CÔNG
                             ElevatedButton(onPressed: () {
                               Map<String, dynamic> data = {
                                 "stampApprovalId": teamApprovalController
                                     .detailTeamApproval.value.stampApprovalId,
                                 "approval": true,
+                                "status": "APPROVED",
                                 "reason": reason.text
                               };
-                              teamApprovalController.updateTeamApproval(data);
+                              teamApprovalController.updateTeamApproval1(data);
                               Get.toNamed('/NavigationBarDemo1', arguments: 1);
-                              Get.snackbar("Báo Cáo", 'Phê Duyệt Thành Công !!!');
+                              // Get.snackbar("Báo Cáo", 'Phê Duyệt Thành Công !!!');
                             },
                               child: Text('承認'),
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.green,
                                   fixedSize: Size(80, 40)),),
                             SizedBox(width: 10),
+
+                            // NÚT TỪ CHỐI
                             ElevatedButton(onPressed: () {
                               Map<String, dynamic> data = {
                                 "stampApprovalId": teamApprovalController
                                     .detailTeamApproval.value.stampApprovalId,
-                                "approval": false,
+                                "approval": true,
+                                "status": "REFUSE",
                                 "reason": reason.text
                               };
-                              teamApprovalController.updateTeamApproval(data);
-                              Get.toNamed('/NavigationBarDemo1');
+                              print("từ chối");
+                              teamApprovalController.updateTeamApproval1(data);
+                              Get.toNamed('/NavigationBarDemo1', arguments: 1);
                             },
                               child: Text('差し戻し'),
                               style: ElevatedButton.styleFrom(

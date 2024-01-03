@@ -86,7 +86,7 @@ class ScreenCheckTeam extends StatelessWidget {
                 controller: submissionDate,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'mm/dd/yyyy --:-- --',
+                    hintText: 'yyyy/mm/dd --:-- --',
                     suffixIcon: Icon(Icons.calendar_today)),
                 onTap: () async {
                   DateTime? datepicker = await showDatePicker(
@@ -114,7 +114,7 @@ class ScreenCheckTeam extends StatelessWidget {
                 controller: approvalDate,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'mm/dd/yyyy --:-- --',
+                    hintText: 'yyyy/mm/dd --:-- --',
                     suffixIcon: Icon(Icons.calendar_today)),
                 onTap: () async {
                   DateTime? datepicker = await showDatePicker(
@@ -172,6 +172,7 @@ class ScreenCheckTeam extends StatelessWidget {
                 () => SizedBox(
                   width: double.infinity,
                   child: DataTable(
+                      showCheckboxColumn: false,
                       sortColumnIndex: 1,
                       sortAscending: true,
                       columns: team
@@ -190,12 +191,12 @@ class ScreenCheckTeam extends StatelessWidget {
                           teamApprovalController.teamApproval.value.length,
                           (index) {
                         return DataRow(
-                            onLongPress: () {
-                              teamApprovalController.showDetailTeamApproval(
-                                  teamApprovalController
-                                      .teamApproval.value[index].stampApprovalId
-                                      .toString());
-                            },
+                          onSelectChanged: (selected){
+                            teamApprovalController.showDetailTeamApproval(
+                                      teamApprovalController
+                                          .teamApproval.value[index].stampApprovalId
+                                          .toString());
+                          },
                             // selected: true,
                             cells: [
                               DataCell(Center(
@@ -211,22 +212,27 @@ class ScreenCheckTeam extends StatelessWidget {
                                       .teamApproval.value[index].submissionDate
                                       .toString()))),
                               DataCell(Center(
-                                  child: Text(teamApprovalController
+                                  child: Text((teamApprovalController
                                       .teamApproval.value[index].approvalDate
-                                      .toString()))),
-                              DataCell(((teamApprovalController
-                                          .teamApproval.value[index].approval ==
-                                      false
-                                  ? const Center(
-                                      child: Text('Chờ Phê Duyệt',
-                                          style: TextStyle(
-                                              color: Colors.red,
-                                              fontWeight: FontWeight.bold)))
-                                  : const Center(
-                                      child: Text('Đã Phê Duyệt',
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontWeight: FontWeight.bold)))))),
+                                      .toString() == 'null' ? '----/--/--' : teamApprovalController
+                                      .teamApproval.value[index].approvalDate
+                                      .toString())))),
+                              DataCell(Center(
+                                child: Text(
+                                    teamApprovalController.teamApproval.value[index].status
+                                        .toString(),
+                                    style: TextStyle(
+                                        color: (teamApprovalController
+                                            .teamApproval.value[index].status ==
+                                            "APPROVED"
+                                            ? Colors.green
+                                            : teamApprovalController
+                                            .teamApproval.value[index].status ==
+                                            "REFUSE"
+                                            ? Colors.red
+                                            : Colors.black87),
+                                        fontWeight: FontWeight.bold)),
+                              )),
                               DataCell(Center(
                                   child: Text(teamApprovalController
                                       .teamApproval
@@ -244,13 +250,13 @@ class ScreenCheckTeam extends StatelessWidget {
                                   onHover: (value) {},
                                   style: ButtonStyle(
                                     backgroundColor:
-                                        MaterialStateProperty.all(Colors.green),
+                            (teamApprovalController.teamApproval.value[index].status != "PENDING") ? MaterialStateProperty.all(Colors.grey) : MaterialStateProperty.all(Colors.green),
                                   ),
                                   child: const Text(
                                     '変更',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  onPressed: () {
+                                  onPressed: (teamApprovalController.teamApproval.value[index].status != "PENDING") ? null : () {
                                     Map<String, dynamic> data = {
                                       "index": index,
                                       "stampApprovalId": teamApprovalController
@@ -258,12 +264,11 @@ class ScreenCheckTeam extends StatelessWidget {
                                           .value[index]
                                           .stampApprovalId,
                                       "approval": true,
+                                      "status": "APPROVED",
                                       "reason": ''
                                     };
-                                    teamApprovalController.updateTeamApproval(
-                                        data);
+                                    teamApprovalController.updateTeamApproval(data);
 
-                                    // Get.toNamed('/NavigationBarDemo1', arguments: 1);
                                   },
                                 ),
                               )),

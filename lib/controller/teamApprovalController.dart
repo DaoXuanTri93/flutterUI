@@ -1,7 +1,6 @@
 
 import 'package:get/get.dart';
 import 'package:login_app/model/TeamApprovalModel.dart';
-import 'package:login_app/pages/web/123.dart';
 import 'package:login_app/services/teamApprovalService.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
 
@@ -22,7 +21,7 @@ class TeamApprovalController extends GetxController {
     fetchDataOfLuyn();
   }
 
-   void fetchDataOfLuyn() async {
+  void fetchDataOfLuyn() async {
 
     try {
       isLoading(true);
@@ -63,53 +62,84 @@ class TeamApprovalController extends GetxController {
         .where((p0) =>
     (dataSearch['officeName'] == ''
         ? true
-        : p0.officeName.contains(dataSearch['officeName']))).toList();
+        : p0.officeName.contains(dataSearch['officeName'])) &&
+        (dataSearch['driverName'] == ''
+            ? true
+            : p0.driverName.contains(dataSearch['driverName'])) &&
 
-    teamApproval.value = teamApprovalSearch
-        .where((p0) =>
-            (dataSearch['officeName'] == ''
-                ? true
-                : p0.officeName.contains(dataSearch['officeName'])) &&
-            (dataSearch['driverName'] == ''
-                ? true
-                : p0.driverName.contains(dataSearch['driverName'])) &&
-            (submissionDateSearch == ''
-                ? true
-                : p0.submissionDate == null
-                    ? false
-                    : p0.submissionDate.contains(submissionDateSearch)) &&
-            (approvalDateSearch == ''
-                ? true
-                : p0.approvalDate == null
-                    ? false
-                    : p0.approvalDate.contains(approvalDateSearch)) &&
-            (p0.approval == dataSearch['approval']))
+        (submissionDateSearch == ''
+            ? true
+            : p0.submissionDate == null
+            ? false
+            : p0.submissionDate.contains(submissionDateSearch))
+
+
+        &&
+        (approvalDateSearch == ''
+            ? true
+            : p0.approvalDate == null
+            ? false
+            : p0.approvalDate.contains(approvalDateSearch)) &&
+        (p0.approval == dataSearch['approval']))
         .toList();
+    teamApprovalSearch.refresh();
 
-    print('dataSearch');
-    print(dataSearch);
-    print('teamApproval.value');
-    print(teamApproval.value);
   }
 
 
   void updateTeamApproval(Map<String, dynamic> data) async {
     String id = data['stampApprovalId'];
+    print("id");
+    print(id);
+    print('data');
+    print(data);
+    Response response = await teamApprovalService.updateTeamApproval(id,data,globals.token);
+    if(response.statusCode == 201){
+      teamApprovalSearch.value[data['index']].approval = teamApproval.value[data['index']].approval = true;
+      teamApprovalSearch.value[data['index']].status = teamApproval.value[data['index']].status = data["status"];
+      teamApprovalSearch.value[data['index']].approvalDate = teamApproval.value[data['index']].approvalDate = response.body['approvalDate'];
+      teamApprovalSearch.value[data['index']].reason = teamApproval.value[data['index']].reason = data["reason"];
 
-      Response response = await teamApprovalService.updateTeamApproval(id,data,globals.token);
-      if(response.statusCode == 201){
-        teamApproval.value[data['index']].approval = true;
-        teamApproval.refresh();
-      }
+      teamApproval.refresh();
+      teamApprovalSearch.refresh();
+    }
   }
 
+  void updateTeamApproval1(Map<String, dynamic> data) async {
+    String id = data['stampApprovalId'];
+    Response response = await teamApprovalService.updateTeamApproval(id,data,globals.token);
+
+    if(response.statusCode == 201){
+      for(var i = 0; i < teamApprovalSearch.length; i++){
+        if(teamApprovalSearch[i].stampApprovalId == id){
+          teamApprovalSearch[i].approval = data["approval"];
+          teamApprovalSearch[i].status = data["status"];
+          teamApprovalSearch[i].approvalDate = response.body['approvalDate'];
+          teamApprovalSearch[i].reason = data["reason"];
+        }
+      }
+      if(response.body["stampApprovalId"] == id){
+        teamApproval.map((e){
+          if(e.stampApprovalId == id){
+            e.approval = true;
+            e.status = data["status"];
+            e.approvalDate = response.body['approvalDate'];
+            e.reason = data["reason"];
+            return e;
+          }
+          return null;
+        });
+
+      }
+      teamApproval.refresh();
+      teamApprovalSearch.refresh();
+    }
+  }
 
   void showDetailTeamApproval(String id) async {
     Response response = await teamApprovalService.approval(globals.token, id);
-    print(response.statusCode);
     if(response.statusCode == 200){
       detailTeamApproval.value = TeamApprovalModel.fromJson(response.body);
-      print(detailTeamApproval.value);
       Get.toNamed('/screenCheckTeamDetail/$id');
     }
 

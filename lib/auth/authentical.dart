@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:login_app/pages/loginpage.dart';
+import 'package:login_app/pages/web/loginpageweb.dart';
 import '../services/HomeProviders.dart';
 import 'cacheManager.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
@@ -15,7 +16,8 @@ class AuthenticationManager extends GetxController with CacheManager {
     removeToken();
     HomeProviders().logOut();
     globals.token = "";
-    Get.off(LoginPage());
+    kIsWeb ?  Get.off(LoginPageWeb()) :Get.off(LoginPage());
+    // Get.off(LoginPage());
   }
 
   void login(
