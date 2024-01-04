@@ -3,11 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:login_app/model/officeModel.dart';
 import '../controller/officeUserController.dart';
 import '../controller/staffUserController.dart';
 import '../model/staffModel.dart';
-
 
 class UserMasterSearch extends StatelessWidget {
   UserMasterSearch({super.key});
@@ -27,7 +25,6 @@ class UserMasterSearch extends StatelessWidget {
         Get.put<OfficeUserController>(OfficeUserController());
 
     List<StaffUser> listStaffUser = controllerStaffUser.staffUserList;
-
 
     Map<String, dynamic> dataSearch;
 
@@ -92,28 +89,26 @@ class UserMasterSearch extends StatelessWidget {
                 height: 10,
               ),
               DropDownTextField(
-                dropdownRadius: 5,
-                controller: dropDownController,
-                onChanged: (value) {
-                  dropDownController.dropDownValue?.name == null
-                      ? role.value = ''
-                      : role.value = dropDownController.dropDownValue!.name;
-                },
-                dropDownIconProperty: IconProperty(
-                    color: Colors.black,
-                    size: 30,
-                    icon: Icons.keyboard_arrow_down),
-                textFieldDecoration: InputDecoration(
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5))),
-                dropDownList: const [
-                  DropDownValueModel(name: 'user', value:'user'),
-                  DropDownValueModel(name: 'admin', value:'admin'),
-                  DropDownValueModel(name: 'member', value:'member'),
-                  DropDownValueModel(name: 'DRIVER', value:'DRIVER'),
-                ]
-              ),
+                  dropdownRadius: 5,
+                  controller: dropDownController,
+                  onChanged: (value) {
+                    dropDownController.dropDownValue?.name == null
+                        ? role.value = ''
+                        : role.value = dropDownController.dropDownValue!.name;
+                  },
+                  dropDownIconProperty: IconProperty(
+                      color: Colors.black,
+                      size: 30,
+                      icon: Icons.keyboard_arrow_down),
+                  textFieldDecoration: InputDecoration(
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5))),
+                  dropDownList: const [
+                    DropDownValueModel(name: 'admin', value: 'admin'),
+                    DropDownValueModel(name: 'member', value: 'member'),
+                    DropDownValueModel(name: 'DRIVER', value: 'DRIVER'),
+                  ]),
               const SizedBox(
                 height: 10,
               ),

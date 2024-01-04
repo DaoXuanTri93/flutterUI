@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/officeUserController.dart';
 import '../controller/staffUserController.dart';
-import '../model/officeModel.dart';
 import '../model/staffModel.dart';
 
 class UserMasterDetails extends StatelessWidget {
@@ -51,9 +50,6 @@ class UserMasterDetails extends StatelessWidget {
       affiliatedOffice.text = controllerOfficeUser.officeUserListOne[0].baseName!;
       _role.value = 'DRIVER';
     }
-
-
-    List<OfficeUser> listOfficeUser = controllerOfficeUser.officeUserList;
 
     return Obx(() => controllerStaffUser.isLoading.value
         ? const Center(
@@ -117,8 +113,8 @@ class UserMasterDetails extends StatelessWidget {
                           controller: userAccount,
                           validator: (value) {
                             userAccount.text = value!;
-                            if(value!.trim().isEmpty){
-                              return "Không được bỏ trống" ;
+                            if(value.trim().isEmpty){
+                              return "Not Empty" ;
                             }
                           },
                           decoration: const InputDecoration(
@@ -141,8 +137,8 @@ class UserMasterDetails extends StatelessWidget {
                           controller: userName,
                           validator: (value) {
                             userName.text = value!;
-                            if(value!.trim().isEmpty){
-                              return "Không được bỏ trống" ;
+                            if(value.trim().isEmpty){
+                              return "Not Empty" ;
                             }
                           },
                           decoration: const InputDecoration(
@@ -165,8 +161,8 @@ class UserMasterDetails extends StatelessWidget {
                           controller: mail,
                           validator: (value) {
                             mail.text = value!;
-                            if(value!.trim().isEmpty){
-                              return "Không được bỏ trống" ;
+                            if(value.trim().isEmpty){
+                              return "Not Empty" ;
                             }
                           },
                           decoration: const InputDecoration(
@@ -189,8 +185,8 @@ class UserMasterDetails extends StatelessWidget {
                           controller: phone,
                           validator: (value) {
                             phone.text = value!;
-                            if(value!.trim().isEmpty){
-                              return "Không được bỏ trống" ;
+                            if(value.trim().isEmpty){
+                              return "Not Empty" ;
                             }
                           },
                           decoration: const InputDecoration(
@@ -213,8 +209,6 @@ class UserMasterDetails extends StatelessWidget {
                           dropdownRadius: 5,
                           controller: dropDownController,
                           onChanged: (value) {
-                            print("name");
-                            print(dropDownController.dropDownValue?.name);
                             dropDownController.dropDownValue?.name == null ?
                             affiliatedOffice.text = dropdownValue.value :
                             affiliatedOffice.text = dropDownController.dropDownValue!.name;
