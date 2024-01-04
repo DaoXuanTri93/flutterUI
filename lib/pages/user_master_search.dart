@@ -151,14 +151,14 @@ class UserMasterSearch extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 15),
-                      backgroundColor: Colors.grey[300],
+                      backgroundColor: Colors.blue,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero,
                       ),
                     ),
                     child: const Text(
                       '検索',
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                   ElevatedButton(
@@ -172,13 +172,12 @@ class UserMasterSearch extends StatelessWidget {
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.zero,
                           ),
-                          backgroundColor: Colors.lightBlue),
+                          backgroundColor: Colors.blue),
                       child: const Text(
                         '新規登録',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500),
+                            fontSize: 16,),
                       ))
                 ],
               ),

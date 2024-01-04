@@ -19,15 +19,13 @@ class ChangePasswordController extends GetxController {
     Response response =
         await changePasswordService.changePassword(data, globals.token);
     if (response.statusCode != 201) {
-      message.value = response.body["message"];
-      // Get.snackbar("Thông Báo", "Bạn đã nhập sai mật khẩu!!!", backgroundColor: Colors.redAccent, duration: Duration(seconds: 2), colorText: Colors.white);
-
-      return  EasyLoading.showError(message.value);
+      Get.snackbar('Incorrect password', response.body['message'],duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+      return  EasyLoading.dismiss();
     }
-
-    Get.snackbar("Thông Báo", "Thay đổi mật khau thành công", backgroundColor: Colors.greenAccent);
-    Get.toNamed("/NavigationBarDemo1");
-
+    Get.snackbar('Notification', 'Updated password successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      Get.toNamed("/NavigationBarDemo1");
+    });
     return EasyLoading.dismiss();
   }
 }

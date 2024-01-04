@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:text_area/text_area.dart';
 
-import '../controller/OfficeController.dart';
+import '../controller/officeController.dart';
 import '../model/office.dart';
 
 class OfficeDetails extends StatelessWidget {
@@ -230,7 +230,7 @@ class OfficeDetails extends StatelessWidget {
                         children: [
                           Image.network(basePhoto.text.replaceAll('"', ''),
                               height: 300,
-                              width: double.infinity,
+                              width: 800,
                               fit: BoxFit.cover, errorBuilder:
                                   (BuildContext context, Object exception,
                                       StackTrace? stackTrace) {
@@ -351,50 +351,44 @@ class OfficeDetails extends StatelessWidget {
               ),
               Row(
                 children: [
-                  SizedBox(
-                    width: 70,
-                    height: 40,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        final offices = Office.changeData(
-                            baseName.text,
-                            address.text,
-                            telephoneNumber.text,
-                            manager.text,
-                            basePhoto.text,
-                            detailedInformation.text,
-                            coordinate.text,
-                            engravingRangeRadius.text);
-                        if (_formKey.currentState!.validate()) {
-                          if (id == '' || id == '0') {
-                            controller.createData(offices);
-                            Get.back();
-                            Get.snackbar(
-                              "Alert",
-                              "Create Success",
-                              backgroundColor: Colors.green,
-                              icon: const Icon(Icons.add_alert),
-                            );
-                          } else {
-                            controller.updateData(offices,
-                                controller.office['officeId'].toString());
-                            Get.back();
-                            Get.snackbar(
-                              "Alert",
-                              "Update Success",
-                              backgroundColor: Colors.green,
-                              icon: const Icon(Icons.add_alert),
-                            );
-                          }
+                  ElevatedButton(
+                    onPressed: () {
+                      final offices = Office.changeData(
+                          baseName.text,
+                          address.text,
+                          telephoneNumber.text,
+                          manager.text,
+                          basePhoto.text,
+                          detailedInformation.text,
+                          coordinate.text,
+                          engravingRangeRadius.text);
+                      if (_formKey.currentState!.validate()) {
+                        if (id == '' || id == '0') {
+                          controller.createData(offices);
+                          Get.back();
+                          Get.snackbar(
+                            "Alert",
+                            "Create Success",
+                            backgroundColor: Colors.green,
+                            icon: const Icon(Icons.add_alert),
+                          );
+                        } else {
+                          controller.updateData(offices,
+                              controller.office['officeId'].toString());
+                          Get.back();
+                          Get.snackbar(
+                            "Alert",
+                            "Update Success",
+                            backgroundColor: Colors.green,
+                            icon: const Icon(Icons.add_alert),
+                          );
                         }
-                      },
-                      child: Text('検索'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[700],
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,
-                            side: BorderSide(color: Colors.black)),
-                      ),
+                      }
+                    },
+                    child: Text('検索',style: TextStyle(color: Colors.white),),
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
                     ),
                   ),
                   SizedBox(

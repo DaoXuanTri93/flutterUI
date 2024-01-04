@@ -1,6 +1,6 @@
 
 import 'package:get/get.dart';
-import 'package:login_app/model/TeamApprovalModel.dart';
+import 'package:login_app/model/teamApprovalModel.dart';
 import 'package:login_app/services/teamApprovalService.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
 

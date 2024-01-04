@@ -75,11 +75,12 @@ class LoginPageWeb extends StatelessWidget {
                                   }
                               },
                               style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 15),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(0))),
-                              child: Text(titleUser)),
+                              child: Text(titleUser,style: TextStyle(color: Colors.white),)),
                           const SizedBox(height: 5),
                           GestureDetector(
                             onTap: () {

@@ -1,9 +1,6 @@
-import 'dart:convert';
 
 import 'package:excel/excel.dart';
 import 'package:get/get.dart';
-import 'package:login_app/model/TeamApprovalModel.dart';
-import '../global-variable/globals.dart';
 import '../services/driverServices.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
 
@@ -19,7 +16,6 @@ class DriverController extends GetxController {
   void onInit() {
     super.onInit();
     fetchData();
-    // Future.delayed(const Duration(seconds: 2), () async {   });
   }
 
   void fetchData() async {
@@ -29,19 +25,17 @@ class DriverController extends GetxController {
       Response response = await driverService.findAll(token);
       if (response.statusCode == 200) {
         driverList.value = diverListSearch.value = response.body;
-        print(response.body);
       } else {
-        print('error fetching data');
+        // throw new Exception('Error');
       }
     } catch (e) {
-      print('Error while getting data is $e');
+      // print('Error while getting data is $e');
     } finally {
       isLoading(false);
     }
   }
 
   void dataSearch(Map<String, dynamic> dataSearch) {
-    print("davoday${dataSearch['not-stamped']}");
     driverList.value = diverListSearch
         .where((p0) =>
             (dataSearch['affiliatedOffice'] == ''
@@ -69,15 +63,11 @@ class DriverController extends GetxController {
                         p0['timeEndDay'] != null))) &&
             dataSearch['businessTrip'] == p0['workOutside'])
         .toList();
-
-    print(driverList);
-
   }
 
   void getDataById(String id) async{
     final token = globals.token;
     Response response = await driverService.getdataById(id,token);
-    print(response.statusCode);
     if(response.statusCode == 200){
       driver.value = Map<String,String>.from(response.body);
     }
@@ -85,10 +75,9 @@ class DriverController extends GetxController {
 
   void updateDriver(Map<String, dynamic> data,String id) async {
     final token = globals.token;
-    print("data" + data['userName']);
     Response response = await driverService.updateDriver(id,token,data);
     if(response.statusCode == 200){
-      print(response.body);
+      // print(response.body);
     }
   }
 

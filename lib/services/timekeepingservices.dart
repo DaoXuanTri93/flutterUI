@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:login_app/services/positionservices.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
-import 'HomeProviders.dart';
+import 'homeProviders.dart';
 
 class TimeKeepingServices {
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_app/controller/teamApprovalController.dart';
 import 'package:login_app/main.dart';
-import 'package:login_app/model/TeamApprovalModel.dart';
+import 'package:login_app/model/teamApprovalModel.dart';
 
 
 class ScreenCheckTeamDetail extends StatelessWidget {
@@ -118,10 +118,10 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                             ElevatedButton(onPressed: () {
                               Get.back();
                             },
-                              child: Text('Cancel'),
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.redAccent,
-                                  fixedSize: Size(110, 40)),),
+                              child: Text('戻る',style: TextStyle(color: Colors.white),),
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                                backgroundColor: MaterialStateProperty.all(Colors.red),),),
                           ],
                         ) : Row(
                           children: [
@@ -138,10 +138,10 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                               Get.toNamed('/NavigationBarDemo1', arguments: 1);
                               // Get.snackbar("Báo Cáo", 'Phê Duyệt Thành Công !!!');
                             },
-                              child: Text('承認'),
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  fixedSize: Size(80, 40)),),
+                              child: Text('承認',style: TextStyle(color: Colors.white),),
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                                backgroundColor: MaterialStateProperty.all(Colors.green),),),
                             SizedBox(width: 10),
 
                             // NÚT TỪ CHỐI
@@ -153,14 +153,14 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                                 "status": "REFUSE",
                                 "reason": reason.text
                               };
-                              print("từ chối");
                               teamApprovalController.updateTeamApproval1(data);
                               Get.toNamed('/NavigationBarDemo1', arguments: 1);
                             },
-                              child: Text('差し戻し'),
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.redAccent,
-                                  fixedSize: Size(110, 40)),),
+                              child: Text('差し戻し',style: TextStyle(color: Colors.white),),
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                                backgroundColor: MaterialStateProperty.all(Colors.red),)
+                              )
                           ],
                         )),
                       ],

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:login_app/model/MissionApproval.dart';
+import 'package:login_app/model/missionApproval.dart';
 import 'package:login_app/services/screenCheckMissionService.dart';
 
 class CheckMissionController extends GetxController {

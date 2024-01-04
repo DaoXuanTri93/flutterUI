@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:login_app/controller/OfficeController.dart';
+import 'package:login_app/controller/officeController.dart';
 
 import '../model/office.dart';
 import 'officemasterdetails.dart';
@@ -235,46 +235,36 @@ class OfficeMasterSearch extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    SizedBox(
-                      width: 70,
-                      height: 40,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final offices = Office.search(
-                              baseName.value.text,
-                              address.value.text,
-                              telephoneNumber.value.text,
-                              manager.value.text,
-                              driverInformation.value.text,
-                              drivingRoute.value.text,
-                              vehicleInformation.value.text,
-                              drivingSchedule.value.text);
-                          controller.searchListOffice(offices);
-                        },
-                        child: Text('検索'),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue[700],
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero,
-                                side: BorderSide(color: Colors.black))),
+                    ElevatedButton(
+                      onPressed: () {
+                        final offices = Office.search(
+                            baseName.value.text,
+                            address.value.text,
+                            telephoneNumber.value.text,
+                            manager.value.text,
+                            driverInformation.value.text,
+                            drivingRoute.value.text,
+                            vehicleInformation.value.text,
+                            drivingSchedule.value.text);
+                        controller.searchListOffice(offices);
+                      },
+                      child: Text('検索',style: TextStyle(color: Colors.white)),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                        backgroundColor: MaterialStateProperty.all(Colors.blue),
                       ),
                     ),
                     SizedBox(
                       width: 10,
                     ),
-                    SizedBox(
-                      width: 100,
-                      height: 40,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.toNamed('/officedetails/');
-                        },
-                        child: Text('新規登録'),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue[700],
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.zero,
-                                side: BorderSide(color: Colors.black))),
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.toNamed('/officedetails/');
+                      },
+                      child: Text('新規登録',style: TextStyle(color: Colors.white),),
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                        backgroundColor: MaterialStateProperty.all(Colors.blue),
                       ),
                     )
                   ],

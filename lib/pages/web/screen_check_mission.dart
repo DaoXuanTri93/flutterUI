@@ -20,12 +20,12 @@ class ScreenCheckMission extends StatelessWidget {
   late Map<String, dynamic> dataSearch;
 
   List<String> team = [
-    'STT',
-    'UserName',
-    'StartDay',
-    'EndDay',
-    'StatusMission',
-    'Button'
+    '#',
+    'User Name',
+    'Start Day',
+    'End Day',
+    'Status Mission',
+    ''
   ];
 
   @override
@@ -42,7 +42,7 @@ class ScreenCheckMission extends StatelessWidget {
             children: [
               const Text('SEARCH MISSIONAPPROVAL',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-              const Text('USER-NAME:',
+              const Text('User Name:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               SizedBox(height: sizeHeight),
               TextField(
@@ -52,7 +52,7 @@ class ScreenCheckMission extends StatelessWidget {
                 ),
               ),
               SizedBox(height: sizeHeight),
-              const Text('START-DAY:',
+              const Text('Start Day:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               SizedBox(height: sizeHeight),
               TextField(
@@ -69,7 +69,7 @@ class ScreenCheckMission extends StatelessWidget {
                 },
               ),
               SizedBox(height: sizeHeight),
-              const Text('END-DAY:',
+              const Text('End Day:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               SizedBox(height: sizeHeight),
               TextField(
@@ -86,7 +86,7 @@ class ScreenCheckMission extends StatelessWidget {
                 },
               ),
               SizedBox(height: sizeHeight),
-              const Text('STATUS-MISSION:',
+              const Text('Status Mission:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               SizedBox(height: sizeHeight),
               DropDownTextField(
@@ -120,9 +120,11 @@ class ScreenCheckMission extends StatelessWidget {
 
                   checkMissionController.dataSearch(dataSearch);
                 },
-                child: Text("Search"),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.white60)),
+                child: Text("検索",style: TextStyle(color: Colors.white),),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    shape: BeveledRectangleBorder(
+                        borderRadius: BorderRadius.circular(2))),
               ),
               Obx(
                 () => SizedBox(

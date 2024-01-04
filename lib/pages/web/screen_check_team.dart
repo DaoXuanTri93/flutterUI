@@ -4,6 +4,7 @@ import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:login_app/const/fontText.dart';
 import 'package:login_app/controller/teamApprovalController.dart';
 
 class ScreenCheckTeam extends StatelessWidget {
@@ -150,24 +151,30 @@ class ScreenCheckTeam extends StatelessWidget {
                 ],
               ),
               ElevatedButton(
-                  onPressed: () {
-                    dataSearch = {
-                      "stampApprovalId": stampApprovalId.value,
-                      "staff": staff.value,
-                      "approval": approval.value,
-                      "officeName": officeName.value,
-                      "driverName": driverName.text,
-                      "submissionDate": submissionDate.text,
-                      "approvalDate": approvalDate.text,
-                      "stampingBeforeCorrection":
-                          stampingBeforeCorrection.value,
-                      "stampingAfterCorrection": stampingAfterCorrection.value,
-                      "reason": reason.value,
-                    };
+                onPressed: () {
+                  dataSearch = {
+                    "stampApprovalId": stampApprovalId.value,
+                    "staff": staff.value,
+                    "approval": approval.value,
+                    "officeName": officeName.value,
+                    "driverName": driverName.text,
+                    "submissionDate": submissionDate.text,
+                    "approvalDate": approvalDate.text,
+                    "stampingBeforeCorrection": stampingBeforeCorrection.value,
+                    "stampingAfterCorrection": stampingAfterCorrection.value,
+                    "reason": reason.value,
+                  };
 
-                    teamApprovalController.dataSearch(dataSearch);
-                  },
-                  child: const Text('検索')),
+                  teamApprovalController.dataSearch(dataSearch);
+                },
+                child: const Text('検索',style: TextStyle(color: Colors.white),),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5))),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+              ),
+              SizedBox(height: 20,),
               Obx(
                 () => SizedBox(
                   width: double.infinity,
@@ -175,28 +182,27 @@ class ScreenCheckTeam extends StatelessWidget {
                       showCheckboxColumn: false,
                       sortColumnIndex: 1,
                       sortAscending: true,
+                      headingRowColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.grey.shade200),
                       columns: team
                           .map((e) => DataColumn(
                                   label: Expanded(
                                       child: Center(
                                           child: Text(
                                 e,
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
+                                style: textFont.titleMedium,
                               )))))
                           .toList(),
                       rows: List.generate(
                           teamApprovalController.teamApproval.value.length,
                           (index) {
                         return DataRow(
-                          onSelectChanged: (selected){
-                            teamApprovalController.showDetailTeamApproval(
-                                      teamApprovalController
-                                          .teamApproval.value[index].stampApprovalId
-                                          .toString());
-                          },
+                            onSelectChanged: (selected) {
+                              teamApprovalController.showDetailTeamApproval(
+                                  teamApprovalController
+                                      .teamApproval.value[index].stampApprovalId
+                                      .toString());
+                            },
                             // selected: true,
                             cells: [
                               DataCell(Center(
@@ -213,24 +219,34 @@ class ScreenCheckTeam extends StatelessWidget {
                                       .toString()))),
                               DataCell(Center(
                                   child: Text((teamApprovalController
-                                      .teamApproval.value[index].approvalDate
-                                      .toString() == 'null' ? '----/--/--' : teamApprovalController
-                                      .teamApproval.value[index].approvalDate
-                                      .toString())))),
+                                              .teamApproval
+                                              .value[index]
+                                              .approvalDate
+                                              .toString() ==
+                                          'null'
+                                      ? '----/--/--'
+                                      : teamApprovalController.teamApproval
+                                          .value[index].approvalDate
+                                          .toString())))),
                               DataCell(Center(
                                 child: Text(
-                                    teamApprovalController.teamApproval.value[index].status
+                                    teamApprovalController
+                                        .teamApproval.value[index].status
                                         .toString(),
                                     style: TextStyle(
                                         color: (teamApprovalController
-                                            .teamApproval.value[index].status ==
-                                            "APPROVED"
+                                                    .teamApproval
+                                                    .value[index]
+                                                    .status ==
+                                                "APPROVED"
                                             ? Colors.green
                                             : teamApprovalController
-                                            .teamApproval.value[index].status ==
-                                            "REFUSE"
-                                            ? Colors.red
-                                            : Colors.black87),
+                                                        .teamApproval
+                                                        .value[index]
+                                                        .status ==
+                                                    "REFUSE"
+                                                ? Colors.red
+                                                : Colors.black87),
                                         fontWeight: FontWeight.bold)),
                               )),
                               DataCell(Center(
@@ -249,27 +265,40 @@ class ScreenCheckTeam extends StatelessWidget {
                                 child: ElevatedButton(
                                   onHover: (value) {},
                                   style: ButtonStyle(
-                                    backgroundColor:
-                            (teamApprovalController.teamApproval.value[index].status != "PENDING") ? MaterialStateProperty.all(Colors.grey) : MaterialStateProperty.all(Colors.green),
+                                    backgroundColor: (teamApprovalController
+                                                .teamApproval
+                                                .value[index]
+                                                .status !=
+                                            "PENDING")
+                                        ? MaterialStateProperty.all(Colors.grey)
+                                        : MaterialStateProperty.all(
+                                            Colors.green),
                                   ),
                                   child: const Text(
                                     '変更',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  onPressed: (teamApprovalController.teamApproval.value[index].status != "PENDING") ? null : () {
-                                    Map<String, dynamic> data = {
-                                      "index": index,
-                                      "stampApprovalId": teamApprovalController
-                                          .teamApproval
-                                          .value[index]
-                                          .stampApprovalId,
-                                      "approval": true,
-                                      "status": "APPROVED",
-                                      "reason": ''
-                                    };
-                                    teamApprovalController.updateTeamApproval(data);
-
-                                  },
+                                  onPressed: (teamApprovalController
+                                              .teamApproval
+                                              .value[index]
+                                              .status !=
+                                          "PENDING")
+                                      ? null
+                                      : () {
+                                          Map<String, dynamic> data = {
+                                            "index": index,
+                                            "stampApprovalId":
+                                                teamApprovalController
+                                                    .teamApproval
+                                                    .value[index]
+                                                    .stampApprovalId,
+                                            "approval": true,
+                                            "status": "APPROVED",
+                                            "reason": ''
+                                          };
+                                          teamApprovalController
+                                              .updateTeamApproval(data);
+                                        },
                                 ),
                               )),
                             ]);

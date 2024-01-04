@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:login_app/controller/screenCheckMissionController.dart';
 import 'package:login_app/controller/teamApprovalController.dart';
 import 'package:login_app/main.dart';
-import 'package:login_app/model/TeamApprovalModel.dart';
+import 'package:login_app/model/teamApprovalModel.dart';
 
 
 class ScreenMissionDetail extends StatelessWidget {

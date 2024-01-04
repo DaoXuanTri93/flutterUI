@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:login_app/pages/loginpage.dart';
 import 'package:login_app/pages/web/loginpageweb.dart';
-import '../services/HomeProviders.dart';
+import '../services/homeProviders.dart';
 import 'cacheManager.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
 import 'package:login_app/auth/cookie_manager.dart' as cookie;
@@ -17,7 +17,6 @@ class AuthenticationManager extends GetxController with CacheManager {
     HomeProviders().logOut();
     globals.token = "";
     kIsWeb ?  Get.off(LoginPageWeb()) :Get.off(LoginPage());
-    // Get.off(LoginPage());
   }
 
   void login(
@@ -41,9 +40,7 @@ class AuthenticationManager extends GetxController with CacheManager {
     cookie.setToken('jwt', token);
     globals.token = token;
     isLogged.value = true;
-    print("globalsToken");
-    print(globals.token);
-    kIsWeb ? Get.toNamed("/NavigationBarDemo1") : Get.offNamed("/homepage");
+    kIsWeb ? Get.toNamed("/navigationBarDemo") : Get.offNamed("/homepage");
 
   }
 
@@ -64,4 +61,5 @@ class AuthenticationManager extends GetxController with CacheManager {
   void onInit() {
     super.onInit();
   }
+
 }

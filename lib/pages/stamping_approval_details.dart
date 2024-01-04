@@ -8,7 +8,7 @@ class StampingApprovalDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller =
-        Get.put<StampingApprovalController>(StampingApprovalController());
+    Get.put<StampingApprovalController>(StampingApprovalController());
     final controllerOffice = controller.detailStampingApproval;
     final stampings = controllerOffice.value;
     return Scaffold(
@@ -42,7 +42,9 @@ class StampingApprovalDetail extends StatelessWidget {
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             Text(
-                              stampings['submissionDate'],
+                              stampings['submissionDate'] == null
+                                  ? '-'
+                                  : stampings['submissionDate'].toString(),
                               style: TextStyle(fontSize: 15),
                             )
                           ],
@@ -57,7 +59,10 @@ class StampingApprovalDetail extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-                            Text(stampings['approvalDate'],
+                            Text(
+                                stampings['approvalDate'] == null
+                                    ? '-'
+                                    : stampings['approvalDate'].toString(),
                                 style: TextStyle(fontSize: 15))
                           ],
                         )
@@ -86,7 +91,10 @@ class StampingApprovalDetail extends StatelessWidget {
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             Text(
-                              stampings['stampingBeforeCorrection'],
+                              stampings['stampingBeforeCorrection'] == null
+                                  ? '-'
+                                  : stampings['stampingBeforeCorrection']
+                                  .toString(),
                               style: TextStyle(fontSize: 15),
                             )
                           ],
@@ -101,7 +109,11 @@ class StampingApprovalDetail extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-                            Text(stampings['stampingAfterCorrection'],
+                            Text(
+                                stampings['stampingAfterCorrection'] == null
+                                    ? '-'
+                                    : stampings['stampingAfterCorrection']
+                                    .toString(),
                                 style: TextStyle(fontSize: 15))
                           ],
                         )
@@ -122,25 +134,30 @@ class StampingApprovalDetail extends StatelessWidget {
                     Text(
                       'Status: ',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
-                    stampings['status'] == 'PENDING'
+                    stampings['status'].toString() == 'PENDING'
                         ? Text(
-                      stampings['status'],
+                      stampings['status'] == null
+                          ? '-'
+                          : stampings['status'].toString(),
                       style: TextStyle(
-                          color: Colors.yellow[900],fontSize: 15),
+                          color: Colors.yellow[900], fontSize: 15),
                     )
-                        : stampings['status'] == 'REFUSE'
+                        : stampings['status'].toString() == 'REFUSE'
                         ? Text(
-                      stampings['status'],
-                      style: TextStyle(
-                          color: Colors.red,fontSize: 15),
+                      stampings['status'] == null
+                          ? '-'
+                          : stampings['status'].toString(),
+                      style:
+                      TextStyle(color: Colors.red, fontSize: 15),
                     )
-                        : Text(stampings['status'],
+                        : Text(
+                        stampings['status'] == null
+                            ? '-'
+                            : stampings['status'].toString(),
                         style: TextStyle(
-                          color: Colors.green,fontSize: 15
-                        )
-                    ),
+                            color: Colors.green, fontSize: 15)),
                   ],
                 ),
                 SizedBox(
@@ -159,9 +176,10 @@ class StampingApprovalDetail extends StatelessWidget {
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     Text(
-                      stampings['reason'],
-                      style:
-                      TextStyle(fontSize: 15),
+                      stampings['reason'] == null
+                          ? '-'
+                          : stampings['reason'].toString(),
+                      style: TextStyle(fontSize: 15),
                     ),
                   ],
                 )

@@ -276,7 +276,7 @@ class LimitSetting extends StatelessWidget {
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero,
                         ),
-                        backgroundColor: Colors.lightBlue,
+                        backgroundColor: Colors.blue,
                         padding:
                         const EdgeInsets.symmetric(vertical: 15, horizontal: 20)),
                     child: const Text(

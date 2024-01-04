@@ -46,3 +46,8 @@ String stampingPage = 'Stamping Approval';
 String submissionDate = "Submission Date:";
 String approvalDate = "Approval date:";
 String approvalStatus = "Status: ";
+
+
+// const japan
+const notEmpty = "Cannot be empty";
+const incorrectPassword= "Incorrect password, please try again";

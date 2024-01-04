@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:login_app/const/const.dart';
+import 'package:login_app/const/fontText.dart';
 import 'package:login_app/controller/changePasswordController.dart';
 
 
@@ -33,53 +35,49 @@ class ChangePassword extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('パスワード変更', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),),
+                            Text('パスワード変更', style: textFont.titleLarge),
                             SizedBox(height: 30),
-                            Text('現在のパスワード:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                            Text('現在のパスワード:', style: textFont.titleMedium),
                             SizedBox(height: 15),
                             TextFormField(
                               validator: (value) {
                                 if(value!.trim().isEmpty){
-                                  return "Không được bỏ trống" ;
+                                  return notEmpty ;
                                 }
                               },
-                              // autovalidateMode: AutovalidateMode.onUserInteraction,
                               obscureText: true,
                               controller: passOld.value,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder()),
                             ),
                             SizedBox(height: 15),
-                            Text('新しいパスワード:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                            Text('新しいパスワード:', style: textFont.titleMedium),
                             SizedBox(height: 15),
                             TextFormField(
                               validator: (value) {
                                 passNew.value.text = value!;
                                 if(value!.trim().isEmpty){
-                                  return "Không được bỏ trống" ;
+                                  return notEmpty ;
                                 }
                               },
-                              // autovalidateMode: AutovalidateMode.onUserInteraction,
                               obscureText: true,
                               controller: passNew.value,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder()),
                             ),
                             SizedBox(height: 15),
-                            Text('新しいパスワードの確認:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                            Text('新しいパスワードの確認:', style: textFont.titleMedium),
                             SizedBox(height: 15),
                             TextFormField(
                               validator: (value) {
                                 passNewConFirm.value.text = value!;
                                 if(value!.trim().isEmpty){
-                                  return "Không được bỏ trống" ;
+                                  return notEmpty ;
                                 }
-
                                 if(passNew.value.text != passNewConFirm.value.text){
-                                  return "Mật khẩu chưa khớp, vui lòng nhập lại";
+                                  return incorrectPassword;
                                 }
                               },
-                              // autovalidateMode: AutovalidateMode.onUserInteraction,
                               obscureText: true,
                               controller: passNewConFirm.value,
                               decoration: InputDecoration(

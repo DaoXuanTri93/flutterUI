@@ -306,7 +306,7 @@ class UserMasterDetails extends StatelessWidget {
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.zero,
                                           ),
-                                          backgroundColor: Colors.lightBlue),
+                                          backgroundColor: Colors.blue),
                                       child: const Text(
                                         '編集',
                                         style: TextStyle(color: Colors.white),
@@ -325,7 +325,7 @@ class UserMasterDetails extends StatelessWidget {
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.zero,
                                           ),
-                                          backgroundColor: Colors.lightBlue),
+                                          backgroundColor: Colors.blue),
                                       child: const Text(
                                         '権限設定',
                                         style: TextStyle(color: Colors.white),
@@ -359,7 +359,7 @@ class UserMasterDetails extends StatelessWidget {
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.zero,
                                           ),
-                                          backgroundColor: Colors.lightBlue),
+                                          backgroundColor: Colors.blue),
                                       child: const Text(
                                         '新規登録',
                                         style: TextStyle(color: Colors.white),

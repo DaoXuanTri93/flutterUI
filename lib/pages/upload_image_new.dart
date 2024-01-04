@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:login_app/const/const.dart';
 
-import '../button_cua_dx_tri/button_screen.dart';
 import '../controller/imageController.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,7 +24,6 @@ class UploadImageNew extends StatelessWidget {
 
   String? _lastKilometerPhotoURL;
 
-  // File? _compressedFile;
 
   final _startingPoint = TextEditingController().obs;
 
@@ -34,11 +33,6 @@ class UploadImageNew extends StatelessWidget {
   Future<void> _uploadImageStartingPoint() async {
     final url =
         Uri.parse('https://api.cloudinary.com/v1_1/dqnnru99w/image/upload');
-    if(_startingPoint.value.text.trim() == ''){
-      Get.snackbar('kilomet không được bỏ trống', 'Vui lòng nhập lại !!!');
-      return;
-    }
-
     if (_firstKilometerPhoto.value!.path == '') {
       var saveImage = imageController.createEnterDistance(_startingPoint.value.text, '');
       _startingPoint.value.text = '';
@@ -62,7 +56,6 @@ class UploadImageNew extends StatelessWidget {
       if (__firstKilometerPhotoURL == '') {
         __firstKilometerPhotoURL = null;
       }
-    print(_startingPoint.value.text);
       imageController.createEnterDistance(_startingPoint.value.text, __firstKilometerPhotoURL!);
       _startingPoint.value.text = '';
       _firstKilometerPhoto.value = File('');
@@ -108,7 +101,7 @@ class UploadImageNew extends StatelessWidget {
     }
   }
 
-  Future<void> _pickImageFromGallery() async {
+  Future<void> _pickImageFromCameraStartingPoint() async {
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.camera);
 
@@ -123,12 +116,10 @@ class UploadImageNew extends StatelessWidget {
     _firstKilometerPhoto.value = File(result!.path);
   }
 
-  Future<void> _pickImageFromGallery1() async {
+  Future<void> _pickImageFromCameraEndPoint() async {
     final returnedImage =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
-
+    await ImagePicker().pickImage(source: ImageSource.camera);
     if (returnedImage == null) return;
-
     _lastKilometerPhoto.value = File(returnedImage!.path);
     var result = await FlutterImageCompress.compressAndGetFile(
       _lastKilometerPhoto.value!.absolute.path,
@@ -140,6 +131,10 @@ class UploadImageNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final _formKey = GlobalKey<FormState>();
+    final _formKey1 = GlobalKey<FormState>();
+
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -161,91 +156,161 @@ class UploadImageNew extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 10),
-                      TextField(
-                        controller: _startingPoint.value,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(0))),
-                        onTap: () {},
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Row(
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ElevatedButton(onPressed: (){
-                              _pickImageFromGallery();
-                            }, child: Text('choose file')),
-                            SizedBox(width: 10,),
-                            Obx(
-                              () => _firstKilometerPhoto.value.path != ''
-                                  ? Row(
-                                      children: [
-                                        Image.file(_firstKilometerPhoto.value!,
-                                            height: 100, width: 100),
-                                        IconButton(
-                                            onPressed: () {
-                                              _firstKilometerPhoto.value = File('');
-                                            },
-                                            icon: Icon(Icons.cancel))
-                                      ],
-                                    )
-                                  : Text('No file chosen'),
+                            TextFormField(
+                              validator: (value){
+                                if(value!.trim().isEmpty){
+                                  return notEmpty.toString() ;
+                                }
+                              },
+                              controller: _startingPoint.value,
+                              keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0))),
                             ),
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 3),
+                                    child: ElevatedButton(onPressed: (){
+                                      _pickImageFromCameraStartingPoint();
+                                    }, child: Text('choose file', style: TextStyle(color: Colors.black54)),
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all(LinearBorder.none),
+                                        backgroundColor: MaterialStateProperty.all(Colors.grey),
+
+                                      ),),
+                                  ),
+                                  SizedBox(width: 10,),
+                                  Obx(
+                                        () => _firstKilometerPhoto.value.path != ''
+                                        ? Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Row(
+                                        children: [
+                                          Image.file(_firstKilometerPhoto.value!,
+                                              height: 100, width: 100),
+                                          IconButton(
+                                              onPressed: () {
+                                                _firstKilometerPhoto.value = File('');
+                                              },
+                                              icon: Icon(Icons.cancel))
+                                        ],
+                                      ),
+                                    )
+                                        : Text('No file chosen'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            ElevatedButton(onPressed: (){
+                              if(_formKey.currentState!.validate()){
+                                EasyLoading.show();
+                                _uploadImageStartingPoint();
+                              }},
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                                ),
+                                child: Text("スタートメーター写真をアップロード", style: TextStyle(color: Colors.white),)),
                           ],
                         ),
                       ),
-                      ButtonScreen(
-                          text: 'スタートメーター写真をアップロード',
-                          onPressed: () {
-                            _uploadImageStartingPoint();
-                          }),
                       const SizedBox(height: 20),
+
+
                       Text("終了距離:",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 10),
-                      TextField(
-                        controller: _endPoint.value,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(0))),
-                        onTap: () {},
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: Row(
+                      Form(
+                        key: _formKey1,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            TextFormField(
+                              validator: (value){
+                                  if(value!.trim().isEmpty){
+                                    return notEmpty.toString() ;
+                                  }
+                              },
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              controller: _endPoint.value,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0))),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(vertical: 5),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 3 ),
+                                child: Row(
+                                  children: [
+                                    ElevatedButton(onPressed: (){
+                                      _pickImageFromCameraEndPoint();
+                                    },
+                                        style: ButtonStyle(
+                                          shape: MaterialStateProperty.all(LinearBorder.none),
+                                          backgroundColor: MaterialStateProperty.all(Colors.grey),
+
+                                        ),
+                                        child: Text('choose file', style: TextStyle(color: Colors.black54))),
+                                    SizedBox(width: 10,),
+                                    Obx(() => _lastKilometerPhoto.value.path != ''
+                                        ? Row(
+                                      children: [
+                                        Image.file(
+                                          _lastKilometerPhoto.value!,
+                                          height: 100,
+                                          width: 100,
+                                        ),
+                                        // IconButton(onPressed: (){}, icon: Icon(Icons.cancel))
+                                        IconButton(onPressed: (){
+                                          _lastKilometerPhoto.value = File('');
+                                        }, icon: Icon(Icons.cancel))
+                                      ],
+                                    )
+                                        : Text('No file chosen')),
+                                  ],
+                                ),
+                              ),
+                            ),
                             ElevatedButton(onPressed: (){
-                              _pickImageFromGallery1();
-                            }, child: Text('choose file')),
-                            SizedBox(width: 10,),
-                            Obx(() => _lastKilometerPhoto.value.path != ''
-                                ? Row(
-                                    children: [
-                                      Image.file(
-                                        _lastKilometerPhoto.value!,
-                                        height: 100,
-                                        width: 100,
-                                      ),
-                                      // IconButton(onPressed: (){}, icon: Icon(Icons.cancel))
-                                      IconButton(onPressed: (){
-                                        _lastKilometerPhoto.value = File('');
-                                      }, icon: Icon(Icons.cancel))
-                                    ],
-                                  )
-                                : Text('No file chosen')),
+                              if(_formKey1.currentState!.validate()){
+                                EasyLoading.show();
+                                _uploadImageEndPoint();
+                              }
+                            },
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                                ),
+                                child: Text("終了メーター写真をアップロード", style: TextStyle(color: Colors.white),))
                           ],
+
                         ),
                       ),
-                      ButtonScreen(text: '終了メーター写真をアップロード', onPressed: () {
-                        _uploadImageEndPoint();
-                      })
                     ],
                   ),
                 ),

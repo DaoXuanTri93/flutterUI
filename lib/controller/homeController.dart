@@ -1,7 +1,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import '../services/HomeProviders.dart';
+import '../services/homeProviders.dart';
 class HomeController extends GetxController {
   String MAC ="";
 
@@ -11,7 +11,6 @@ class HomeController extends GetxController {
       MAC = "";
     }else{
       MAC = deviceData["id"];
-      print(MAC);
     }
   }
 
