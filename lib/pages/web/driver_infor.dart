@@ -72,7 +72,6 @@ class DriverInforSearch extends StatelessWidget {
                                   ? affiliatedOfficeController.text = ''
                                   : affiliatedOfficeController.text =
                                   dropDownController.dropDownValue!.name;
-                              // print(affiliatedOfficeController.text);
                             },
                             dropDownIconProperty: IconProperty(
                                 color: Colors.black,
@@ -135,7 +134,6 @@ class DriverInforSearch extends StatelessWidget {
                           TextFormField(
                             onChanged: (value) {
                               areaController.text = value;
-                              // print(areaController.text);
                             },
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(
@@ -220,8 +218,10 @@ class DriverInforSearch extends StatelessWidget {
                             columns: List.generate(titleTable.length, (index) {
                               return DataColumn(
                                   label:
-                                  Expanded(child: Text(titleTable[index],
-                                      style: textFont.titleSmall)));
+                                  Expanded(child: Center(
+                                    child: Text(titleTable[index],
+                                        style: textFont.titleSmall),
+                                  )));
                             }),
                             rows: List.generate(
                                 driverController.driverList.length, (index) {
@@ -261,7 +261,10 @@ class DriverInforSearch extends StatelessWidget {
                                   )),
                                   DataCell(Center(
                                     child: Text(
-                                        driverController.driverList[index]['workOutside'] ? 'あり' : 'ない'),
+                                        driverController.driverList[index]['workOutside'] ? 'あり' : 'ない',
+                                      style: TextStyle(
+                                          color: (driverController.driverList[index]['workOutside'] ? Colors.green : Colors.red),
+                                          fontWeight: FontWeight.bold),),
                                   )),
                                   DataCell(Center(
                                     child: Text(

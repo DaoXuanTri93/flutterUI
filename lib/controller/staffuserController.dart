@@ -21,32 +21,28 @@ class StaffUserController extends GetxController {
 
   getAllStaffUser() async {
     final String staffUserUrl = '$SEVERNAME/staff';
-    final response = await http.get(Uri.parse(staffUserUrl),headers: {
-      // 'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer ${globals.token}'
-    });
+    final response = await http.get(Uri.parse(staffUserUrl),
+        headers: {'Authorization': 'Bearer ${globals.token}'});
 
     if (response.statusCode == 200) {
       final List result = jsonDecode(response.body);
-      print("resulf");
-      print(result);
+
       staffUserList.value = staffUserSearchList.value =
           result.map((e) => StaffUser.fromJson(e)).toList();
 
       isLoading.value = false;
     } else {
       Get.snackbar('Error Loading Data !!! ',
-          'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}');
+          'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}',
+          backgroundColor: Colors.redAccent);
     }
   }
 
   getAllStaffUserDetail(String id) async {
     try {
       final String staffUserDetailUrl = '$SEVERNAME/staff/$id';
-      final response = await http.get(Uri.parse(staffUserDetailUrl),headers: {
-        // 'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ${globals.token}'
-      });
+      final response = await http.get(Uri.parse(staffUserDetailUrl),
+          headers: {'Authorization': 'Bearer ${globals.token}'});
 
       if (response.statusCode == 200) {
         final result = jsonDecode(response.body);
@@ -57,7 +53,8 @@ class StaffUserController extends GetxController {
         isLoading.value = false;
       }
     } catch (e) {
-      Get.snackbar('Error Loading Data !!! ', 'Sever Responded : $e');
+      Get.snackbar('Error Loading Data !!! ', 'Sever Responded : $e',
+          backgroundColor: Colors.redAccent);
     }
   }
 
@@ -79,41 +76,29 @@ class StaffUserController extends GetxController {
   createStaffUser(StaffUser staffUser) async {
     try {
       final String createStaffUser = '$SEVERNAME/staff';
-      final response =
-          await http.post(Uri.parse(createStaffUser), body: staffUser.toJson(),headers: {
-            // 'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'Bearer ${globals.token}'
-          });
-        print("createAt");
-        print(response.body);
+      final response = await http.post(Uri.parse(createStaffUser),
+          body: staffUser.toJson(),
+          headers: {'Authorization': 'Bearer ${globals.token}'});
+
       if (response.statusCode == 201) {
-        getAllStaffUser();
         Get.snackbar('Success', 'Staff User New Has Been Created',
             backgroundColor: Colors.lightGreen);
       }
     } catch (e) {
-      Get.snackbar('Error Loading Data !!! ', 'Sever Responded : $e');
+      Get.snackbar('Error Loading Data !!! ', 'Sever Responded : $e',
+          backgroundColor: Colors.redAccent);
     }
   }
 
   updateStaffUser(String id, StaffUser staffUser) async {
     final String updateStaffUser = '$SEVERNAME/staff/$id';
-    final response =
-        await http.put(Uri.parse(updateStaffUser), body: staffUser.toJson(),headers: {
-          // 'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ${globals.token}'
-        });
-
+    final response = await http.put(Uri.parse(updateStaffUser),
+        body: staffUser.toJson(),
+        headers: {'Authorization': 'Bearer ${globals.token}'});
     if (response.statusCode == 200) {
-      Get.snackbar('Thành Công', 'cập nhập Staff User thành công',
-          backgroundColor: Colors.lightGreen);
-      getAllStaffUserDetail(id);
       getAllStaffUser();
-    } else {
-      (Get.snackbar('Error Loading Data !!! ',
-          'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}'));
+     return Get.snackbar('Notification', 'Updated successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
     }
+   return (Get.snackbar('Error Loading Data !!! ', 'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}', backgroundColor: Colors.redAccent.withOpacity(0.3), duration: Duration(milliseconds: 1500)));
   }
-
-
 }

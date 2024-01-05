@@ -20,18 +20,9 @@ class DriverInforDetails extends StatelessWidget {
     final DriverController controller = Get.put(DriverController());
     final businessTripChecked = false.obs;
     final id = Uri.base.path.split('/')[2];
-    print(id);
     controller.getDataById(id);
-    print(controller.driver);
-    // userName.text = controller.driver['userName'];
-    // staffId.text = controller.driver['staffId'];
-    // dateOfBirth.text = controller.driver['dateOfBirth'];
-    // drivingLicenseNumber.text = controller.driver['phone'];
-    // area.text = controller.driver['area'];
-    // businessTrip.text = controller.driver['mission'];
     return Obx(
           () {
-        print(controller.driver);
         userName.text = controller.driver['userName']!;
         staffId.text = controller.driver['staffId']!;
         dateOfBirth.text = controller.driver['dateOfBirth']!;

@@ -50,6 +50,7 @@ class ScreenCheckTeam extends StatelessWidget {
             children: [
               const Text('打刻承認検索',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+              SizedBox(height: 5),
               const Text('事務所:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               Obx(
@@ -73,6 +74,7 @@ class ScreenCheckTeam extends StatelessWidget {
                   },
                 ),
               ),
+              SizedBox(height: 5),
               const Text('運転手名:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               TextField(
@@ -81,6 +83,7 @@ class ScreenCheckTeam extends StatelessWidget {
                   border: OutlineInputBorder(),
                 ),
               ),
+              SizedBox(height: 5),
               const Text('申請日:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               TextField(
@@ -109,6 +112,7 @@ class ScreenCheckTeam extends StatelessWidget {
                   }
                 },
               ),
+              SizedBox(height: 5),
               const Text('承認日:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               TextField(
@@ -135,6 +139,7 @@ class ScreenCheckTeam extends StatelessWidget {
                   }
                 },
               ),
+              SizedBox(height: 5),
               const Text('出張有無:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               Row(

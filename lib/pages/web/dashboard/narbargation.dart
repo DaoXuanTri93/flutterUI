@@ -65,7 +65,7 @@ class NavigationBarDemo1 extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               selectedIcon: Icon(
-                                Icons.check,
+                                Icons.search,
                                 color: Colors.black,
                               ),
                               label: Text("Office Search")),
@@ -75,7 +75,7 @@ class NavigationBarDemo1 extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               selectedIcon: Icon(
-                                Icons.search,
+                                Icons.check,
                                 color: Colors.black,
                               ),
                               label: Text("Check Team Approval")),

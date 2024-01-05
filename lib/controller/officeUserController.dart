@@ -22,12 +22,10 @@ class OfficeUserController extends GetxController {
 
     final String staffUserUrl = '$SEVERNAME/office';
     final response = await http.get(Uri.parse(staffUserUrl),headers: {
-      // 'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer ${globals.token}'
     });
 
     if(response.statusCode==200){
-
       final List result = jsonDecode(response.body);
       officeUserList.value = result.map((e) => OfficeUser.fromJson(e)).toList();
     }else{
@@ -35,20 +33,19 @@ class OfficeUserController extends GetxController {
           'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}'
       );
     }
+
   }
 
   findOfficeStaff() async {
     final String findOfficeStaffUrl = '$SEVERNAME/office/info';
     final response = await http.get(Uri.parse(findOfficeStaffUrl),headers: {
-      // 'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer ${globals.token}'
     });
 
-    print("body");
-    print(response.body);
     if(response.statusCode == 200){
       final List result = jsonDecode(response.body);
       officeUserListOne.value = result.map((e) => OfficeUser.fromJson(e)).toList();
     }
+
   }
 }

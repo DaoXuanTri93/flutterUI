@@ -3,11 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:login_app/model/officeModel.dart';
+import 'package:login_app/const/fontText.dart';
 import '../controller/officeUserController.dart';
 import '../controller/staffUserController.dart';
 import '../model/staffModel.dart';
-
 
 class UserMasterSearch extends StatelessWidget {
   UserMasterSearch({super.key});
@@ -18,19 +17,16 @@ class UserMasterSearch extends StatelessWidget {
 
   SingleValueDropDownController dropDownController =
       SingleValueDropDownController();
+  final controllerStaffUser =
+  Get.put<StaffUserController>(StaffUserController());
+  final controllerOfficeUser =
+  Get.put<OfficeUserController>(OfficeUserController());
+
 
   @override
   Widget build(BuildContext context) {
-    final controllerStaffUser =
-        Get.put<StaffUserController>(StaffUserController());
-    final controllerOfficeUser =
-        Get.put<OfficeUserController>(OfficeUserController());
-
-    List<StaffUser> listStaffUser = controllerStaffUser.staffUserList;
-
-
     Map<String, dynamic> dataSearch;
-
+    controllerStaffUser.getAllStaffUser();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(30),
@@ -41,16 +37,16 @@ class UserMasterSearch extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              const Text(
+               Text(
                 'ユーザマスタ検索',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: textFont.titleLarge,
               ),
               const SizedBox(
                 height: 20,
               ),
-              const Text(
+               Text(
                 '事務所:',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                style: textFont.titleMedium,
               ),
               const SizedBox(
                 height: 10,
@@ -84,42 +80,40 @@ class UserMasterSearch extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
+               Text(
                 '種別:',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                 style: textFont.titleMedium,
               ),
               const SizedBox(
                 height: 10,
               ),
               DropDownTextField(
-                dropdownRadius: 5,
-                controller: dropDownController,
-                onChanged: (value) {
-                  dropDownController.dropDownValue?.name == null
-                      ? role.value = ''
-                      : role.value = dropDownController.dropDownValue!.name;
-                },
-                dropDownIconProperty: IconProperty(
-                    color: Colors.black,
-                    size: 30,
-                    icon: Icons.keyboard_arrow_down),
-                textFieldDecoration: InputDecoration(
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5))),
-                dropDownList: const [
-                  DropDownValueModel(name: 'user', value:'user'),
-                  DropDownValueModel(name: 'admin', value:'admin'),
-                  DropDownValueModel(name: 'member', value:'member'),
-                  DropDownValueModel(name: 'DRIVER', value:'DRIVER'),
-                ]
-              ),
+                  dropdownRadius: 5,
+                  controller: dropDownController,
+                  onChanged: (value) {
+                    dropDownController.dropDownValue?.name == null
+                        ? role.value = ''
+                        : role.value = dropDownController.dropDownValue!.name;
+                  },
+                  dropDownIconProperty: IconProperty(
+                      color: Colors.black,
+                      size: 30,
+                      icon: Icons.keyboard_arrow_down),
+                  textFieldDecoration: InputDecoration(
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5))),
+                  dropDownList: const [
+                    DropDownValueModel(name: 'admin', value: 'admin'),
+                    DropDownValueModel(name: 'member', value: 'member'),
+                    DropDownValueModel(name: 'DRIVER', value: 'DRIVER'),
+                  ]),
               const SizedBox(
                 height: 10,
               ),
-              const Text(
+               Text(
                 '名前:',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                 style: textFont.titleMedium,
               ),
               const SizedBox(
                 height: 10,
@@ -184,9 +178,9 @@ class UserMasterSearch extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const Text(
+               Text(
                 '検索結果',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: textFont.titleMedium,
               ),
               const SizedBox(
                 height: 15,
@@ -198,45 +192,45 @@ class UserMasterSearch extends StatelessWidget {
                   : SizedBox(
                       width: double.infinity,
                       child: DataTable(
-                        headingRowColor:
-                            MaterialStateColor.resolveWith((states) {
-                          return Colors.grey;
-                        }),
-                        columns: const <DataColumn>[
+                        // columnSpacing: 20,
+
+                        headingRowColor: MaterialStateColor.resolveWith(
+                                (states) => Colors.grey.shade300),
+                        columns: [
                           DataColumn(
-                              label: Expanded(
-                            child: Text('事務所'),
-                          )),
+                              label: Expanded(child: Center(child: Text('事務所', style: textFont.titleSmall,)))),
                           DataColumn(
-                              label: Expanded(
-                            child: Text('種別'),
-                          )),
+                              label: Expanded(child: Center(child: Text('種別', style: textFont.titleSmall)))),
                           DataColumn(
-                              label: Expanded(
-                            child: Text('名前'),
-                          )),
+                              label: Expanded(child: Center(child: Text('名前', style: textFont.titleSmall)))),
                         ],
-                        rows: listStaffUser
+                        rows: controllerStaffUser.staffUserList
                             .map(
                               (e) => DataRow(cells: [
-                                DataCell(Text(
-                                  e.affiliatedOffice,
-                                  overflow: TextOverflow.ellipsis,
+                                DataCell(Center(
+                                  child: Text(
+                                    e.affiliatedOffice,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 )),
-                                DataCell(Text(e.role,
-                                    overflow: TextOverflow.ellipsis)),
-                                DataCell(InkWell(
-                                    onTap: () {
-                                      controllerStaffUser.getAllStaffUserDetail(
-                                          e.id.toString());
-                                      // Get.toNamed('/users-details',arguments: e.id);
-                                    },
-                                    child: Text(e.userName,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            color: Colors.blue))))
+                                DataCell(Center(
+                                  child: Text(e.role,
+                                      overflow: TextOverflow.ellipsis),
+                                )),
+                                DataCell(Center(
+                                  child: InkWell(
+                                      onTap: () {
+                                        controllerStaffUser.getAllStaffUserDetail(
+                                            e.id.toString());
+                                        // Get.toNamed('/users-details',arguments: e.id);
+                                      },
+                                      child: Text(e.userName,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              color: Colors.blue))),
+                                ))
                               ]),
                             )
                             .toList(),

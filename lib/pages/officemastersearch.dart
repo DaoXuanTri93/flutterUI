@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:login_app/const/fontText.dart';
 import 'package:login_app/controller/officeController.dart';
 
 import '../model/office.dart';
@@ -29,7 +30,7 @@ class OfficeMasterSearch extends StatelessWidget {
               children: [
                 Text(
                   '事務所マスタ検索',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  style: textFont.titleLarge,
                 ),
                 SizedBox(
                   height: 20,
@@ -44,7 +45,7 @@ class OfficeMasterSearch extends StatelessWidget {
                             Text(
                               '提点名',
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: textFont.titleMedium,
                             ),
                             SizedBox(
                               height: 5,
@@ -68,7 +69,7 @@ class OfficeMasterSearch extends StatelessWidget {
                             Text(
                               '住所',
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: textFont.titleMedium,
                             ),
                             SizedBox(
                               height: 5,
@@ -92,7 +93,7 @@ class OfficeMasterSearch extends StatelessWidget {
                             Text(
                               '電話番号',
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: textFont.titleMedium,
                             ),
                             SizedBox(
                               height: 5,
@@ -116,7 +117,7 @@ class OfficeMasterSearch extends StatelessWidget {
                             Text(
                               '管理者',
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: textFont.titleMedium,
                             ),
                             SizedBox(
                               height: 5,
@@ -140,7 +141,7 @@ class OfficeMasterSearch extends StatelessWidget {
                             Text(
                               '運転手情報',
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: textFont.titleMedium,
                             ),
                             SizedBox(
                               height: 5,
@@ -164,7 +165,7 @@ class OfficeMasterSearch extends StatelessWidget {
                             Text(
                               '運転ルート',
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: textFont.titleMedium,
                             ),
                             SizedBox(
                               height: 5,
@@ -188,7 +189,7 @@ class OfficeMasterSearch extends StatelessWidget {
                             Text(
                               '車両情報',
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: textFont.titleMedium,
                             ),
                             SizedBox(
                               height: 5,
@@ -212,7 +213,7 @@ class OfficeMasterSearch extends StatelessWidget {
                             Text(
                               '運転日程',
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: textFont.titleMedium,
                             ),
                             SizedBox(
                               height: 5,
@@ -274,7 +275,7 @@ class OfficeMasterSearch extends StatelessWidget {
                 ),
                 Text(
                   '検索結果',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  style: textFont.titleLarge,
                 ),
                 SizedBox(
                   height: 20,
@@ -292,25 +293,29 @@ class OfficeMasterSearch extends StatelessWidget {
                           columns: List.generate(header.length, (index) {
                             return DataColumn(
                                 label: Expanded(
-                              child: Text(header[index],
-                                  style: TextStyle(fontWeight: FontWeight.bold)),
+                              child: Center(
+                                child: Text(header[index],
+                                  style: textFont.titleMedium),
+                              ),
                             ));
                           }),
                           rows: List.generate(office.length, (index) {
                             return DataRow(
                                 cells: [
-                                  DataCell(Text(office[index].baseName ?? '-')),
-                                  DataCell(Text(office[index].address ?? '-')),
+                                  DataCell(Center(child: Text(office[index].baseName ?? '-'))),
+                                  DataCell(Center(child: Text(office[index].address ?? '-'))),
                                   DataCell(
-                                      Text(office[index].telephoneNumber ?? '-')),
-                                  DataCell(Text(office[index].manager ?? '-')),
+                                      Center(child: Text(office[index].telephoneNumber ?? '-'))),
+                                  DataCell(Center(child: Text(office[index].manager ?? '-'))),
                                   DataCell(
-                                      Text(office[index].driverInformation ?? '-')),
-                                  DataCell(Text(office[index].drivingRoute ?? '-')),
-                                  DataCell(Text(
-                                      office[index].vehicleInformation ?? '-')),
+                                      Center(child: Text(office[index].driverInformation ?? '-'))),
+                                  DataCell(Center(child: Text(office[index].drivingRoute ?? '-'))),
+                                  DataCell(Center(
+                                    child: Text(
+                                        office[index].vehicleInformation ?? '-'),
+                                  )),
                                   DataCell(
-                                      Text(office[index].drivingSchedule ?? '-'))
+                                      Center(child: Text(office[index].drivingSchedule ?? '-')))
                                 ],
                                 onSelectChanged: (value) {
                                   Get.toNamed('/officedetails/${office[index].officeId.toString()}');
