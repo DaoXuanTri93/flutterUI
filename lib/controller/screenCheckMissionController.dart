@@ -23,7 +23,7 @@ class CheckMissionController extends GetxController {
         uniqueList();
       }
     } catch (e) {
-      print('Error while getting data is $e');
+        Get.snackbar('ERROR', '$e');
     }
   }
 
@@ -51,7 +51,7 @@ class CheckMissionController extends GetxController {
         dataMissionSearch.refresh();
       }
     } catch (e) {
-      print('Error while getting data is $e');
+      Get.snackbar('Error','Error while getting data is $e');
     }
   }
 
@@ -74,7 +74,7 @@ class CheckMissionController extends GetxController {
         dataMissionSearch.refresh();
       }
     } catch (e) {
-      print('Error while getting data is $e');
+      Get.snackbar('Error','Error while getting data is $e');
     }
   }
 

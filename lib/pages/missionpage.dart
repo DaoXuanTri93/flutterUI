@@ -9,7 +9,6 @@ class MissionPage extends StatelessWidget {
   final MissionServices missionServices = MissionServices();
   @override
   Widget build(BuildContext context) {
-    print("hello");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mission detail'),

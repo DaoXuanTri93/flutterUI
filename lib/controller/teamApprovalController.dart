@@ -29,13 +29,13 @@ class TeamApprovalController extends GetxController {
       if (response.statusCode == 200) {
         teamApproval.value = teamApprovalSearch.value =
             TeamApprovalModel.fromData(response.body);
-        print(teamApproval.runtimeType);
+
         uniqueList();
       } else {
-        print('error fetching data');
+        Get.snackbar('Error','Error while getting data is ${response.statusCode}');
       }
     } catch (e) {
-      print('Error while getting data is $e');
+      Get.snackbar('Error','Error while getting data is $e');
     } finally {
       isLoading(false);
     }
@@ -89,10 +89,7 @@ class TeamApprovalController extends GetxController {
 
   void updateTeamApproval(Map<String, dynamic> data) async {
     String id = data['stampApprovalId'];
-    print("id");
-    print(id);
-    print('data');
-    print(data);
+
     Response response = await teamApprovalService.updateTeamApproval(id,data,globals.token);
     if(response.statusCode == 201){
       teamApprovalSearch.value[data['index']].approval = teamApproval.value[data['index']].approval = true;

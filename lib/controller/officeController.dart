@@ -32,14 +32,12 @@ class OfficeController extends GetxController {
 
   void getOfficeById(String id) async {
     final String url = '$SEVERNAME/office/$id';
-    print(id);
     final response = await _getConnect.get(url, headers: {
       // 'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer ${globals.token}'
     });
     if (response.statusCode == 200) {
       office.value = response.body;
-      print(response.body);
     }else {
       office.value = {};
     }
@@ -134,7 +132,6 @@ class OfficeController extends GetxController {
   }
   void deleteOfficeById(String id) async {
     final String url = '$SEVERNAME/office/$id';
-    print(id);
     final response = await _getConnect.delete(url, headers: {
       // 'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer ${globals.token}'

@@ -6,7 +6,6 @@ import 'package:login_app/services/homeProviders.dart';
 class ScheduleServices {
   registerSchedule(Map data) async{
     final token = globals.token;
-    print(token);
     Response response = await HomeProviders().registerSchedule(token, data);
     if (response.statusCode != 201) {
       Get.snackbar("Đăng kí đi trễ thất bại", response.body["message"]);

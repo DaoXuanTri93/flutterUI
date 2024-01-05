@@ -17,7 +17,7 @@ class MissionServices {
       Navigator.pop(context);
     } else {
       Navigator.pop(context);
-      Get.snackbar("Lỗi", response.body["message"]);
+      Get.snackbar("ERROR", response.body["message"]);
     }
   }
 

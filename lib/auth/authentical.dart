@@ -30,8 +30,8 @@ class AuthenticationManager extends GetxController with CacheManager {
     Response response = await HomeProviders().login(user);
     Map<String, dynamic> data = Map<String, dynamic>.from(response.body);
     if (response.statusCode != 200) {
-      Get.snackbar("Đăng nhập thất bại", data["message"]);
-      throw Exception("Đăng nhập thất bại");
+      Get.snackbar("Login failed", data["message"]);
+      throw Exception("Login failed");
     }
     if (ischeckSave) {
       await saveToken(data["jwt"]);

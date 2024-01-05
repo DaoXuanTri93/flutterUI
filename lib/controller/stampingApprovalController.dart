@@ -50,10 +50,10 @@ class StampingApprovalController extends GetxController {
   }
   void showDetailStampingApproval(String id) async {
     Response response = await stampingApprovalService.approval(globals.token, id);
-    print(response.statusCode);
+
     if(response.statusCode == 200){
       detailStampingApproval.value = response.body;
-      print(detailStampingApproval.value);
+
       Get.toNamed('/stamping-approval-detail/$id');
     }
   }
