@@ -29,7 +29,7 @@ class DriverController extends GetxController {
         // throw new Exception('Error');
       }
     } catch (e) {
-      // print('Error while getting data is $e');
+
     } finally {
       isLoading(false);
     }
@@ -77,7 +77,7 @@ class DriverController extends GetxController {
     final token = globals.token;
     Response response = await driverService.updateDriver(id,token,data);
     if(response.statusCode == 200){
-      // print(response.body);
+
     }
   }
 

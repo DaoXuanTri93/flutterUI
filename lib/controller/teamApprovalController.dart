@@ -27,8 +27,11 @@ class TeamApprovalController extends GetxController {
             TeamApprovalModel.fromData(response.body);
         uniqueList();
       }
+    else {
+        Get.snackbar('Error','Error while getting data is ${response.statusCode}');
+      }
     } catch (e) {
-      throw Exception(e);
+      Get.snackbar('Error','Error while getting data is $e');
     } finally {
       EasyLoading.dismiss();
     }
@@ -82,7 +85,6 @@ class TeamApprovalController extends GetxController {
        teamApprovalSearch.value[data['index']].status = teamApproval.value[data['index']].status = data["status"];
        teamApprovalSearch.value[data['index']].approvalDate = teamApproval.value[data['index']].approvalDate = response.body['approvalDate'];
        teamApprovalSearch.value[data['index']].reason = teamApproval.value[data['index']].reason = data["reason"];
-
        teamApproval.refresh();
        teamApprovalSearch.refresh();
      }

@@ -36,7 +36,6 @@ class AuthenticationManager extends GetxController with CacheManager {
          Get.snackbar('Login failed', data["message"],duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.red.withOpacity(0.3));
           throw Exception(data['message']);
       }
-
       if (ischeckSave) {
         await saveToken(data["jwt"]);
       }

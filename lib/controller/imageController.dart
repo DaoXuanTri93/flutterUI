@@ -20,10 +20,10 @@ class ImageController extends GetxController {
     };
    Response response =  await imageConnect.createEnterDistance(data, token);
    if(response.statusCode == 201){
-     Get.snackbar('Notification', 'Updated successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+     Get.snackbar('Notification', 'Create successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
      return EasyLoading.dismiss();
    }
-    Get.snackbar('Notification', 'Updated failed' ,duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+    Get.snackbar('Notification', 'Create failed' ,duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
     return EasyLoading.dismiss();
   }
 
