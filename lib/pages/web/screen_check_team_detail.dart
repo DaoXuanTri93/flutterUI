@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:login_app/controller/teamApprovalController.dart';
 import 'package:login_app/main.dart';
@@ -11,10 +12,10 @@ class ScreenCheckTeamDetail extends StatelessWidget {
   TeamApprovalController teamApprovalController = Get.put(
       TeamApprovalController());
   TextEditingController reason = TextEditingController();
-
-
+  final id = Uri.base.path.split('/')[2];
   @override
   Widget build(BuildContext context) {
+    teamApprovalController.showDetailTeamApproval(id);
     return SafeArea(
         child: Scaffold(
           body: SingleChildScrollView(
@@ -116,12 +117,12 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                             .approval == true ? Row(
                           children: [
                             ElevatedButton(onPressed: () {
-                              Get.back();
+                              Get.toNamed('/navigationBarDemo', arguments: 1);
                             },
                               child: Text('戻る',style: TextStyle(color: Colors.white),),
                               style: ButtonStyle(
                                 shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
-                                backgroundColor: MaterialStateProperty.all(Colors.red),),),
+                                backgroundColor: MaterialStateProperty.all(Colors.red))),
                           ],
                         ) : Row(
                           children: [
@@ -135,8 +136,7 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                                 "reason": reason.text
                               };
                               teamApprovalController.updateTeamApproval1(data);
-                              Get.toNamed('/NavigationBarDemo1', arguments: 1);
-                              // Get.snackbar("Báo Cáo", 'Phê Duyệt Thành Công !!!');
+                              Get.toNamed('/navigationBarDemo', arguments: 1);
                             },
                               child: Text('承認',style: TextStyle(color: Colors.white),),
                               style: ButtonStyle(
@@ -147,16 +147,16 @@ class ScreenCheckTeamDetail extends StatelessWidget {
                             // NÚT TỪ CHỐI
                             ElevatedButton(onPressed: () {
                               Map<String, dynamic> data = {
-                                "stampApprovalId": teamApprovalController
-                                    .detailTeamApproval.value.stampApprovalId,
+                                "stampApprovalId": teamApprovalController.detailTeamApproval.value.stampApprovalId,
                                 "approval": true,
                                 "status": "REFUSE",
                                 "reason": reason.text
                               };
+                              EasyLoading.show();
                               teamApprovalController.updateTeamApproval1(data);
-                              Get.toNamed('/NavigationBarDemo1', arguments: 1);
+                              Get.toNamed('/navigationBarDemo', arguments: 1);
                             },
-                              child: Text('差し戻し',style: TextStyle(color: Colors.white),),
+                              child: Text('差し戻し',style: TextStyle(color: Colors.white)),
                               style: ButtonStyle(
                                 shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
                                 backgroundColor: MaterialStateProperty.all(Colors.red),)

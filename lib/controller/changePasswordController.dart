@@ -24,7 +24,7 @@ class ChangePasswordController extends GetxController {
     }
     Get.snackbar('Notification', 'Updated password successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
     Future.delayed(const Duration(milliseconds: 1500), () {
-      Get.toNamed("/NavigationBarDemo1");
+      Get.toNamed("/navigationBarDemo");
     });
     return EasyLoading.dismiss();
   }

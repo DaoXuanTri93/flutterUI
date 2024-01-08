@@ -19,6 +19,7 @@ class _SchedulePageState extends State<SchedulePage> {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -152,12 +153,13 @@ class _SchedulePageState extends State<SchedulePage> {
                     data["date"] = _date.text;
                     data["time"] = _time.text;
                     data["timeNew"] = _timeNew.text;
+                  if(formKey.currentState!.validate()){
                     ScheduleServices().registerSchedule(data);
-                  },
+                  }},
                   text: const Text('申請',
                       style: TextStyle(
+                        color: Colors.white,
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
                       )),
                   radius: 8,
                 )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
@@ -19,57 +20,66 @@ class TimeKeepingServices {
   }
 
   Future checkin() async {
-    final token = globals.token;
-    final positionLocal = await PositionServices().getLocaltion();
-
-    Response response = await HomeProviders().getCoordinate(token!);
-    if (response.statusCode != 200) {
-      throw Exception(response.body["message"]);
+    try{
+      final token = globals.token;
+      final positionLocal = await PositionServices().getLocaltion();
+      Response response = await HomeProviders().getCoordinate(token!);
+      if (response.statusCode != 200) {
+        throw Exception(response.body["message"]);
+      }
+      final positionOffice = response.body[0]["coordinate"].split(",");
+      final latOffice = double.parse(positionOffice[0]);
+      final longOffice = double.parse(positionOffice[1]);
+      double distanceInMeters = Geolocator.distanceBetween(
+          positionLocal.latitude, positionLocal.longitude, latOffice, longOffice);
+      Map<String, dynamic> checkPosition = {};
+      if (distanceInMeters > 200) {
+        checkPosition = {"check" : false};
+      }
+      Response res = await HomeProviders().checkIn(token,checkPosition);
+      if (res.statusCode != 201) {
+        Get.snackbar('Timekeeping failed', res.body["message"] ,duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+        return false;
+      }
+      Get.snackbar('Timekeeping successful', res.body["timeStartDay"],duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+      return true;
+    }catch (e){
+      Get.snackbar("Office coordinates cannot be determined","Please check again !!!",duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+    } finally {
+      EasyLoading.dismiss();
     }
-    final positionOffice = response.body[0]["coordinate"].split(",");
-    final latOffice = double.parse(positionOffice[0]);
-    final longOffice = double.parse(positionOffice[1]);
-
-    double distanceInMeters = Geolocator.distanceBetween(
-        positionLocal.latitude, positionLocal.longitude, latOffice, longOffice);
-    Map<String, dynamic> checkPosition = {};
-    if (distanceInMeters > 200) {
-      checkPosition = {"check" : false};
-    }
-    Response res = await HomeProviders().checkIn(token,checkPosition);
-    if (res.statusCode != 201) {
-      Get.snackbar("Chấm công thất bại", res.body["message"]);
-      return false;
-    }
-    Get.snackbar("Chấm công thành công", res.body["timeStartDay"]);
-    return true;
   }
 
   Future checkout() async {
-    final token = globals.token;
-    final positionLocal = await PositionServices().getLocaltion();
+    try {
+      final token = globals.token;
+      final positionLocal = await PositionServices().getLocaltion();
+      Response response = await HomeProviders().getCoordinate(token!);
+      if (response.statusCode != 200) {
+        throw Exception(response.body["message"]);
+      }
+      final positionOffice = response.body[0]["coordinate"].split(",");
+      final latOffice = double.parse(positionOffice[0]);
+      final longOffice = double.parse(positionOffice[1]);
 
-    Response response = await HomeProviders().getCoordinate(token!);
-    if (response.statusCode != 200) {
-      throw Exception(response.body["message"]);
+      double distanceInMeters = Geolocator.distanceBetween(
+          positionLocal.latitude, positionLocal.longitude, latOffice, longOffice);
+      Map<String, dynamic> checkPosition = {};
+      if (distanceInMeters > 200) {
+        checkPosition = {"check" : false};
+      }
+      Response res = await HomeProviders().checkOut(token,checkPosition);
+      if (res.statusCode != 201) {
+        Get.snackbar('Timekeeping failed', res.body["message"] ,duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+        return false;
+      }
+      Get.snackbar('Timekeeping successful', res.body["timeEndDay"],duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+      return true;
+    }catch (e){
+      Get.snackbar("Office coordinates cannot be determined","Please check again !!!",duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+    } finally {
+      EasyLoading.dismiss();
     }
-    final positionOffice = response.body[0]["coordinate"].split(",");
-    final latOffice = double.parse(positionOffice[0]);
-    final longOffice = double.parse(positionOffice[1]);
-
-    double distanceInMeters = Geolocator.distanceBetween(
-        positionLocal.latitude, positionLocal.longitude, latOffice, longOffice);
-    Map<String, dynamic> checkPosition = {};
-    if (distanceInMeters > 200) {
-      checkPosition = {"check" : false};
-    }
-    Response res = await HomeProviders().checkOut(token,checkPosition);
-    if (res.statusCode != 201) {
-      Get.snackbar("Chấm công thất bại", res.body["message"]);
-      return false;
-    }
-    Get.snackbar("Chấm công thành công", res.body["timeEndDay"]);
-    return true;
   }
 
   Future showInputStartOverTime(BuildContext context) async {
@@ -89,8 +99,8 @@ class TimeKeepingServices {
                         Navigator.of(context).pop();
                       },
                       child: const CircleAvatar(
-                        backgroundColor: Colors.blue,
-                        child: Icon(Icons.close),
+                        backgroundColor: Colors.red,
+                        child: Icon(Icons.close, color: Colors.white),
                       ),
                     ),
                   ),
@@ -123,11 +133,16 @@ class TimeKeepingServices {
                         Padding(
                           padding: const EdgeInsets.all(8),
                           child: ElevatedButton(
-                            child: const Text('Đăng kí'),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                              backgroundColor: MaterialStateProperty.all(Colors.blue),
+                            ),
+                            child: const Text('Register', style: TextStyle(color: Colors.white)),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
+                                EasyLoading.show();
                                 _formKey.currentState!.save();
-                                checkInOverTime({"overTimeStart":_timeStart.text});
+                                checkInOverTime(context,{"overTimeStart":_timeStart.text});
                               }
                             },
                           ),
@@ -157,8 +172,8 @@ class TimeKeepingServices {
                         Navigator.of(context).pop();
                       },
                       child: const CircleAvatar(
-                        backgroundColor: Colors.blue,
-                        child: Icon(Icons.close),
+                        backgroundColor: Colors.red,
+                        child: Icon(Icons.close, color: Colors.white),
                       ),
                     ),
                   ),
@@ -191,10 +206,15 @@ class TimeKeepingServices {
                         Padding(
                           padding: const EdgeInsets.all(8),
                           child: ElevatedButton(
-                            child: const Text('Đăng kí'),
+                            child: const Text('Resgiter', style: TextStyle(color: Colors.white)),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                              backgroundColor: MaterialStateProperty.all(Colors.blue),
+                            ),
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                checkOutOverTime({"overTimeEnd":_endStart.text});
+                                EasyLoading.show();
+                                checkOutOverTime(context,{"overTimeEnd":_endStart.text});
                               }
                             },
                           ),
@@ -207,25 +227,38 @@ class TimeKeepingServices {
             ));
   }
 
-  checkInOverTime(Map data)async{
-    final token = globals.token;
-    Response res = await HomeProviders().saveTimeStartOT(token,data);
-    if (res.statusCode != 201) {
-      Get.snackbar("Chấm công ngoài giờ thất bại", res.body["message"]);
-      return false;
+  checkInOverTime(BuildContext context, Map data)async{
+    try {
+      final token = globals.token;
+      Response res = await HomeProviders().saveTimeStartOT(token,data);
+      if (res.statusCode != 201) {
+        Get.snackbar('Timekeeping overtime fail', res.body["message"] ,duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+        return false;
+      }
+      Get.snackbar('Timekeeping overtime successful', res.body["overTimeStart"],duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+      return true;
+    }catch(e) {
+      throw Exception(e);
+    }finally{
+      EasyLoading.dismiss();
+      Navigator.pop(context);
     }
-    Get.snackbar("Chấm công ngoài giờ thành công", res.body["overTimeStart"]);
-    return true;
   }
 
-  checkOutOverTime(Map data)async{
-    final token = globals.token;
-    Response res = await HomeProviders().saveTimeEndOT(token,data);
-    if (res.statusCode != 201) {
-      Get.snackbar("Chấm công ngoài giờ thất bại", res.body["message"]);
-      return false;
+  checkOutOverTime(BuildContext context, Map data)async{
+    try {
+      final token = globals.token;
+      Response res = await HomeProviders().saveTimeEndOT(token,data);
+      if (res.statusCode != 201) {
+        Get.snackbar('Timekeeping overtime fail', res.body["message"] ,duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+        return false;
+      }
+      Get.snackbar('Timekeeping overtime successful', res.body["overTimeEnd"],duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+    }catch(e) {
+      throw Exception(e);
+    }finally{
+      EasyLoading.dismiss();
+      Navigator.pop(context);
     }
-    Get.snackbar("Chấm công ngoài giờ thành công", res.body["overTimeEnd"]);
-
   }
 }

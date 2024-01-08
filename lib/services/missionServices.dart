@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import 'package:get/get_connect/http/src/response/response.dart';
@@ -9,40 +10,57 @@ import 'package:login_app/global-variable/globals.dart' as globals;
 
 class MissionServices {
   Future registerMission(BuildContext context,Map data,controller) async {
-    final token = globals.token;
-    Response response = await HomeProviders().mission(token!, data);
-    if (response.statusCode == 201) {
-      Get.snackbar("Đăng kí công tác thành công", "");
-      controller.getDataMission();
-      Navigator.pop(context);
-    } else {
-      Navigator.pop(context);
-      Get.snackbar("Lỗi", response.body["message"]);
+    try {
+      final token = globals.token;
+      Response response = await HomeProviders().mission(token!, data);
+      if (response.statusCode == 201) {
+        Get.snackbar('Notification', 'Register mission successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+        controller.getDataMission();
+        Navigator.pop(context);
+      } else {
+        Navigator.pop(context);
+        Get.snackbar('Register fail', response.body["message"] ,duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+      }
+    }catch (e){
+      throw Exception(e);
+    }finally {
+      EasyLoading.dismiss();
     }
   }
 
   Future editMission(BuildContext context, Map data, id,MissionController controller) async {
-    final token = globals.token;
-    Response response = await HomeProviders().editMission(token, data, id);
-    if (response.statusCode == 200) {
-      Get.snackbar("Đăng kí công tác thành công", "");
-      controller.getDataMission();
-      Navigator.pop(context);
-    } else {
-      Get.snackbar("Đăng kí thất bại", response.body["message"]);
+    try {
+      final token = globals.token;
+      Response response = await HomeProviders().editMission(token, data, id);
+      if (response.statusCode == 200) {
+        Get.snackbar('Notification', 'Update mission successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+        controller.getDataMission();
+        Navigator.pop(context);
+      } else {
+        Get.snackbar('Update mission', response.body["message"] ,duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+      }
+    }catch (e){
+      throw Exception(e);
+    }finally {
+      EasyLoading.dismiss();
     }
   }
 
   Future cancelMisson(BuildContext context, id,MissionController controller) async {
-    final token = globals.token;
-    Response response = await HomeProviders().cancelMission(token, id);
-    if (response.statusCode == 200) {
-      Get.snackbar("Thao tác thành công", "");
-      controller.getDataMission();
-      Navigator.pop(context);
-    } else {
-      Get.snackbar("Đăng kí thất bại", response.body["message"]);
-    }
+   try {
+     final token = globals.token;
+     Response response = await HomeProviders().cancelMission(token, id);
+     if (response.statusCode == 200) {
+       Get.snackbar('Notification', 'Deleted successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+       controller.getDataMission();
+     } else {
+       Get.snackbar('Notification', 'Deleted failed' ,duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.redAccent.withOpacity(0.3));
+     }
+   }catch (e){
+     throw Exception(e);
+   }finally {
+     EasyLoading.dismiss();
+   }
   }
 
   Future showFormRegisterMission(
@@ -66,9 +84,9 @@ class MissionServices {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.blue,
-                        child: Icon(Icons.close),
+                      child:  CircleAvatar(
+                        backgroundColor: Colors.redAccent,
+                        child: Icon(Icons.close, color: Colors.white),
                       ),
                     ),
                   ),
@@ -95,14 +113,14 @@ class MissionServices {
                                     return 'Field is required';
                                   }
                                   if (timeEnd.text!=''&& timeStart.text.compareTo(timeEnd.text)>0) {
-                                    return 'Time start > Time end';
+                                    return 'Start day > End day';
                                   }
                                   return null;
                                 },
                                 keyboardType: TextInputType.none,
                                 decoration: InputDecoration(
                                     focusColor: Colors.red,
-                                    hintText: 'yyyy/MM/dd',
+                                    hintText: 'yyyy/mm/dd',
                                     suffixIcon:
                                         const Icon(Icons.calendar_today),
                                     border: OutlineInputBorder(
@@ -140,15 +158,15 @@ class MissionServices {
                                   if (value!.trim().isEmpty) {
                                     return 'Field is required';
                                   }
-                                  if (timeEnd.text.compareTo(DateFormat('yyyy/MM/dd').format(DateTime.now()))<=0) {
-                                    return 'Time end <= Now';
+                                  if (timeEnd.text.compareTo(DateFormat('yyyy/MM/dd').format(DateTime.now()))<0) {
+                                    return 'start day < End day';
                                   }
                                   return null;
                                 },
                                 keyboardType: TextInputType.none,
                                 decoration: InputDecoration(
                                     focusColor: Colors.red,
-                                    hintText: 'yyyy/MM/dd',
+                                    hintText: 'yyyy/mm/dd',
                                     suffixIcon:
                                         const Icon(Icons.calendar_today),
                                     border: OutlineInputBorder(
@@ -172,7 +190,11 @@ class MissionServices {
                         Padding(
                           padding: const EdgeInsets.all(8),
                           child: ElevatedButton(
-                            child: const Text('Register'),
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                              backgroundColor: MaterialStateProperty.all(Colors.blue),
+                            ),
+                            child: const Text('Register', style: TextStyle(color: Colors.white)),
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
                                 Map<String, dynamic> data = {
@@ -180,8 +202,10 @@ class MissionServices {
                                   "endDay": timeEnd.text
                                 };
                                 if (start != null) {
+                                  EasyLoading.show();
                                   editMission(context, data, id,controller);
                                 } else {
+                                  EasyLoading.show();
                                   registerMission(context,data,controller);
                                 }
                               }

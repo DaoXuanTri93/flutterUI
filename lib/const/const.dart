@@ -1,5 +1,5 @@
 //hostname
-String SEVERNAME = "http://192.168.24.16:3000";
+String SEVERNAME = "http://192.168.249.81:3000";
 // String SEVERNAME = "http://localhost:3000";
 
 // const login
@@ -25,6 +25,7 @@ String buttonEndOverTime= "所定時間外退勤";
 String buttonRegisterTimekeeping= "打刻申請";
 String buttonEnterDistance= "距離入力";
 String buttonEnterStamping = "Stamping approval";
+String buttonEnterTimekeeping = "承認";
 
 
 // const schedulepage

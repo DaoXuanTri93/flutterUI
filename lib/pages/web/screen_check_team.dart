@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:login_app/const/fontText.dart';
@@ -203,12 +204,12 @@ class ScreenCheckTeam extends StatelessWidget {
                           (index) {
                         return DataRow(
                             onSelectChanged: (selected) {
+                              EasyLoading.show();
                               teamApprovalController.showDetailTeamApproval(
                                   teamApprovalController
                                       .teamApproval.value[index].stampApprovalId
                                       .toString());
                             },
-                            // selected: true,
                             cells: [
                               DataCell(Center(
                                   child: Text(teamApprovalController

@@ -5,12 +5,14 @@ import 'package:login_app/pages/officemastersearch.dart';
 import 'package:login_app/pages/user_master_search.dart';
 import 'package:login_app/pages/web/change_password_web.dart';
 import 'package:login_app/pages/web/driver_infor.dart';
+import 'package:login_app/pages/web/log_search_approval.dart';
 import 'package:login_app/pages/web/screen_check_mission.dart';
 import 'package:login_app/pages/web/screen_check_team.dart';
-// import 'package:login_app/pages/web/screen_check_team.dart';
 
 class NavigationBarDemo1 extends StatelessWidget {
   NavigationBarDemo1({super.key});
+
+  AuthenticationManager authenticationManager = Get.put(AuthenticationManager());
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class NavigationBarDemo1 extends StatelessWidget {
       DriverInforSearch(),
       ScreenCheckMission(),
       UserMasterSearch(),
-      Container(child: Center(child: Text("Staff"))),
+      LogSearch(),
       ChangePassword(),
     ].obs;
     var _selectIndex = 0.obs;
@@ -103,6 +105,10 @@ class NavigationBarDemo1 extends StatelessWidget {
                               icon: Icon(Icons.search_outlined, color: Colors.white,),
                               selectedIcon: Icon(Icons.search_outlined, color: Colors.black,),
                               label: Text("Staff User")),
+                          NavigationRailDestination(
+                              icon: Icon(Icons.menu_book, color: Colors.white,),
+                              selectedIcon: Icon(Icons.menu_book, color: Colors.black,),
+                              label: Text("Logger")),
                         ],
                         trailing: Column(
                           children: [

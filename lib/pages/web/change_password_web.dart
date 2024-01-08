@@ -95,7 +95,10 @@ class ChangePassword extends StatelessWidget {
                                 EasyLoading.show();
                                 changePasswordController.fetchDatauser(data);
                               }
-                            }, child: Text('変更')),
+                            }, style: ButtonStyle(
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder( borderRadius: BorderRadius.circular(5))),
+                                backgroundColor: MaterialStateProperty.all(Colors.blue)),
+                                child: Text('変更', style: TextStyle(color: Colors.white))),
                           ],
                         ),
                     ),

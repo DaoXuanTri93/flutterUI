@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 20),
           child: ButtonScreen(
                 onPressed: () => Get.toNamed("/timekeepingpage"),
-                text: Text("Chấm công", style: const TextStyle(fontSize: 20)),
+                text: Text(buttonEnterTimekeeping, style: const TextStyle(fontSize: 20, color: Colors.white)),
                 radius: 8),
         ),
         Container(
@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
           child: ButtonScreen(
                 onPressed: () => Get.toNamed("/schedulepage"),
                 text: Text(buttonRegisterTimekeeping,
-                    style: const TextStyle(fontSize: 20)),
+                    style: const TextStyle(fontSize: 20, color: Colors.white)),
                 radius: 8),
         ),
         Container(
@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
           child: ButtonScreen(
                 onPressed: () => Get.toNamed("/imageUpload"),
                 text: Text(buttonEnterDistance,
-                    style: const TextStyle(fontSize: 20)),
+                    style: const TextStyle(fontSize: 20, color: Colors.white)),
                 radius: 8),
         ),
         Container(
@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
           child: ButtonScreen(
               onPressed: () => Get.toNamed("/stamping-approval-screen"),
               text: Text(buttonEnterStamping,
-                  style: const TextStyle(fontSize: 20)),
+                  style: const TextStyle(fontSize: 20, color: Colors.white)),
               radius: 8),
         ),
       ],

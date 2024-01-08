@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import '../auth/authentical.dart';
 import '../services/uploadImage.dart';
 import 'package:login_app/global-variable/globals.dart' as globals;
 
@@ -22,7 +20,6 @@ class ImageController extends GetxController {
     };
    Response response =  await imageConnect.createEnterDistance(data, token);
    if(response.statusCode == 201){
-
      Get.snackbar('Notification', 'Updated successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
      return EasyLoading.dismiss();
    }
@@ -43,5 +40,4 @@ class ImageController extends GetxController {
     Get.snackbar('Notification', 'Updated successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
     EasyLoading.dismiss();
   }
-
 }

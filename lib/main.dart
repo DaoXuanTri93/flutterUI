@@ -15,6 +15,7 @@ import 'package:login_app/pages/schedulepage.dart';
 import 'package:login_app/pages/timekeepingpage.dart';
 import 'package:login_app/pages/web/change_password_web.dart';
 import 'package:login_app/pages/web/driver_infor.dart';
+import 'package:login_app/pages/web/log_search_approval.dart';
 import 'package:login_app/pages/web/screen_check_team.dart';
 import 'package:login_app/pages/upload_image_new.dart';
 import 'package:login_app/pages/web/screen_check_team_detail.dart';
@@ -68,13 +69,13 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: '/driver-infor',
               page: () => DriverInforSearch()),
+          GetPage(name: '/logApproval',page: () => LogSearch()),
           GetPage(name: '/search-users', page: () => UserMasterSearch()),
           GetPage(name: '/users-details', page: () => UserMasterDetails()),
           GetPage(name: '/limit-setting', page: () => LimitSetting()),
           GetPage(name: '/stamping-approval-screen', page: () => StampingApprovalScreen()),
           GetPage(name: '/stamping-approval-detail', page: () => StampingApprovalDetail()),
         ],
-
         builder: EasyLoading.init(),
         debugShowCheckedModeBanner: false);
   }

@@ -66,12 +66,6 @@ class UploadImageNew extends StatelessWidget {
   Future<void> _uploadImageEndPoint() async {
     final url =
     Uri.parse('https://api.cloudinary.com/v1_1/dqnnru99w/image/upload');
-
-    if(_endPoint.value.text.trim() == ''){
-      Get.snackbar('kilomet không được bỏ trống', 'Vui lòng nhập lại !!!');
-      return;
-    }
-
     if (_lastKilometerPhoto.value!.path == '') {
       var saveImage1 = imageController.updateEnterDistance(_endPoint.value.text, '');
       _endPoint.value.text = '';

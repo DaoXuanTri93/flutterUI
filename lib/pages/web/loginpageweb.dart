@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:login_app/auth/authentical.dart';
 import 'package:login_app/const/const.dart';
@@ -68,10 +69,11 @@ class LoginPageWeb extends StatelessWidget {
                           const SizedBox(height: 10),
                           ElevatedButton(
                               onPressed: () => {
+
                                 if (_formKey.currentState!.validate())
                                   {
-                                    AuthenticationManager().login(_username.text,
-                                        _password.text, _ischeck.value, controller.MAC)
+                                    EasyLoading.show(),
+                                    AuthenticationManager().login(_username.text,_password.text, _ischeck.value, controller.MAC)
                                   }
                               },
                               style: ElevatedButton.styleFrom(

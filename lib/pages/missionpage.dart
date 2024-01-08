@@ -9,7 +9,6 @@ class MissionPage extends StatelessWidget {
   final MissionServices missionServices = MissionServices();
   @override
   Widget build(BuildContext context) {
-    print("hello");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mission detail'),
@@ -57,14 +56,15 @@ class MissionPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                    'Thời gian\n${_todo[index]["startDay"]} - ${_todo[index]["endDay"]}',
+                                    'Time\n${_todo[index]["startDay"]} - ${_todo[index]["endDay"]}',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w500,
                                         fontSize: 18)),
-                                Text('Ngày tạo: ${_todo[index]["startDay"]}',
+                                Text('Date created: ${_todo[index]["startDay"]}',
                                     style: const TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 12))
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15)
+                                )
                               ]),
                           const SizedBox(width: 15),
                           SizedBox(
@@ -83,29 +83,16 @@ class MissionPage extends StatelessWidget {
                           PopupMenuButton<int>(
                             itemBuilder: (BuildContext context) => [
                               const PopupMenuItem(
-                                  value: 1, child: Text("Chỉnh sửa")),
+                                  value: 1, child: Text("Edit")),
                               PopupMenuItem(
                                   value: 2,
                                   child: _todo[index]["statusMission"] ==
                                           "CANCELLING"
-                                      ? const Text("Bỏ hủy")
-                                      : const Text("Hủy")),
+                                      ? const Text("Cancel")
+                                      : const Text("Deleted")),
                             ],
                             onSelected: (value) {
-                              switch (value) {
-                                case 1:
-                                  missionServices.showFormRegisterMission(
-                                      context, controller,
-                                      start: _todo[index]["startDay"],
-                                      end: _todo[index]["endDay"],
-                                      id: _todo[index]["id"]);
-                                  break;
-                                case 2:
-                                  missionServices.cancelMisson(
-                                      context, _todo[index]["id"], controller);
-                                  break;
-                                default:
-                              }
+                                  missionServices.cancelMisson(context, _todo[index]["id"], controller);
                             },
                           )
                         ]),
