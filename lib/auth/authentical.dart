@@ -31,7 +31,6 @@ class AuthenticationManager extends GetxController with CacheManager {
       };
       Response response = await HomeProviders().login(user);
       Map<String, dynamic> data = Map<String, dynamic>.from(response.body);
-
       if (response.statusCode != 200) {
          Get.snackbar('Login failed', data["message"],duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.red.withOpacity(0.3));
           throw Exception(data['message']);

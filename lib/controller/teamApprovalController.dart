@@ -27,7 +27,7 @@ class TeamApprovalController extends GetxController {
             TeamApprovalModel.fromData(response.body);
         uniqueList();
       }
-    else {
+      else {
         Get.snackbar('Error','Error while getting data is ${response.statusCode}');
       }
     } catch (e) {
