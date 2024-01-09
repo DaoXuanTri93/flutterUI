@@ -20,22 +20,26 @@ class StaffUserController extends GetxController {
   }
 
   getAllStaffUser() async {
-    final String staffUserUrl = '$SEVERNAME/staff';
-    final response = await http.get(Uri.parse(staffUserUrl),
-        headers: {'Authorization': 'Bearer ${globals.token}'});
+   try {
+     final String staffUserUrl = '$SEVERNAME/staff';
+     final response = await http.get(Uri.parse(staffUserUrl),
+         headers: {'Authorization': 'Bearer ${globals.token}'});
 
-    if (response.statusCode == 200) {
-      final List result = jsonDecode(response.body);
+     if (response.statusCode == 200) {
+       final List result = jsonDecode(response.body);
 
-      staffUserList.value = staffUserSearchList.value =
-          result.map((e) => StaffUser.fromJson(e)).toList();
+       staffUserList.value = staffUserSearchList.value =
+           result.map((e) => StaffUser.fromJson(e)).toList();
 
-      isLoading.value = false;
-    } else {
-      Get.snackbar('Error Loading Data !!! ',
-          'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}',
-          backgroundColor: Colors.redAccent);
-    }
+       isLoading.value = false;
+     } else {
+       Get.snackbar('Error Loading Data !!! ',
+           'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}',
+           backgroundColor: Colors.redAccent);
+     }
+   }catch (e) {
+     throw Exception(e);
+   }
   }
 
   getAllStaffUserDetail(String id) async {
@@ -51,10 +55,13 @@ class StaffUserController extends GetxController {
         Get.toNamed('/users-details', arguments: id);
 
         isLoading.value = false;
+      }else {
+        Get.snackbar('Error Loading Data !!! ',
+            'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}',
+            backgroundColor: Colors.redAccent);
       }
     } catch (e) {
-      Get.snackbar('Error Loading Data !!! ', 'Sever Responded : $e',
-          backgroundColor: Colors.redAccent);
+      throw Exception(e);
     }
   }
 
@@ -63,13 +70,13 @@ class StaffUserController extends GetxController {
         .where((e) =>
             (staffUser['affiliatedOffice'] == ''
                 ? true
-                : e.affiliatedOffice.contains(staffUser['affiliatedOffice'])) &&
+                : e.affiliatedOffice.toLowerCase().contains(staffUser['affiliatedOffice'].toLowerCase())) &&
             (staffUser['role'] == ''
                 ? true
-                : e.role.contains(staffUser['role'])) &&
+                : e.role.toLowerCase().contains(staffUser['role'].toLowerCase())) &&
             (staffUser['userName'] == ''
                 ? true
-                : e.userName.contains(staffUser['userName'])))
+                : e.userName.toLowerCase().contains(staffUser['userName'].toLowerCase())))
         .toList();
   }
 
@@ -83,22 +90,32 @@ class StaffUserController extends GetxController {
       if (response.statusCode == 201) {
         Get.snackbar('Success', 'Staff User New Has Been Created',
             backgroundColor: Colors.lightGreen);
+        getAllStaffUser();
+      } else {
+        Get.snackbar('Error Loading Data !!! ',
+            'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}',
+            backgroundColor: Colors.redAccent);
       }
     } catch (e) {
-      Get.snackbar('Error Loading Data !!! ', 'Sever Responded : $e',
-          backgroundColor: Colors.redAccent);
+      throw Exception(e);
     }
   }
 
   updateStaffUser(String id, StaffUser staffUser) async {
-    final String updateStaffUser = '$SEVERNAME/staff/$id';
-    final response = await http.put(Uri.parse(updateStaffUser),
-        body: staffUser.toJson(),
-        headers: {'Authorization': 'Bearer ${globals.token}'});
-    if (response.statusCode == 200) {
-      getAllStaffUser();
-     return Get.snackbar('Notification', 'Updated successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+    try {
+      final String updateStaffUser = '$SEVERNAME/staff/$id';
+      final response = await http.put(Uri.parse(updateStaffUser),
+          body: staffUser.toJson(),
+          headers: {'Authorization': 'Bearer ${globals.token}'});
+      if (response.statusCode == 200) {
+        getAllStaffUser();
+        return Get.snackbar('Notification', 'Updated successfully',duration: Duration(milliseconds: 1500, ) , backgroundColor: Colors.green.withOpacity(0.3));
+      }
+      return (Get.snackbar('Error Loading Data !!! ', 'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}',
+          backgroundColor: Colors.redAccent.withOpacity(0.3), duration: Duration(milliseconds: 1500)));
     }
-   return (Get.snackbar('Error Loading Data !!! ', 'Sever Responded : ${response.statusCode} : ${response.reasonPhrase.toString()}', backgroundColor: Colors.redAccent.withOpacity(0.3), duration: Duration(milliseconds: 1500)));
+    catch (e) {
+      throw Exception(e);
+    }
   }
 }

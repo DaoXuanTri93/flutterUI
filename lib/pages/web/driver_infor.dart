@@ -7,7 +7,7 @@ import 'package:login_app/controller/driverController.dart';
 
 class DriverInforSearch extends StatelessWidget {
   DriverInforSearch({super.key});
-
+  DriverController driverController = Get.put(DriverController());
   final notStamped = false.obs;
   final businessTrips = false.obs;
   final titleTable = [
@@ -30,8 +30,6 @@ class DriverInforSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> dataSearch;
-
-    DriverController driverController = Get.put(DriverController());
 
     TextEditingController affiliatedOfficeController = TextEditingController();
     TextEditingController userNameController = TextEditingController();

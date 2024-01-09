@@ -55,21 +55,21 @@ class TeamApprovalController extends GetxController {
         .where((p0) =>
     (dataSearch['officeName'] == ''
         ? true
-        : p0.officeName.contains(dataSearch['officeName'])) &&
+        : p0.officeName.toLowerCase().contains(dataSearch['officeName'].toLowerCase())) &&
         (dataSearch['driverName'] == ''
             ? true
-            : p0.driverName.contains(dataSearch['driverName'])) &&
+            : p0.driverName.toLowerCase().contains(dataSearch['driverName'].toLowerCase())) &&
 
         (submissionDateSearch == ''
             ? true
             : p0.submissionDate == null
             ? false
-            : p0.submissionDate.contains(submissionDateSearch)) &&
+            : p0.submissionDate.toLowerCase().contains(submissionDateSearch.toLowerCase())) &&
         (approvalDateSearch == ''
             ? true
             : p0.approvalDate == null
             ? false
-            : p0.approvalDate.contains(approvalDateSearch)) &&
+            : p0.approvalDate.toLowerCase().contains(approvalDateSearch.toLowerCase())) &&
         (p0.approval == dataSearch['approval']))
         .toList();
     teamApprovalSearch.refresh();

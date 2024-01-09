@@ -24,7 +24,7 @@ String buttonStartOverTime = "所定時間外出勤";
 String buttonEndOverTime= "所定時間外退勤";
 String buttonRegisterTimekeeping= "打刻申請";
 String buttonEnterDistance= "距離入力";
-String buttonEnterStamping = "Stamping approval";
+String buttonEnterStamping = "スタンプ承認";
 String buttonEnterTimekeeping = "承認";
 
 

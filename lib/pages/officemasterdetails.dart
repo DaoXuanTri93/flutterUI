@@ -91,7 +91,7 @@ class OfficeDetails extends StatelessWidget {
                                 ),
                                 TextFormField(
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
+                                    if (value == null || value.trim().isEmpty) {
                                       return 'Please enter some text';
                                     }
                                     return null;
@@ -121,7 +121,7 @@ class OfficeDetails extends StatelessWidget {
                                 ),
                                 TextFormField(
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
+                                    if (value == null || value.trim().isEmpty) {
                                       return 'Please enter some text';
                                     }
                                     return null;
@@ -151,7 +151,7 @@ class OfficeDetails extends StatelessWidget {
                                 ),
                                 TextFormField(
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
+                                    if (value == null || value.trim().isEmpty) {
                                       return 'Please enter some text';
                                     }
                                     return null;
@@ -181,7 +181,7 @@ class OfficeDetails extends StatelessWidget {
                                 ),
                                 TextFormField(
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
+                                    if (value == null || value.trim().isEmpty) {
                                       return 'Please enter some text';
                                     }
                                     return null;
@@ -265,7 +265,7 @@ class OfficeDetails extends StatelessWidget {
                               ),
                               TextFormField(
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
+                                  if (value == null || value.trim().isEmpty) {
                                     return 'Please enter some text';
                                   }
                                   return null;
@@ -281,7 +281,7 @@ class OfficeDetails extends StatelessWidget {
                               ),
                               TextFormField(
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
+                                  if (value == null || value.trim().isEmpty) {
                                     return 'Please enter some text';
                                   }
                                   return null;
@@ -312,7 +312,7 @@ class OfficeDetails extends StatelessWidget {
                               ),
                               TextFormField(
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
+                                  if (value == null || value.trim().isEmpty) {
                                     return 'Please enter some text';
                                   }
                                   return null;

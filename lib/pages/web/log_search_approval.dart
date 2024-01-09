@@ -142,7 +142,7 @@ class LogSearch extends StatelessWidget {
                               keyboardType: TextInputType.none,
                               decoration: InputDecoration(
                                   focusColor: Colors.red,
-                                  hintText: 'yyyy/MM/dd',
+                                  hintText: 'yyyy/mm/dd',
                                   suffixIcon:
                                   const Icon(Icons.calendar_today),
                                   border: OutlineInputBorder(

@@ -50,7 +50,7 @@ class OfficeController extends GetxController {
                 ? true
                 : e.baseName == null
                     ? false
-                    : e.baseName!.contains(office.baseName!)) &&
+                    : e.baseName!.toLowerCase().contains(office.baseName!.toLowerCase())) &&
             (office.address == ''
                 ? true
                 : e.address == null
@@ -60,34 +60,34 @@ class OfficeController extends GetxController {
                 ? true
                 : e.telephoneNumber == null
                     ? false
-                    : e.telephoneNumber!.contains(office.telephoneNumber!)) &&
+                    : e.telephoneNumber!.toLowerCase().contains(office.telephoneNumber!.toLowerCase())) &&
             (office.manager == ''
                 ? true
                 : e.manager == null
                     ? false
-                    : e.manager!.contains(office.manager!)) &&
+                    : e.manager!.toLowerCase().contains(office.manager!.toLowerCase())) &&
             (office.driverInformation == ''
                 ? true
                 : e.driverInformation == null
                     ? false
-                    : e.driverInformation!
-                        .contains(office.driverInformation!)) &&
+                    : e.driverInformation!.toLowerCase()
+                        .contains(office.driverInformation!.toLowerCase())) &&
             (office.drivingRoute == ''
                 ? true
                 : e.drivingRoute == null
                     ? false
-                    : e.drivingRoute!.contains(office.drivingRoute!)) &&
+                    : e.drivingRoute!.toLowerCase().contains(office.drivingRoute!.toLowerCase())) &&
             (office.vehicleInformation == ''
                 ? true
                 : e.vehicleInformation == null
                     ? false
-                    : e.vehicleInformation!
-                        .contains(office.vehicleInformation!)) &&
+                    : e.vehicleInformation!.toLowerCase()
+                        .contains(office.vehicleInformation!.toLowerCase())) &&
             (office.drivingSchedule == ''
                 ? true
                 : e.drivingSchedule == null
                     ? false
-                    : e.drivingSchedule!.contains(office.drivingSchedule!)))
+                    : e.drivingSchedule!.toLowerCase().contains(office.drivingSchedule!.toLowerCase())))
         .toList();
 
     searchOfficeList.value = filteredList;

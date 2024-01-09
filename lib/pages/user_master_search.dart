@@ -22,11 +22,14 @@ class UserMasterSearch extends StatelessWidget {
   final controllerOfficeUser =
   Get.put<OfficeUserController>(OfficeUserController());
 
-
+  final id = Uri.base.path.split('/')[2];
   @override
   Widget build(BuildContext context) {
+
     Map<String, dynamic> dataSearch;
     controllerStaffUser.getAllStaffUser();
+    controllerStaffUser.getAllStaffUserDetail(id);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(30),

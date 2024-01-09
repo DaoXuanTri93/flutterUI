@@ -38,12 +38,12 @@ class StampingApprovalController extends GetxController {
             ? true
             : p0.submissionDate == null
             ? false
-            : p0.submissionDate!.contains(submissionDateSearch)) &&
+            : p0.submissionDate!.toLowerCase().contains(submissionDateSearch.toLowerCase())) &&
         (approvalDateSearch == ''
             ? true
             : p0.approvalDate == null
             ? false
-            : p0.approvalDate!.contains(approvalDateSearch)) &&
+            : p0.approvalDate!.toLowerCase().contains(approvalDateSearch.toLowerCase())) &&
         (p0.approval == dataSearch['approval']))
         .toList();
     stamingApproval.refresh();
